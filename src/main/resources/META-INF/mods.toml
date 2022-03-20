@@ -1,0 +1,22 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+license = "MIT"
+[[mods]]
+modId = "dungeon_quest"
+version = "${file.jarVersion}"
+displayName = "DungeonQuest"
+description = '''
+
+'''
+[[dependencies.dungeon_quest]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.dungeon_quest]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,1.19)"
+ordering = "NONE"
+side = "BOTH"
