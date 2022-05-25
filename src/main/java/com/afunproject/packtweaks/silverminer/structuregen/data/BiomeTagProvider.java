@@ -21,19 +21,25 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.silverminer.dungeon_quest.data;
+package com.afunproject.packtweaks.silverminer.structuregen.data;
 
-import com.silverminer.dungeon_quest.DungeonQuest;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class QuestBiomeTags {
-   public static final TagKey<Biome> HAS_QUEST_DUNGEON = create("has_structure/quest_dungeon");
+import com.afunproject.packtweaks.PackTweaks;
 
-   private static @NotNull TagKey<Biome> create(String id) {
-      return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(DungeonQuest.MODID, id));
-   }
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.tags.BiomeTags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+
+public class BiomeTagProvider extends BiomeTagsProvider {
+	public BiomeTagProvider(DataGenerator dataGenerator, @Nullable ExistingFileHelper existingFileHelper) {
+		super(dataGenerator, PackTweaks.MODID, existingFileHelper);
+	}
+
+	@Override
+	protected void addTags() {
+		this.tag(QuestBiomeTags.HAS_QUEST_DUNGEON).addTag(BiomeTags.HAS_VILLAGE_DESERT).addTag(BiomeTags.HAS_VILLAGE_PLAINS)
+		.addTag(BiomeTags.HAS_VILLAGE_TAIGA).addTag(BiomeTags.HAS_VILLAGE_SNOWY).addTag(BiomeTags.HAS_VILLAGE_SAVANNA);
+	}
 }

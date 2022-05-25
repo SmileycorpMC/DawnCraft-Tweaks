@@ -21,17 +21,21 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.silverminer.dungeon_quest.structure;
+package com.afunproject.packtweaks.silverminer.structuregen.data;
 
-import com.silverminer.dungeon_quest.DungeonQuest;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
-public class StructureRegistration {
-   public static final DeferredRegister<StructureFeature<?>> STRUCTURE_FEATURE_REGISTRY =
-         DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, DungeonQuest.MODID);
-   public static final RegistryObject<DungeonQuestStructureFeature> UNDERGROUND =
-         STRUCTURE_FEATURE_REGISTRY.register("quest_dungeon", DungeonQuestStructureFeature::new);
+import com.afunproject.packtweaks.PackTweaks;
+
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
+
+public class QuestBiomeTags {
+	public static final TagKey<Biome> HAS_QUEST_DUNGEON = create("has_structure/quest_dungeon");
+
+	private static @NotNull TagKey<Biome> create(String id) {
+		return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(PackTweaks.MODID, id));
+	}
 }

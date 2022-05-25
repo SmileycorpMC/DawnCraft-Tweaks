@@ -12,6 +12,8 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.cadixdev.licenser'
+apply plugin: 'eclipse'
+apply plugin: 'java'
 
 group = 'com.silverminer'
 version = '1.0-SNAPSHOT'
@@ -72,7 +74,8 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.0.19'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.25'
+	compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 jar {

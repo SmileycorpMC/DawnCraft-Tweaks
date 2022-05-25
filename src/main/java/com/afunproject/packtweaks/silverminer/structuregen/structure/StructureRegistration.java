@@ -21,28 +21,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.silverminer.dungeon_quest.data;
+package com.afunproject.packtweaks.silverminer.structuregen.structure;
 
-import com.silverminer.dungeon_quest.DungeonQuest;
-import net.minecraft.data.info.WorldgenRegistryDumpReport;
+import com.afunproject.packtweaks.PackTweaks;
+
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@Mod.EventBusSubscriber(modid = DungeonQuest.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Events {
-   @SubscribeEvent(priority = EventPriority.LOW)
-   public static void registerStructures(RegistryEvent.Register<StructureFeature<?>> event) {
-      StructureSets.bootstrap();
-   }
-
-   @SubscribeEvent
-   public static void onGatherDataEvent(@NotNull GatherDataEvent event) {
-      event.getGenerator().addProvider(new BiomeTagProvider(event.getGenerator(), event.getExistingFileHelper()));
-      event.getGenerator().addProvider(new WorldgenRegistryDumpReport(event.getGenerator()));
-   }
+public class StructureRegistration {
+	public static final DeferredRegister<StructureFeature<?>> STRUCTURE_FEATURE_REGISTRY =
+			DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, PackTweaks.MODID);
+	public static final RegistryObject<DungeonQuestStructureFeature> UNDERGROUND =
+			STRUCTURE_FEATURE_REGISTRY.register("quest_dungeon", DungeonQuestStructureFeature::new);
 }

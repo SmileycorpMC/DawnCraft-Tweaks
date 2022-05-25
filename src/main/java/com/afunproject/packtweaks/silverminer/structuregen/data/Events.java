@@ -21,23 +21,30 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.silverminer.dungeon_quest.data;
+package com.afunproject.packtweaks.silverminer.structuregen.data;
 
-import com.silverminer.dungeon_quest.DungeonQuest;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.tags.BiomeTags;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class BiomeTagProvider extends BiomeTagsProvider {
-   public BiomeTagProvider(DataGenerator dataGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-      super(dataGenerator, DungeonQuest.MODID, existingFileHelper);
-   }
+import com.afunproject.packtweaks.PackTweaks;
 
-   @Override
-   protected void addTags() {
-      this.tag(QuestBiomeTags.HAS_QUEST_DUNGEON).addTag(BiomeTags.HAS_VILLAGE_DESERT).addTag(BiomeTags.HAS_VILLAGE_PLAINS)
-            .addTag(BiomeTags.HAS_VILLAGE_TAIGA).addTag(BiomeTags.HAS_VILLAGE_SNOWY).addTag(BiomeTags.HAS_VILLAGE_SAVANNA);
-   }
+import net.minecraft.data.info.WorldgenRegistryDumpReport;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+
+@Mod.EventBusSubscriber(modid = PackTweaks.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class Events {
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public static void registerStructures(RegistryEvent.Register<StructureFeature<?>> event) {
+		StructureSets.bootstrap();
+	}
+
+	@SubscribeEvent
+	public static void onGatherDataEvent(@NotNull GatherDataEvent event) {
+		event.getGenerator().addProvider(new BiomeTagProvider(event.getGenerator(), event.getExistingFileHelper()));
+		event.getGenerator().addProvider(new WorldgenRegistryDumpReport(event.getGenerator()));
+	}
 }

@@ -21,30 +21,36 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.silverminer.dungeon_quest;
+package com.afunproject.packtweaks;
 
+import org.slf4j.Logger;
+
+import com.afunproject.packtweaks.capability.CapabilitiesRegister;
+import com.afunproject.packtweaks.silverminer.structuregen.structure.StructureRegistration;
 import com.mojang.logging.LogUtils;
-import com.silverminer.dungeon_quest.structure.StructureRegistration;
+
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
 
-@Mod(DungeonQuest.MODID)
-public class DungeonQuest {
-   private static final Logger LOGGER = LogUtils.getLogger();
-   public static final String MODID = "dungeon_quest";
-   public static String VERSION = "N/A";
+@Mod(PackTweaks.MODID)
+public class PackTweaks {
+	private static final Logger LOGGER = LogUtils.getLogger();
+	public static final String MODID = "pack_tweaks";
+	public static String VERSION = "N/A";
 
-   public DungeonQuest() {
-      ModList.get().getModContainerById(DungeonQuest.MODID)
-            .ifPresent(container -> VERSION = container.getModInfo().getVersion().toString());
-      LOGGER.info("Dungeon Quest " + VERSION + " initialized");
-      StructureRegistration.STRUCTURE_FEATURE_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-   }
+	public PackTweaks() {
+		ModList.get().getModContainerById(PackTweaks.MODID)
+		.ifPresent(container -> VERSION = container.getModInfo().getVersion().toString());
+		LOGGER.info("Pack Tweaks " + VERSION + " initialized");
+		StructureRegistration.STRUCTURE_FEATURE_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
+		MinecraftForge.EVENT_BUS.register(new EventListener());
+	}
 
-   public static ResourceLocation location(String path) {
-      return new ResourceLocation(MODID, path);
-   }
+	public static ResourceLocation location(String path) {
+		return new ResourceLocation(MODID, path);
+	}
 }
