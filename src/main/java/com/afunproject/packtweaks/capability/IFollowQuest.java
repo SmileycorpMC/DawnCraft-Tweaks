@@ -6,7 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.smileycorp.followme.common.FollowMe;
 
 public interface IFollowQuest {
 
@@ -67,7 +66,7 @@ public interface IFollowQuest {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == FollowMe.FOLLOW_CAPABILITY ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == CapabilitiesRegister.FOLLOW_QUEST_CAPABILITY ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

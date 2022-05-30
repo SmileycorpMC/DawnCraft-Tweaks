@@ -34,5 +34,5 @@ public class StructureRegistration {
 	public static final DeferredRegister<StructureFeature<?>> STRUCTURE_FEATURE_REGISTRY =
 			DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, PackTweaks.MODID);
 	public static final RegistryObject<DungeonQuestStructureFeature> UNDERGROUND =
-			STRUCTURE_FEATURE_REGISTRY.register("quest_dungeon", DungeonQuestStructureFeature::new);
+			STRUCTURE_FEATURE_REGISTRY.register("underground", DungeonQuestStructureFeature::new);
 }

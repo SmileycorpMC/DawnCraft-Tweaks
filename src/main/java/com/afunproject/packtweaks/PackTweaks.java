@@ -47,6 +47,7 @@ public class PackTweaks {
 		LOGGER.info("Pack Tweaks " + VERSION + " initialized");
 		StructureRegistration.STRUCTURE_FEATURE_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
+		System.out.println("baboonga");
 		MinecraftForge.EVENT_BUS.register(new EventListener());
 	}
 

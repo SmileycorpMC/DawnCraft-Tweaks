@@ -47,7 +47,7 @@ public class ConfiguredStructureFeatures {
 	}
 
 	public static class Keys {
-		public static final ResourceKey<ConfiguredStructureFeature<?, ?>> QUEST_DUNGEON = register("quest_dungeon");
+		public static final ResourceKey<ConfiguredStructureFeature<?, ?>> QUEST_DUNGEON = register("pack_tweaks");
 		private static @NotNull ResourceKey<ConfiguredStructureFeature<?, ?>> register(String path) {
 			return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, PackTweaks.location(path));
 		}

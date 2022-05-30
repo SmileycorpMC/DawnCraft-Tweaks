@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -57,6 +58,7 @@ public class EventListener {
 									followCap.setForcedToFollow(false);
 									questCap.setStructure(null);
 									//give quest code goes here
+									followedEntity.sendMessage(new TextComponent("Quest Completed"), null);
 								}
 							}
 						}
@@ -68,10 +70,10 @@ public class EventListener {
 
 	private static boolean isInStructure(BlockPos pos, ServerLevel level, ResourceLocation loc) {
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-		TagKey<ConfiguredStructureFeature<?, ?>> village = TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, loc);
-		Optional<HolderSet.Named<ConfiguredStructureFeature<?, ?>>> villageOptional = registry.getTag(village);
-		if (villageOptional.isPresent()) {
-			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator().findNearestMapFeature(level, villageOptional.get(), pos, 1, false);
+		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, loc);
+		Optional<HolderSet.Named<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.getTag(structureTag);
+		if (structureOptional.isPresent()) {
+			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator().findNearestMapFeature(level, structureOptional.get(), pos, 1, false);
 			if (pair == null) return false;
 			BlockPos villagePos = pair.getFirst();
 			return Math.pow(villagePos.getX()-pos.getX(), 2) + Math.pow(villagePos.getZ()-pos.getZ(), 2)<=1024;

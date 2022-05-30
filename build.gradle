@@ -6,30 +6,30 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath "gradle.plugin.org.cadixdev.gradle:licenser:0.6.+"
+        //classpath "gradle.plugin.org.cadixdev.gradle:licenser:0.6.+"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.cadixdev.licenser'
+//apply plugin: 'org.cadixdev.licenser'
 apply plugin: 'eclipse'
 apply plugin: 'java'
 
 group = 'com.silverminer'
-version = '1.0-SNAPSHOT'
+version = '0.1.0'
 
 java {
-    archivesBaseName = 'dungeon_quest'
+    archivesBaseName = 'Pack-Tweaks'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
-license {
-    header = project.file('LICENSE')
-    properties {
-        name = 'AFunProject'
-        year = 2022
-    }
-}
+//license {
+    //header = project.file('LICENSE')
+    //properties {
+        //name = 'AFunProject'
+        //year = 2022
+    //}
+//}
 
 minecraft {
     mappings channel: 'official', version: '1.18.2'
