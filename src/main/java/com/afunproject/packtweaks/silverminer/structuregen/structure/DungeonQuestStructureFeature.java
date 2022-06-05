@@ -25,6 +25,8 @@ package com.afunproject.packtweaks.silverminer.structuregen.structure;
 
 import java.util.Optional;
 
+import com.afunproject.packtweaks.PackTweaks;
+import com.mojang.logging.LogUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,15 +54,17 @@ public class DungeonQuestStructureFeature extends StructureFeature<DungeonQuestC
 			return Optional.empty();
 		} else {
 			BlockPos position = context.chunkPos().getMiddleBlockPosition(0);
+			int worldSurface = context.chunkGenerator().getFirstFreeHeight(position.getX(), position.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+			int minY = context.chunkGenerator().getMinY();
 			position = new BlockPos(position.getX(),
-					context.chunkGenerator().getFirstFreeHeight(position.getX(), position.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor()),
+					((worldSurface - minY) / 2) + minY,
 					position.getZ());
 			Optional<PieceGenerator<JigsawConfiguration>> pieceGenerator = JigsawPlacement.addPieces(
 					new PieceGeneratorSupplier.Context<>(context.chunkGenerator(), context.biomeSource(), context.seed(),
 							context.chunkPos(), context.config().jigsawConfiguration(), context.heightAccessor(),
 							context.validBiome(), context.structureManager(), context.registryAccess()),
 					PoolElementStructurePiece::new, position,
-					false, true);
+					false, false);
 			return pieceGenerator.isEmpty() ? Optional.empty() :
 				Optional.of((structurePieceBuilder, pieceGeneratorContext) ->
 				pieceGenerator.get().generatePieces(structurePieceBuilder, convertContext(pieceGeneratorContext)));

@@ -40,7 +40,7 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
 public class TemplatePools {
 	public static final Holder<StructureTemplatePool> QUEST_DUNGEON = register(Keys.QUEST_DUNGEON, new StructureTemplatePool(PackTweaks.location("quest_dungeon"), new ResourceLocation("empty"), List.of(
-			Pair.of(StructurePoolElement.single("quest_dungeon").apply(StructureTemplatePool.Projection.RIGID), 1)
+			Pair.of(StructurePoolElement.single(PackTweaks.location("quest_dungeon").toString()).apply(StructureTemplatePool.Projection.RIGID), 1)
 			)));
 
 	private static @NotNull Holder<StructureTemplatePool> register(ResourceKey<StructureTemplatePool> resourceKey, StructureTemplatePool structureTemplatePool) {
