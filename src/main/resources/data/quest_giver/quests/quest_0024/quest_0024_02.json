@@ -20,6 +20,10 @@
     }
   },
   "tasks": [
+	{
+      "structure": "pack_tweaks:pack_tweaks",
+      "id": "quest_giver:structure"
+    },
     {
       "id": "pack_tweaks:follow_quest"
     }
