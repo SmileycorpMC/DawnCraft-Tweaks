@@ -20,3 +20,13 @@ mandatory = true
 versionRange = "[1.18.2,1.19)"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies.pack_tweaks]]
+modId = "followme"
+mandatory = true
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.pack_tweaks]]
+modId = "quest_mod"
+mandatory = true
+ordering = "NONE"
+side = "BOTH"

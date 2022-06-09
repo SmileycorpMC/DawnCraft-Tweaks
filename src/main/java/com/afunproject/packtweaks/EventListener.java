@@ -4,20 +4,21 @@ import java.util.Optional;
 
 import com.afunproject.packtweaks.capability.CapabilitiesRegister;
 import com.afunproject.packtweaks.capability.IFollowQuest;
+import com.afunproject.packtweaks.quest.task.FollowTask;
+import com.feywild.quest_giver.quest.player.QuestData;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -26,6 +27,7 @@ import net.smileycorp.followme.common.FollowHandler;
 import net.smileycorp.followme.common.FollowMe;
 import net.smileycorp.followme.common.ai.FollowUserGoal;
 import net.smileycorp.followme.common.capability.IFollower;
+import net.smileycorp.followme.common.event.FollowUserEvent;
 
 public class EventListener {
 
@@ -42,7 +44,7 @@ public class EventListener {
 						if (followOptional.isPresent()) {
 							IFollower followCap = followOptional.resolve().get();
 							LivingEntity followedEntity = followCap.getFollowedEntity();
-							if (followedEntity instanceof Player) {
+							if (followedEntity instanceof ServerPlayer) {
 								if (isInStructure(entity.blockPosition(), (ServerLevel)entity.level, questCap.getStructure())) {
 									//remove follow ai
 									for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
@@ -58,7 +60,8 @@ public class EventListener {
 									followCap.setForcedToFollow(false);
 									questCap.setStructure(null);
 									//give quest code goes here
-									followedEntity.sendMessage(new TextComponent("Quest Completed"), null);
+									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
+									quests.checkComplete(FollowTask.INSTANCE, true);
 								}
 							}
 						}
@@ -78,6 +81,11 @@ public class EventListener {
 			BlockPos villagePos = pair.getFirst();
 			return Math.pow(villagePos.getX()-pos.getX(), 2) + Math.pow(villagePos.getZ()-pos.getZ(), 2)<=1024;
 		} return false;
+	}
+
+	@SubscribeEvent
+	public void tryFollow(FollowUserEvent event) {
+
 	}
 
 }

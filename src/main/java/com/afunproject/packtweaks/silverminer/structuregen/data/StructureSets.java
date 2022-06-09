@@ -39,7 +39,7 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 
 public class StructureSets {
-	public static final Holder<StructureSet> QUEST_DUNGEON = register(Keys.QUEST_DUNGEON, List.of(StructureSet.entry(ConfiguredStructureFeatures.QUEST_DUNGEON)), new RandomSpreadStructurePlacement(34, 11, RandomSpreadType.LINEAR, 10387312));
+	public static final Holder<StructureSet> QUEST_DUNGEON = register(Keys.QUEST_DUNGEON, List.of(StructureSet.entry(ConfiguredStructureFeatures.QUEST_DUNGEON)), new RandomSpreadStructurePlacement(18, 7, RandomSpreadType.LINEAR, 10387312));
 
 	private static @NotNull Holder<StructureSet> register(ResourceKey<StructureSet> resourceKey, List<StructureSet.StructureSelectionEntry> structureSet, StructurePlacement structurePlacement) {
 		StructureSet element = new StructureSet(structureSet, structurePlacement);

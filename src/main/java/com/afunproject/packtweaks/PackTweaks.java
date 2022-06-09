@@ -26,7 +26,9 @@ package com.afunproject.packtweaks;
 import org.slf4j.Logger;
 
 import com.afunproject.packtweaks.capability.CapabilitiesRegister;
+import com.afunproject.packtweaks.quest.task.FollowTask;
 import com.afunproject.packtweaks.silverminer.structuregen.structure.StructureRegistration;
+import com.feywild.quest_giver.quest.task.TaskTypes;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.resources.ResourceLocation;
@@ -47,8 +49,8 @@ public class PackTweaks {
 		LOGGER.info("Pack Tweaks " + VERSION + " initialized");
 		StructureRegistration.STRUCTURE_FEATURE_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
-		System.out.println("baboonga");
 		MinecraftForge.EVENT_BUS.register(new EventListener());
+		TaskTypes.register(location("follow_quest"), FollowTask.INSTANCE);
 	}
 
 	public static ResourceLocation location(String path) {
