@@ -3,6 +3,12 @@ buildscript {
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+		maven {  
+			url "https://cursemaven.com"
+			content {
+				includeGroup "curse.maven"
+			}
+		}
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
@@ -40,7 +46,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                dungeonquest {
+                pack_tweaks {
                     source sourceSets.main
                 }
             }
@@ -52,7 +58,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                dungeonquest {
+                pack_tweaks {
                     source sourceSets.main
                 }
             }
@@ -62,16 +68,19 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'dungeon_quest', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'pack_tweaks', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                dungeonquest {
+                pack_tweaks {
                     source sourceSets.main
+					source sourceSets.test
                 }
             }
         }
     }
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.25'
@@ -81,7 +90,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "dungeonquest",
+                "Specification-Title"     : "pack_tweaks",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
