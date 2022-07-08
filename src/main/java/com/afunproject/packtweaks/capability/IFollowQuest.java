@@ -2,7 +2,6 @@ package com.afunproject.packtweaks.capability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -11,9 +10,9 @@ public interface IFollowQuest {
 
 	public boolean hasStructure();
 
-	public ResourceLocation getStructure();
+	public String getStructure();
 
-	public void setStructure(ResourceLocation loc);
+	public void setStructure(String loc);
 
 	public void readNBT(CompoundTag nbt);
 
@@ -21,7 +20,7 @@ public interface IFollowQuest {
 
 	public static class Implementation implements IFollowQuest {
 
-		private ResourceLocation structure = null;
+		private String structure = null;
 
 		@Override
 		public boolean hasStructure() {
@@ -29,28 +28,23 @@ public interface IFollowQuest {
 		}
 
 		@Override
-		public ResourceLocation getStructure() {
+		public String getStructure() {
 			return structure;
 		}
 
 		@Override
-		public void setStructure(ResourceLocation loc) {
+		public void setStructure(String loc) {
 			structure = loc;
 		}
 
 		@Override
 		public void readNBT(CompoundTag nbt) {
-			try {
-				ResourceLocation loc = new ResourceLocation(nbt.getString("structure"));
-				structure = loc;
-			} catch (Exception e) {
-				structure = null;
-			}
+			if (nbt.contains("structure")) structure = nbt.getString("structure");
 		}
 
 		@Override
 		public CompoundTag writeNBT(CompoundTag nbt) {
-			if (structure != null)nbt.putString("structure", structure.toString());
+			if (structure != null) nbt.putString("structure", structure);
 			return nbt;
 		}
 

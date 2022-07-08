@@ -21,7 +21,8 @@
   },
   "tasks": [
     {
-      "id": "pack_tweaks:follow_quest"
+      "id": "pack_tweaks:follow_quest",
+	  "structure": "#minecraft:village"
     }
   ],
   "rewards": [

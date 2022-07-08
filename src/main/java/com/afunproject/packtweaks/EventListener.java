@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,7 +28,6 @@ import net.smileycorp.followme.common.FollowHandler;
 import net.smileycorp.followme.common.FollowMe;
 import net.smileycorp.followme.common.ai.FollowUserGoal;
 import net.smileycorp.followme.common.capability.IFollower;
-import net.smileycorp.followme.common.event.FollowUserEvent;
 
 public class EventListener {
 
@@ -61,7 +61,7 @@ public class EventListener {
 									questCap.setStructure(null);
 									//give quest code goes here
 									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
-									quests.checkComplete(FollowTask.INSTANCE, true);
+									quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure());
 								}
 							}
 						}
@@ -71,21 +71,42 @@ public class EventListener {
 		}
 	}
 
-	private static boolean isInStructure(BlockPos pos, ServerLevel level, ResourceLocation loc) {
+	private static boolean isInStructure(BlockPos pos, ServerLevel level, String structure) {
+		if (structure.contains("#")) return isInStructureTag(pos, level , structure.replace("#", ""));
+		if (!isValidResourceLocation(structure)) return false;
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, loc);
-		Optional<HolderSet.Named<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.getTag(structureTag);
+		ResourceKey<ConfiguredStructureFeature<?, ?>> structureKey = ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(structure));
+		Optional<Holder<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.getHolder(structureKey);
 		if (structureOptional.isPresent()) {
-			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator().findNearestMapFeature(level, structureOptional.get(), pos, 1, false);
+			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator()
+					.findNearestMapFeature(level, HolderSet.direct(structureOptional.get()), pos, 1, false);
 			if (pair == null) return false;
 			BlockPos villagePos = pair.getFirst();
 			return Math.pow(villagePos.getX()-pos.getX(), 2) + Math.pow(villagePos.getZ()-pos.getZ(), 2)<=1024;
 		} return false;
 	}
 
-	@SubscribeEvent
-	public void tryFollow(FollowUserEvent event) {
+	private static boolean isInStructureTag(BlockPos pos, ServerLevel level, String structure) {
+		if (!isValidResourceLocation(structure)) return false;
+		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
+		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(structure));
+		Optional<HolderSet.Named<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.getTag(structureTag);
+		if (structureOptional.isPresent()) {
+			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator()
+					.findNearestMapFeature(level, structureOptional.get(), pos, 1, false);
+			if (pair == null) return false;
+			BlockPos villagePos = pair.getFirst();
+			return Math.pow(villagePos.getX()-pos.getX(), 2) + Math.pow(villagePos.getZ()-pos.getZ(), 2)<=1024;
+		} return false;
+	}
 
+	private static boolean isValidResourceLocation(String structure) {
+		try {
+			new ResourceLocation(structure.replace("#", ""));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }
