@@ -1,6 +1,6 @@
 package com.afunproject.packtweaks.data;
 
-import com.afunproject.packtweaks.PackTweaks;
+import com.afunproject.afptweaks.ModDefinitions;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
-@EventBusSubscriber(modid = PackTweaks.MODID, bus = Bus.MOD)
+@EventBusSubscriber(modid = ModDefinitions.MODID, bus = Bus.MOD)
 public class DataGenerators {
 
 	@SubscribeEvent

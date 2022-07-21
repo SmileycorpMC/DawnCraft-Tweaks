@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "afptweaks:block/sand_door",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "afptweaks:block/sand_door"
+    }
+  }
+}

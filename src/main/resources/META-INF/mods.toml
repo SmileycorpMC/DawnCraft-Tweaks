@@ -2,19 +2,19 @@ modLoader = "javafml"
 loaderVersion = "[40,)"
 license = "MIT"
 [[mods]]
-modId = "pack_tweaks"
+modId = "afptweaks"
 version = "${file.jarVersion}"
-displayName = "DungeonQuest"
+displayName = "AFP Tweaks"
 description = '''
 
 '''
-[[dependencies.pack_tweaks]]
+[[dependencies.afptweaks]]
 modId = "forge"
 mandatory = true
 versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.pack_tweaks]]
+[[dependencies.afptweaks]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.18.2,1.19)"

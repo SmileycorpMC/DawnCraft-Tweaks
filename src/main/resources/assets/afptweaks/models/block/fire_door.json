@@ -1,0 +1,7 @@
+{
+  "parent": "afptweaks:block/dungeon_door",
+  "textures": {
+    "particle": "afptweaks:block/fire_door",
+    "door": "afptweaks:block/fire_door"
+  }
+}

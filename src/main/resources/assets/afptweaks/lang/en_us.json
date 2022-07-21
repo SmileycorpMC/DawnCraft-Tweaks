@@ -1,0 +1,100 @@
+{
+	"itemGroup.afptweaks.DungeonBlocks": "Dungeon Blocks",
+	"itemGroup.afptweaks.DungeonFunctionalBlocks": "Functional Dungeon Blocks",
+	"itemGroup.afptweaks.DungeonItems": "Dungeon Items",
+
+	"block.afptweaks.forest_brick": "Forest Brick",
+	"block.afptweaks.forest_brick_stairs": "Forest Brick Stairs",
+	"block.afptweaks.forest_brick_slab": "Forest Brick Slab",
+	"block.afptweaks.forest_brick_wall": "Forest Brick Wall",
+	
+	"block.afptweaks.fire_brick": "Fire Brick",
+	"block.afptweaks.fire_brick_stairs": "Fire Brick Stairs",
+	"block.afptweaks.fire_brick_slab": "Fire Brick Slab",
+	"block.afptweaks.fire_brick_wall": "Fire Brick Wall",
+	
+	"block.afptweaks.coral": "Coral",
+	"block.afptweaks.coral_stairs": "Coral Stairs",
+	"block.afptweaks.coral_slab": "Coral Slab",
+	"block.afptweaks.coral_wall": "Coral Wall",
+	
+	"block.afptweaks.magma_slate": "Magma Slate",
+	"block.afptweaks.magma_slate_stairs": "Magma Slate Stairs",
+	"block.afptweaks.magma_slate_slab": "Magma Slate Slab",
+	"block.afptweaks.magma_slate_wall": "Magma Slate Wall",
+	
+	"block.afptweaks.moss_brick": "Moss Brick",
+	"block.afptweaks.moss_brick_stairs": "Moss Brick Stairs",
+	"block.afptweaks.moss_brick_slab": "Moss Brick Slab",
+	"block.afptweaks.moss_brick_wall": "Moss Brick Wall",
+	
+	"block.afptweaks.mud_brick": "Mud Brick",
+	"block.afptweaks.mud_brick_stairs": "Mud Brick Stairs",
+	"block.afptweaks.mud_brick_slab": "Mud Brick Slab",
+	"block.afptweaks.mud_brick_wall": "Mud Brick Wall",
+	
+	"block.afptweaks.rock": "Rock",
+	"block.afptweaks.rock_stairs": "Rock Stairs",
+	"block.afptweaks.rock_slab": "Rock Slab",
+	"block.afptweaks.rock_wall": "Rock Wall",
+	
+	"block.afptweaks.sand_brick": "Sand Brick",
+	"block.afptweaks.sand_brick_stairs": "Sand Brick Stairs",
+	"block.afptweaks.sand_brick_slab": "Sand Brick Slab",
+	"block.afptweaks.sand_brick_wall": "Sand Brick Wall",
+	
+	"block.afptweaks.sand_slate": "Sand Slate",
+	"block.afptweaks.sand_slate_stairs": "Sand Slate Stairs",
+	"block.afptweaks.sand_slate_slab": "Sand Slate Slab",
+	"block.afptweaks.sand_slate_wall": "Sand Slate Wall",
+	
+	"block.afptweaks.shadow_brick": "Shadow Brick",
+	"block.afptweaks.shadow_brick_stairs": "Shadow Brick Stairs",
+	"block.afptweaks.shadow_brick_slab": "Shadow Brick Slab",
+	"block.afptweaks.shadow_brick_wall": "Shadow Brick Wall",
+	
+	"block.afptweaks.water_brick": "Water Brick",
+	"block.afptweaks.water_brick_stairs": "Water Brick Stairs",
+	"block.afptweaks.water_brick_slab": "Water Brick Slab",
+	"block.afptweaks.water_brick_wall": "Water Brick Wall",
+	
+	"block.afptweaks.fire_door": "Fire Dungeon Door",
+	"block.afptweaks.rust_door": "Rust Dungeon Door",
+	"block.afptweaks.sand_door": "Sand Dungeon Door",
+	"block.afptweaks.stone_door": "Stone Dungeon Door",
+	"block.afptweaks.wood_door": "Wood Dungeon Door",
+	
+	"block.afptweaks.chest_spawner": "Chest Spawner",
+	"block.afptweaks.redstone_trigger": "Redstone Trigger",
+	
+	"item.afptweaks.red_key": "Red Key",
+	"item.afptweaks.green_key": "Green Key",
+	"item.afptweaks.blue_key": "Blue Key",
+	"item.afptweaks.yellow_key": "Yellow Key",
+	"item.afptweaks.orange_key": "Orange Key",
+	"item.afptweaks.purple_key": "Purple Key",
+	"item.afptweaks.red_lock": "Red Lock",
+	"item.afptweaks.green_lock": "Green Lock",
+	"item.afptweaks.blue_lock": "Blue Lock",
+	"item.afptweaks.yellow_lock": "Yellow Lock",
+	"item.afptweaks.orange_lock": "Orange Lock",
+	"item.afptweaks.purple_lock": "Purple Lock",
+	
+	"item.afptweaks.dungeon_configurator": "Dungeon Configurator",
+	
+	"message.afptweaks.selectfunctionalblock": "Selected functional block %1$s",
+	"message.afptweaks.linktriggerableblock": "Linked functional block %1$s to trigger %2$s",
+	"message.afptweaks.unlinktriggerableblock": "Unlinked functional block %1$s from trigger %2$s",
+	"message.afptweaks.resetfunctionalblock": "Reset functional block %1$s",
+	
+	"tooltip.afptweaks.configuratormode": "Shift right-click to switch modes",
+	"tooltip.afptweaks.configuratormode.link_functional": "Right-click to link a functional block, right-click again to link it to a trigger",
+	"tooltip.afptweaks.configuratormode.unlink_functional": "Right-click to link a functional block, right-click again to unlink it from a trigger",
+	"tooltip.afptweaks.configuratormode.reset_functional": "Right-click a single-use functional block to reset it",
+	
+	"configuratormode.afptweaks.link_functional": "Mode: Link Functional Blocks",
+	"configuratormode.afptweaks.unlink_functional": "Mode: Unlink Functional Blocks",
+	"configuratormode.afptweaks.reset_functional": "Mode: Reset Functional Blocks",
+	
+	"tile.afptweaks.chest_spawner": "Chest Spawner"
+}

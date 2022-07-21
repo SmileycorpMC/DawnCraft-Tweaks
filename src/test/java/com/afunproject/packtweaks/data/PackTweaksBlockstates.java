@@ -1,6 +1,6 @@
 package com.afunproject.packtweaks.data;
 
-import com.afunproject.packtweaks.PackTweaks;
+import com.afunproject.afptweaks.ModDefinitions;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -13,7 +13,7 @@ public class PackTweaksBlockstates /*extends AtlasDataProvider*/ {
 
 	//@Override
 	public String getName() {
-		return PackTweaks.MODID;
+		return ModDefinitions.MODID;
 	}
 
 	//@Override
