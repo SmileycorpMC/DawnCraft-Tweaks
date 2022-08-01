@@ -16,7 +16,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 
-public class KeyItem extends Item {
+public class KeyItem extends Item implements AdventureItem {
 
 	private final KeyColour colour;
 

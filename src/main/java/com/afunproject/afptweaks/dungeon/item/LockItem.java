@@ -2,7 +2,7 @@ package com.afunproject.afptweaks.dungeon.item;
 
 import com.afunproject.afptweaks.CreativeTabs;
 import com.afunproject.afptweaks.dungeon.KeyColour;
-import com.afunproject.afptweaks.dungeon.block.entity.base.LockableBlockEntity;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.Lockable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.BaseComponent;
@@ -37,14 +37,16 @@ public class LockItem extends Item {
 
 	@Override
 	public InteractionResult useOn(UseOnContext ctx) {
-		Level level = ctx.getLevel();
-		BlockPos pos = ctx.getClickedPos();
-		BlockEntity blockentity = level.getBlockEntity(pos);
-		if (blockentity instanceof LockableBlockEntity) {
-			((LockableBlockEntity)blockentity).setLockColour(colour);
-			level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 0.75f, 0, false);
-			if (!ctx.getPlayer().isCreative()) ctx.getItemInHand().shrink(1);
-			return InteractionResult.CONSUME;
+		if (ctx.getPlayer().isCreative()) {
+			Level level = ctx.getLevel();
+			BlockPos pos = ctx.getClickedPos();
+			BlockEntity blockentity = level.getBlockEntity(pos);
+			if (blockentity instanceof Lockable) {
+				((Lockable)blockentity).setLockColour(colour);
+				level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 0.75f, 0, false);
+				if (!ctx.getPlayer().isCreative()) ctx.getItemInHand().shrink(1);
+				return InteractionResult.CONSUME;
+			}
 		}
 		return super.useOn(ctx);
 	}

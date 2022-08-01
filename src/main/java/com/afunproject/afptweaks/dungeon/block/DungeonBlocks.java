@@ -35,6 +35,7 @@ public class DungeonBlocks {
 	public static final ShapedBlock SAND_SLATE = new ShapedBlock("sand_slate", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
 	public static final ShapedBlock SHADOW_BRICK = new ShapedBlock("shadow_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
 	public static final ShapedBlock WATER_BRICK = new ShapedBlock("water_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
+	public static final ShapedBlock MOSS_SLATE = new ShapedBlock("moss_slate", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
 
 	//dungeon doors
 	public static final RegistryObject<Block> FIRE_DOOR = registerDoor("fire_door");
@@ -45,6 +46,7 @@ public class DungeonBlocks {
 
 	//functional blocks
 	public static final RegistryObject<Block> CHEST_SPAWNER = register("chest_spawner", ChestSpawnerBlock :: new, true);
+	public static final RegistryObject<Block> REDSTONE_ACTIVATOR = register("redstone_activator", RedstoneActivatorBlock :: new, true);
 
 	//triggerable blocks
 	public static final RegistryObject<Block> REDSTONE_TRIGGER = register("redstone_trigger", RedstoneTriggerBlock :: new, true);

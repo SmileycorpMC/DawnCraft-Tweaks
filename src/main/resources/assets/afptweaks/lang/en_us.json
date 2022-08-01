@@ -65,6 +65,7 @@
 	"block.afptweaks.wood_door": "Wood Dungeon Door",
 	
 	"block.afptweaks.chest_spawner": "Chest Spawner",
+	"block.afptweaks.redstone_activator": "Redstone Activator",
 	"block.afptweaks.redstone_trigger": "Redstone Trigger",
 	
 	"item.afptweaks.red_key": "Red Key",
@@ -81,6 +82,9 @@
 	"item.afptweaks.purple_lock": "Purple Lock",
 	
 	"item.afptweaks.dungeon_configurator": "Dungeon Configurator",
+	
+	"message.afptweaks.singlepulse": "Changed to single tick mode",
+	"message.afptweaks.toggle": "Changed to toggle mode",
 	
 	"message.afptweaks.selectfunctionalblock": "Selected functional block %1$s",
 	"message.afptweaks.linktriggerableblock": "Linked functional block %1$s to trigger %2$s",

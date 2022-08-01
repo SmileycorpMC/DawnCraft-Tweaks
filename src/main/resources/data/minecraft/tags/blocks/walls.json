@@ -1,16 +1,16 @@
 {
   "replace": false,
   "values": [
-	"pack_tweaks:forest_brick_wall",
-	"pack_tweaks:fire_brick_wall",
-	"pack_tweaks:coral_wall",
-	"pack_tweaks:magma_slate_wall",
-	"pack_tweaks:moss_brick_wall",
-	"pack_tweaks:mud_brick_wall",
-	"pack_tweaks:rock_wall",
-	"pack_tweaks:sand_brick_wall",
-	"pack_tweaks:sand_slate_wall",
-	"pack_tweaks:shadow_brick_wall",
-	"pack_tweaks:water_brick_wall"
+	"afptweaks:forest_brick_wall",
+	"afptweaks:fire_brick_wall",
+	"afptweaks:coral_wall",
+	"afptweaks:magma_slate_wall",
+	"afptweaks:moss_brick_wall",
+	"afptweaks:mud_brick_wall",
+	"afptweaks:rock_wall",
+	"afptweaks:sand_brick_wall",
+	"afptweaks:sand_slate_wall",
+	"afptweaks:shadow_brick_wall",
+	"afptweaks:water_brick_wall"
   ]
 }

@@ -58,16 +58,14 @@ public class ChestSpawnerBlock extends Block implements EntityBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_51536_) {
+		if (!player.isCreative()) return InteractionResult.PASS;
+		if (level.isClientSide) return InteractionResult.SUCCESS;
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() == DungeonItems.DUNGEON_CONFIGURATOR.get() || hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			MenuProvider menuprovider = getMenuProvider(state, level, pos);
-			if (menuprovider != null) {
-				player.openMenu(menuprovider);
-			}
-			return InteractionResult.CONSUME;
+		MenuProvider menuprovider = getMenuProvider(state, level, pos);
+		if (menuprovider != null) {
+			player.openMenu(menuprovider);
 		}
+		return InteractionResult.CONSUME;
 	}
 }

@@ -6,8 +6,8 @@ import com.afunproject.afptweaks.ModDefinitions;
 import com.afunproject.afptweaks.ModUtils;
 import com.afunproject.afptweaks.dungeon.block.ChestSpawnerBlock;
 import com.afunproject.afptweaks.dungeon.block.entity.base.CamouflagedFunctionalBlockEntity;
-import com.afunproject.afptweaks.dungeon.block.entity.base.SingleUse;
-import com.afunproject.afptweaks.dungeon.block.entity.base.TriggerableBlockEntity;
+import com.afunproject.afptweaks.dungeon.block.entity.base.TriggerBlockEntityBase;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.SingleUse;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -44,12 +44,12 @@ public class ChestSpawnerBlockEntity extends CamouflagedFunctionalBlockEntity im
 	}
 
 	@Override
-	public boolean canTrigger(TriggerableBlockEntity source) {
+	public boolean canTrigger(TriggerBlockEntityBase source) {
 		return !hasTriggered;
 	}
 
 	@Override
-	public void trigger(TriggerableBlockEntity source) {
+	public void trigger(TriggerBlockEntityBase source) {
 		BlockState state = Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, getBlockState().getValue(ChestSpawnerBlock.FACING));
 		BlockPos pos = worldPosition.above();
 		BlockState oldState = level.getBlockState(pos);

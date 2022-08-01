@@ -1,8 +1,8 @@
-package com.afunproject.afptweaks.dungeon.block.entity.base;
+package com.afunproject.afptweaks.dungeon.block.entity.interfaces;
 
 import com.afunproject.afptweaks.dungeon.KeyColour;
 
-public interface LockableBlockEntity {
+public interface Lockable {
 
 	public KeyColour getLockColour();
 

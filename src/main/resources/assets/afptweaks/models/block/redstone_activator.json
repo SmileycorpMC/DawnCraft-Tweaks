@@ -2,7 +2,7 @@
     "textures": {
         "particle": "afptweaks:block/forest_brick",
         "all": "afptweaks:block/forest_brick",
-        "overlay": "afptweaks:block/creative_overlays/redstone_trigger"
+        "overlay": "afptweaks:block/creative_overlays/redstone_activator"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

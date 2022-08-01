@@ -1,4 +1,4 @@
-package com.afunproject.afptweaks.dungeon.block.entity.base;
+package com.afunproject.afptweaks.dungeon.block.entity.interfaces;
 
 public interface SingleUse {
 

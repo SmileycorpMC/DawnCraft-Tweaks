@@ -1,19 +1,21 @@
 buildscript {
     repositories {
-        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
+		maven { url = 'https://repo.spongepowered.org/maven/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.1.0'
+version = '1.1.2'
 group = 'com.afunproject.afptweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'AFP-Tweaks'
 
@@ -23,7 +25,7 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 minecraft {
     mappings channel: 'official', version: '1.18'
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -72,6 +74,11 @@ minecraft {
     }
 }
 
+mixin {
+    add sourceSets.main, "afptweaks.refmap.json"
+	config 'afptweaks.mixin.json'
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
@@ -79,8 +86,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.25'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
 	compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+	
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -93,7 +102,8 @@ jar {
                "Implementation-Title"    : project.name,
                "Implementation-Version"  : project.jar.archiveVersion,
                "Implementation-Vendor"   :"smileycorp",
-               "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+               "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			   "MixinConfigs": "afptweaks.mixin.json"
         ])
     }
 }

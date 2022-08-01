@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 
 import com.afunproject.afptweaks.CreativeTabs;
 import com.afunproject.afptweaks.ModUtils;
-import com.afunproject.afptweaks.dungeon.block.entity.base.FunctionalBlockEntity;
-import com.afunproject.afptweaks.dungeon.block.entity.base.SingleUse;
-import com.afunproject.afptweaks.dungeon.block.entity.base.TriggerableBlockEntity;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.DungeonTrigger;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.Functional;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.SingleUse;
 import com.afunproject.afptweaks.network.AFPPacketHandler;
 
 import net.minecraft.ChatFormatting;
@@ -28,6 +28,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 import net.smileycorp.atlas.api.network.SimpleStringMessage;
 
@@ -66,54 +67,58 @@ public class DungeonConfiguratorItem extends Item {
 		BlockPos pos = ctx.getClickedPos();
 		ItemStack stack = ctx.getItemInHand();
 		BlockEntity block_entity = level.getBlockEntity(pos);
+		BlockState state = level.getBlockState(pos);
 		Player player = ctx.getPlayer();
-		if (player.isCrouching()) {
-			ConfiguratorMode mode = shiftMode(stack);
-			if (player instanceof ServerPlayer) {
-				AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-			}
-		} else {
-			switch(ConfiguratorMode.getmode(stack)) {
-			case LINK_FUNCTIONAL:
-				if (block_entity instanceof FunctionalBlockEntity) {
-					if (pos != null) {
-						player.sendMessage(new TranslatableComponent("message.afptweaks.selectfunctionalblock", ModUtils.getPosString(pos)), null);
-						setSelectedBlock(stack, pos);
-					}
+		if (player.isCreative()) {
+			if (player.isCrouching()) {
+				ConfiguratorMode mode = shiftMode(stack);
+				if (player instanceof ServerPlayer) {
+					AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 				}
-				else if (block_entity instanceof TriggerableBlockEntity) {
-					BlockPos linked_pos = getSelectedPos(stack);
-					if (linked_pos != null) {
-						player.sendMessage(new TranslatableComponent("message.afptweaks.linktriggerableblock", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
-						((TriggerableBlockEntity) block_entity).addLinkedBlock(level, linked_pos);
-						setSelectedBlock(stack, null);
+			} else {
+				switch(ConfiguratorMode.getmode(stack)) {
+				case LINK_FUNCTIONAL:
+					if (block_entity instanceof Functional) {
+						if (pos != null) {
+							player.sendMessage(new TranslatableComponent("message.afptweaks.selectfunctionalblock", ModUtils.getPosString(pos)), null);
+							setSelectedBlock(stack, pos);
+						}
 					}
-				}
-				break;
-			case UNLINK_FUNCTIONAL:
-				if (block_entity instanceof FunctionalBlockEntity) {
-					if (pos != null) {
-						player.sendMessage(new TranslatableComponent("message.afptweaks.selectfunctionalblock", ModUtils.getPosString(pos)), null);
-						setSelectedBlock(stack, pos);
+					else if (block_entity instanceof DungeonTrigger) {
+						BlockPos linked_pos = getSelectedPos(stack);
+						if (linked_pos != null) {
+							player.sendMessage(new TranslatableComponent("message.afptweaks.linktriggerableblock", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
+							((DungeonTrigger) block_entity).addLinkedBlock(level, linked_pos);
+							setSelectedBlock(stack, null);
+						}
 					}
-				}
-				else if (block_entity instanceof TriggerableBlockEntity) {
-					BlockPos linked_pos = getSelectedPos(stack);
-					if (linked_pos != null) {
-						player.sendMessage(new TranslatableComponent("message.afptweaks.unlinktriggerableblock", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
-						((TriggerableBlockEntity) block_entity).removeLinkedBlock(linked_pos);
-						setSelectedBlock(stack, null);
+					break;
+				case UNLINK_FUNCTIONAL:
+					if (block_entity instanceof Functional) {
+						if (pos != null) {
+							player.sendMessage(new TranslatableComponent("message.afptweaks.selectfunctionalblock", ModUtils.getPosString(pos)), null);
+							setSelectedBlock(stack, pos);
+						}
 					}
-				}
-				break;
-			case RESET_FUNCTIONAL:
-				if (block_entity instanceof SingleUse) {
-					if (((SingleUse)block_entity).hasBeenUsed()) {
-						((SingleUse)block_entity).reset();
-						player.sendMessage(new TranslatableComponent("message.afptweaks.resetfunctionalblock", ModUtils.getPosString(pos)), null);
+					else if (block_entity instanceof DungeonTrigger) {
+						BlockPos linked_pos = getSelectedPos(stack);
+						if (linked_pos != null) {
+							player.sendMessage(new TranslatableComponent("message.afptweaks.unlinktriggerableblock", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
+							((DungeonTrigger) block_entity).removeLinkedBlock(linked_pos);
+							setSelectedBlock(stack, null);
+						}
 					}
+					break;
+				case RESET_FUNCTIONAL:
+					if (block_entity instanceof SingleUse) {
+						if (((SingleUse)block_entity).hasBeenUsed()) {
+							((SingleUse)block_entity).reset();
+							player.sendMessage(new TranslatableComponent("message.afptweaks.resetfunctionalblock", ModUtils.getPosString(pos)), null);
+						}
+					}
+					break;
+				default: break;
 				}
-			default: break;
 			}
 		}
 		return super.useOn(ctx);
@@ -126,30 +131,26 @@ public class DungeonConfiguratorItem extends Item {
 		return newMode;
 	}
 
-	public void setMode(ItemStack stack, ConfiguratorMode mode) {
+	protected void setMode(ItemStack stack, ConfiguratorMode mode) {
 		CompoundTag tag = new CompoundTag();
 		tag.putString("mode", mode.toString().toLowerCase());
 		stack.setTag(tag);
 	}
 
-	private void setSelectedBlock(ItemStack stack, BlockPos pos) {
+	protected void setSelectedBlock(ItemStack stack, BlockPos pos) {
 		CompoundTag tag = stack.getOrCreateTag();
 		if (pos == null) {
 			tag.remove("selected_pos");
 		} else {
-			CompoundTag pos_tag = new CompoundTag();
-			pos_tag.putInt("x", pos.getX());
-			pos_tag.putInt("y", pos.getY());
-			pos_tag.putInt("z", pos.getZ());
-			tag.put("linked_pos", pos_tag);
+			tag.put("selected_pos", ModUtils.savePosToNBT(pos));
 		}
 	}
 
-	private BlockPos getSelectedPos(ItemStack stack) {
+	public static BlockPos getSelectedPos(ItemStack stack) {
 		CompoundTag tag = stack.getOrCreateTag();
 		if (tag.contains("selected_pos")) {
 			CompoundTag pos = (CompoundTag) tag.get("selected_pos");
-			return new BlockPos(pos.getInt("x"), pos.getInt("y"), pos.getInt("z"));
+			return (BlockPos) ModUtils.readPosFromNBT(pos, true);
 		}
 		return null;
 	}
@@ -158,7 +159,6 @@ public class DungeonConfiguratorItem extends Item {
 		LINK_FUNCTIONAL,
 		UNLINK_FUNCTIONAL,
 		RESET_FUNCTIONAL;
-
 
 		public String getModeMessage() {
 			return "configuratormode.afptweaks." + toString().toLowerCase();

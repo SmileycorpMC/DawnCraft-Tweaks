@@ -42,17 +42,16 @@ public class RedstoneTriggerBlock extends Block implements EntityBlock {
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbour, BlockPos neighbour_pos, boolean p_55671_) {
 		if (!level.isClientSide) {
 			boolean is_powered = state.getValue(POWERED);
-			if (is_powered != level.hasNeighborSignal(pos)) {
-				if (is_powered) {
-					Optional<RedstoneTriggerBlockEntity> optional = level.getBlockEntity(pos, DungeonBlockEntities.REDSTONE_TRIGGER.get());
-					if (optional.isPresent()) {
-						optional.get().triggerLinkedBlocks();
-					}
-				} else {
-					level.setBlock(pos, state.cycle(POWERED), 2);
+			if (!is_powered && level.hasNeighborSignal(pos)) {
+				Optional<RedstoneTriggerBlockEntity> optional = level.getBlockEntity(pos, DungeonBlockEntities.REDSTONE_TRIGGER.get());
+				if (optional.isPresent()) {
+					optional.get().triggerLinkedBlocks();
+					level.setBlock(pos, state.cycle(POWERED), 3);
 				}
 			}
-
+			else if (is_powered &! level.hasNeighborSignal(pos)) {
+				level.setBlock(pos, state.cycle(POWERED), 3);
+			}
 		}
 	}
 

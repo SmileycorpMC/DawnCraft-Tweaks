@@ -25,6 +25,8 @@ public class DungeonBlockEntities {
 			ChestSpawnerBlockEntity :: new, DungeonBlocks.CHEST_SPAWNER);
 	public static final RegistryObject<BlockEntityType<RedstoneTriggerBlockEntity>> REDSTONE_TRIGGER = register("redstone_trigger",
 			RedstoneTriggerBlockEntity :: new, DungeonBlocks.REDSTONE_TRIGGER);
+	public static final RegistryObject<BlockEntityType<RedstoneActivatorBlockEntity>> REDSTONE_ACTIVATOR = register("redstone_activator",
+			RedstoneActivatorBlockEntity :: new, DungeonBlocks.REDSTONE_ACTIVATOR);
 
 	@SafeVarargs
 	private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String name, BlockEntitySupplier<T> supplier, RegistryObject<Block>... blocks) {

@@ -1,13 +1,17 @@
 package com.afunproject.afptweaks.dungeon.block.entity.base;
 
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.Disguisable;
+import com.afunproject.afptweaks.dungeon.block.entity.interfaces.Functional;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.smileycorp.followme.common.ModDefinitions;
 
-public abstract class CamouflagedFunctionalBlockEntity extends FunctionalBlockEntity implements CamouflagedBlockEntity {
+public abstract class CamouflagedFunctionalBlockEntity extends BlockEntity implements Functional, Disguisable {
 
 	protected ResourceLocation texture = ModDefinitions.getResource("forest_brick");
 

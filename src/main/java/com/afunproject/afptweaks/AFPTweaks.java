@@ -8,8 +8,7 @@ import com.afunproject.afptweaks.dungeon.block.DungeonBlocks;
 import com.afunproject.afptweaks.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.afptweaks.dungeon.item.DungeonItems;
 import com.afunproject.afptweaks.network.AFPPacketHandler;
-import com.afunproject.afptweaks.quest.task.FollowTask;
-import com.feywild.quest_giver.quest.task.TaskTypes;
+import com.afunproject.afptweaks.quest.task.QuestModule;
 import com.mojang.logging.LogUtils;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -31,8 +30,8 @@ public class AFPTweaks {
 		.ifPresent(container -> ModDefinitions.VERSION = container.getModInfo().getVersion().toString());
 		LOGGER.info("AFP Tweaks " + ModDefinitions.VERSION + " initialized");
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
+		if(ModList.get().isLoaded("quest_giver") && ModList.get().isLoaded("followme")) QuestModule.init();
 		MinecraftForge.EVENT_BUS.register(new EventListener());
-		TaskTypes.register(ModDefinitions.getResource("follow_quest"), FollowTask.INSTANCE);
 		AFPPacketHandler.initPackets();
 	}
 
@@ -48,4 +47,9 @@ public class AFPTweaks {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
 	}
+
+	public static void logInfo(Object message) {
+		LOGGER.info(String.valueOf(message));
+	}
+
 }

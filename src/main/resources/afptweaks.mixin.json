@@ -1,0 +1,10 @@
+{
+	"required": true,
+	"package": "com.afunproject.afptweaks.mixin",
+	"compatibilityLevel": "JAVA_16",
+	"refmap": "afptweaks.refmap.json",
+	"mixins": [
+		"MixinItemStack"
+	],
+	"minVersion": "0.8"
+}

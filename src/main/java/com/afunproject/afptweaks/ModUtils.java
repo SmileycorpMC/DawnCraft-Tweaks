@@ -1,6 +1,8 @@
 package com.afunproject.afptweaks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -19,6 +21,21 @@ public class ModUtils {
 
 	public static String getPosString(BlockPos pos) {
 		return "("+pos.getX() + ", "+pos.getY()+", "+pos.getZ()+")";
+	}
+
+	public static CompoundTag savePosToNBT(Vec3i center) {
+		CompoundTag nbt = new CompoundTag();
+		nbt.putInt("x", center.getX());
+		nbt.putInt("y", center.getY());
+		nbt.putInt("z", center.getZ());
+		return nbt;
+	}
+
+	public static Vec3i readPosFromNBT(CompoundTag nbt, boolean isBlockPos) {
+		int x = nbt.getInt("x");
+		int y = nbt.getInt("y");
+		int z = nbt.getInt("z");
+		return isBlockPos ? new BlockPos(x, y, z) : new Vec3i(x, y, z);
 	}
 
 }
