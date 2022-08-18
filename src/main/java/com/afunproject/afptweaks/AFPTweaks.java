@@ -4,9 +4,12 @@ import org.slf4j.Logger;
 
 import com.afunproject.afptweaks.capability.CapabilitiesRegister;
 import com.afunproject.afptweaks.client.ClientEventListener;
+import com.afunproject.afptweaks.client.epicfight.EpicFightClientEventListener;
 import com.afunproject.afptweaks.dungeon.block.DungeonBlocks;
 import com.afunproject.afptweaks.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.afptweaks.dungeon.item.DungeonItems;
+import com.afunproject.afptweaks.effects.AFPTweaksEffects;
+import com.afunproject.afptweaks.entities.AFPTweaksEntities;
 import com.afunproject.afptweaks.network.AFPPacketHandler;
 import com.afunproject.afptweaks.quest.task.QuestModule;
 import com.mojang.logging.LogUtils;
@@ -41,11 +44,17 @@ public class AFPTweaks {
 		DungeonBlocks.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonBlockEntities.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		AFPTweaksEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		AFPTweaksEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
+		if(ModList.get().isLoaded("epicfight")) {
+			EpicFightCompat.registerKeybinds();
+			if (ModList.get().isLoaded("paraglider")) MinecraftForge.EVENT_BUS.register(new EpicFightClientEventListener());
+		}
 	}
 
 	public static void logInfo(Object message) {

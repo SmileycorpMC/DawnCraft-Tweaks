@@ -100,5 +100,7 @@
 	"configuratormode.afptweaks.unlink_functional": "Mode: Unlink Functional Blocks",
 	"configuratormode.afptweaks.reset_functional": "Mode: Reset Functional Blocks",
 	
-	"tile.afptweaks.chest_spawner": "Chest Spawner"
+	"tile.afptweaks.chest_spawner": "Chest Spawner",
+	
+	"effect.afptweaks.immobilized":"Immobilized"
 }

@@ -11,7 +11,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -97,6 +96,19 @@ public class DungeonDoorBlock extends Block implements LockedBlock, EntityBlock 
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
-		return RotatedPillarBlock.rotatePillar(state, rotation);
+		switch(rotation) {
+		case COUNTERCLOCKWISE_90:
+		case CLOCKWISE_90:
+			switch((Direction.Axis)state.getValue(AXIS)) {
+			case X:
+				return state.setValue(AXIS, Direction.Axis.Z);
+			case Z:
+				return state.setValue(AXIS, Direction.Axis.X);
+			default:
+				return state;
+			}
+		default:
+			return state;
+		}
 	}
 }

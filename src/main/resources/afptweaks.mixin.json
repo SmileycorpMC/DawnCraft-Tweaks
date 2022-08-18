@@ -6,5 +6,10 @@
 	"mixins": [
 		"MixinItemStack"
 	],
+	"client": [
+		"MixinKeyMapping",
+		"MixinKeyboardHandler",
+		"MixinMouseHandler"
+	],
 	"minVersion": "0.8"
 }
