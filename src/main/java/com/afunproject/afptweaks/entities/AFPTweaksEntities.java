@@ -15,4 +15,7 @@ public class AFPTweaksEntities {
 	public static RegistryObject<EntityType<Fallen>> FALLEN = ENTITIES.register("fallen",  () ->
 	EntityType.Builder.<Fallen>of(Fallen::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("fallen"));
 
+	public static RegistryObject<EntityType<WerewolfPlayer>> WEREWOLF_PLAYER = ENTITIES.register("werewolf_player",  () ->
+	EntityType.Builder.<WerewolfPlayer>of(WerewolfPlayer::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("werewolf_player"));
+
 }

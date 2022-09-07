@@ -17,20 +17,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ChestSpawnerBlock extends Block implements EntityBlock {
-
-	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+public class ChestSpawnerBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
 	public ChestSpawnerBlock() {
 		super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_RED).strength(-1, 18000000));
@@ -72,14 +66,4 @@ public class ChestSpawnerBlock extends Block implements EntityBlock {
 		return InteractionResult.CONSUME;
 	}
 
-	@Override
-	public BlockState rotate(BlockState p_52790_, Rotation rotation) {
-		return RotatedPillarBlock.rotatePillar(p_52790_, rotation);
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public BlockState mirror(BlockState p_52787_, Mirror p_52788_) {
-		return p_52788_ == Mirror.NONE ? p_52787_ : p_52787_.rotate(p_52788_.getRotation(p_52787_.getValue(FACING)));
-	}
 }

@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"package": "com.afunproject.afptweaks.mixin",
-	"compatibilityLevel": "JAVA_16",
+	"compatibilityLevel": "JAVA_17",
 	"refmap": "afptweaks.refmap.json",
 	"mixins": [
 		"MixinItemStack"
@@ -9,7 +9,9 @@
 	"client": [
 		"MixinKeyMapping",
 		"MixinKeyboardHandler",
-		"MixinMouseHandler"
+		"MixinMouseHandler",
+		"MixinEntityRenderer",
+		"MixinEntityRenderDispatcher"
 	],
 	"minVersion": "0.8"
 }

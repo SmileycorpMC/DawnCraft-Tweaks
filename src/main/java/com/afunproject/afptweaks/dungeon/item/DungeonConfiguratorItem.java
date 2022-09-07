@@ -19,7 +19,9 @@ import net.minecraft.network.chat.BaseComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -27,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
@@ -61,6 +64,20 @@ public class DungeonConfiguratorItem extends Item {
 	}
 
 	@Override
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+		if (level.isClientSide) return super.use(level, player, hand);
+		if (player.isCreative()) {
+			if (player.isCrouching()) {
+				ConfiguratorMode mode = shiftMode(player.getItemInHand(hand));
+				if (player instanceof ServerPlayer) {
+					AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+				}
+			}
+		} else player.sendMessage(new TranslatableComponent("message.afptweaks.creative_required"), null);
+		return super.use(level, player, hand);
+	}
+
+	@Override
 	public InteractionResult useOn(UseOnContext ctx) {
 		Level level = ctx.getLevel();
 		if (level.isClientSide) return super.useOn(ctx);
@@ -76,7 +93,8 @@ public class DungeonConfiguratorItem extends Item {
 					AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 				}
 			} else {
-				switch(ConfiguratorMode.getmode(stack)) {
+				ConfiguratorMode mode = ConfiguratorMode.getmode(stack);
+				switch(mode) {
 				case LINK_FUNCTIONAL:
 					if (block_entity instanceof Functional) {
 						if (pos != null) {
@@ -96,14 +114,14 @@ public class DungeonConfiguratorItem extends Item {
 				case UNLINK_FUNCTIONAL:
 					if (block_entity instanceof Functional) {
 						if (pos != null) {
-							player.sendMessage(new TranslatableComponent("message.afptweaks.selectfunctionalblock", ModUtils.getPosString(pos)), null);
+							player.sendMessage(new TranslatableComponent("message.afptweaks.select_functional_block", ModUtils.getPosString(pos)), null);
 							setSelectedBlock(stack, pos);
 						}
 					}
 					else if (block_entity instanceof DungeonTrigger) {
 						BlockPos linked_pos = getSelectedPos(stack);
 						if (linked_pos != null) {
-							player.sendMessage(new TranslatableComponent("message.afptweaks.unlinktriggerableblock", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
+							player.sendMessage(new TranslatableComponent("message.afptweaks.unlink_triggerable_block", ModUtils.getPosString(linked_pos), ModUtils.getPosString(pos)), null);
 							((DungeonTrigger) block_entity).removeLinkedBlock(linked_pos);
 							setSelectedBlock(stack, null);
 						}
@@ -113,14 +131,20 @@ public class DungeonConfiguratorItem extends Item {
 					if (block_entity instanceof SingleUse) {
 						if (((SingleUse)block_entity).hasBeenUsed()) {
 							((SingleUse)block_entity).reset();
-							player.sendMessage(new TranslatableComponent("message.afptweaks.resetfunctionalblock", ModUtils.getPosString(pos)), null);
+							player.sendMessage(new TranslatableComponent("message.afptweaks.reset_functional_block", ModUtils.getPosString(pos)), null);
 						}
 					}
 					break;
-				default: break;
+				case ROTATE:
+					if (state != null) state.rotate(level, pos, Rotation.CLOCKWISE_90);
+					break;
+				default:
+					player.sendMessage(new TranslatableComponent("message.afptweaks.no_mode", mode), null);
+					break;
 				}
 			}
-		}
+			return InteractionResult.SUCCESS;
+		} else player.sendMessage(new TranslatableComponent("message.afptweaks.creative_required"), null);
 		return super.useOn(ctx);
 	}
 
@@ -158,7 +182,8 @@ public class DungeonConfiguratorItem extends Item {
 	public static enum ConfiguratorMode {
 		LINK_FUNCTIONAL,
 		UNLINK_FUNCTIONAL,
-		RESET_FUNCTIONAL;
+		RESET_FUNCTIONAL,
+		ROTATE;
 
 		public String getModeMessage() {
 			return "configuratormode.afptweaks." + toString().toLowerCase();

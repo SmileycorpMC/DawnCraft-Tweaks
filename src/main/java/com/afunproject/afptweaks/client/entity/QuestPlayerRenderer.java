@@ -1,34 +1,33 @@
-package com.afunproject.afptweaks.client;
+package com.afunproject.afptweaks.client.entity;
 
 import com.afunproject.afptweaks.ModDefinitions;
-import com.afunproject.afptweaks.entities.Fallen;
+import com.afunproject.afptweaks.entities.QuestPlayer;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.smileycorp.atlas.api.client.RenderingUtils;
 
-public class FallenRenderer extends HumanoidMobRenderer<Fallen, HumanoidModel<Fallen>> {
+public class QuestPlayerRenderer<T extends QuestPlayer> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
 
-	public static ModelLayerLocation MAIN_LAYER = new ModelLayerLocation(new ResourceLocation(ModDefinitions.MODID, "fallen"), "main");
+	public static ModelLayerLocation MAIN_LAYER = new ModelLayerLocation(new ResourceLocation(ModDefinitions.MODID, "quest_player"), "main");
 
-	protected FallenRenderer(Context ctx) {
-		super(ctx, new FallenModel(ctx.bakeLayer(MAIN_LAYER)), 0.5f);
+	public QuestPlayerRenderer(EntityRendererProvider.Context ctx) {
+		this(ctx, new HumanoidModel<T>(ctx.bakeLayer(MAIN_LAYER)));
+	}
+
+	public QuestPlayerRenderer(Context ctx, HumanoidModel<T> model) {
+		super(ctx, model, 0.5f);
 	}
 
 	@Override
-	protected RenderType getRenderType(Fallen entity, boolean p_230496_2_, boolean p_230496_3_, boolean p_230496_4_) {
-		return RenderType.entityTranslucent(getTextureLocation(entity));
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(Fallen entity) {
+	public ResourceLocation getTextureLocation(QuestPlayer entity) {
 		return RenderingUtils.getPlayerTexture(entity.getPlayerUUID(), Type.SKIN);
 	}
 

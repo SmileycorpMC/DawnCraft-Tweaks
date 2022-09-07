@@ -83,24 +83,36 @@
 	
 	"item.afptweaks.dungeon_configurator": "Dungeon Configurator",
 	
+	"entity.afptweaks.fallen": "Fallen Adventurer",
+	
 	"message.afptweaks.singlepulse": "Changed to single tick mode",
 	"message.afptweaks.toggle": "Changed to toggle mode",
+	"message.afptweaks.creative_required": "You must be in creative mode to use this item.",
 	
-	"message.afptweaks.selectfunctionalblock": "Selected functional block %1$s",
-	"message.afptweaks.linktriggerableblock": "Linked functional block %1$s to trigger %2$s",
-	"message.afptweaks.unlinktriggerableblock": "Unlinked functional block %1$s from trigger %2$s",
-	"message.afptweaks.resetfunctionalblock": "Reset functional block %1$s",
+	"message.afptweaks.select_functional_block": "Selected functional block %1$s",
+	"message.afptweaks.link_triggerable_block": "Linked functional block %1$s to trigger %2$s",
+	"message.afptweaks.unlink_triggerable_block": "Unlinked functional block %1$s from trigger %2$s",
+	"message.afptweaks.reset_functional_block": "Reset functional block %1$s",
+	"message.afptweaks.no_mode": "WARNING: no functionality set for configuration mode %1$s",
 	
 	"tooltip.afptweaks.configuratormode": "Shift right-click to switch modes",
 	"tooltip.afptweaks.configuratormode.link_functional": "Right-click to link a functional block, right-click again to link it to a trigger",
 	"tooltip.afptweaks.configuratormode.unlink_functional": "Right-click to link a functional block, right-click again to unlink it from a trigger",
 	"tooltip.afptweaks.configuratormode.reset_functional": "Right-click a single-use functional block to reset it",
+	"tooltip.afptweaks.configuratormode.rotate": "Right-click to rotate a block",
 	
 	"configuratormode.afptweaks.link_functional": "Mode: Link Functional Blocks",
 	"configuratormode.afptweaks.unlink_functional": "Mode: Unlink Functional Blocks",
 	"configuratormode.afptweaks.reset_functional": "Mode: Reset Functional Blocks",
+	"configuratormode.afptweaks.rotate": "Mode: Rotate Blocks",
 	
 	"tile.afptweaks.chest_spawner": "Chest Spawner",
 	
-	"effect.afptweaks.immobilized":"Immobilized"
+	"effect.afptweaks.immobilized":"Immobilized",
+	
+	"text.afptweaks.quest.no_text": "Missing text for quest. %1$s",
+	"text.afptweaks.quest.lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus pharetra imperdiet. Vivamus porttitor magna eget lobortis faucibus. Pellentesque et dignissim dolor. Quisque congue pharetra nibh non consequat. Maecenas risus nisi, cursus in sem ut, pulvinar commodo nisi. Nam at euismod eros, sagittis mollis sem. Etiam vitae nibh sapien. Maecenas non magna neque. Pellentesque aliquet erat ac dolor interdum rutrum. Nullam volutpat tellus erat, ac fermentum velit auctor in. Ut non est semper, volutpat ex in, semper justo. Praesent pellentesque quam a sapien interdum faucibus. Nulla eu diam ac ligula pulvinar rhoncus. Morbi pellentesque aliquet efficitur. Mauris eleifend luctus finibus. Morbi eu iaculis turpis. Duis mauris ex, condimentum tincidunt diam ac, facilisis sodales libero. Donec sagittis mauris ligula, at porttitor dolor bibendum eget. Duis ut finibus justo, nec consequat orci. Morbi ornare suscipit mattis. Suspendisse quis mauris odio. Pellentesque tempor non lorem accumsan tincidunt. Vestibulum ultricies ex at metus laoreet interdum. Nullam ornare ultricies metus in condimentum. Nulla sit amet nisl vehicula, dignissim dolor vitae, malesuada leo. Quisque id accumsan libero.",
+	"text.afptweaks.quest.werewolf1":"Can you please help me adventurer, I've been afflicted by a most terrible curse.¶I've been told only a Golden Apple will cure me, could you get one for me?",
+	"text.afptweaks.quest.werewolf2":"Have you found a golden apple for me?",
+	"text.afptweaks.quest.werewolf3":"Thank you adventurer, I feel better already."
 }

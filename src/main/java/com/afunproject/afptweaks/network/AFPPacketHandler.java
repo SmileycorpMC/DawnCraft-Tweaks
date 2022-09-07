@@ -16,14 +16,23 @@ public class AFPPacketHandler {
 
 	public static SimpleChannel NETWORK_INSTANCE;
 
+	@SuppressWarnings("rawtypes")
 	public static void initPackets() {
 		NETWORK_INSTANCE = NetworkRegistry.newSimpleChannel(ModDefinitions.getResource("main"), ()-> "1", "1"::equals, "1"::equals);
 		NETWORK_INSTANCE.registerMessage(1, SimpleStringMessage.class, new SimpleMessageEncoder<SimpleStringMessage>(),
 				new SimpleMessageDecoder<SimpleStringMessage>(SimpleStringMessage.class), (T, K)-> processNotificationMessage(T, K.get()));
+		NETWORK_INSTANCE.registerMessage(1, TriggerQuestCompleteMessage.class, new SimpleMessageEncoder<TriggerQuestCompleteMessage>(),
+				new SimpleMessageDecoder<TriggerQuestCompleteMessage>(TriggerQuestCompleteMessage.class), (T, K)-> processQuestCompleteMessage(T, K.get()));
 	}
 
 	public static void processNotificationMessage(SimpleStringMessage message, Context ctx) {
 		ctx.enqueueWork(() ->  DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandler.displayMessage(message.getText())));
 		ctx.setPacketHandled(true);
 	}
+
+	public static void processQuestCompleteMessage(TriggerQuestCompleteMessage<?> message, Context ctx) {
+		ctx.enqueueWork(() -> message.get(ctx.getSender().level).completeQuest(message.isAccepted()));
+		ctx.setPacketHandled(true);
+	}
+
 }

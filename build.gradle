@@ -15,9 +15,9 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.1.3'
+version = '1.1.4'
 group = 'com.afunproject.afptweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'AFP-Tweaks'
+archivesBaseName = 'DawnCraft-Tweaks'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -88,7 +88,6 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
 	compileOnly fileTree(dir: 'libs', include: ['*.jar'])
-	
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

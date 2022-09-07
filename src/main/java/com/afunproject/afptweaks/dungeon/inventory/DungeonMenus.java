@@ -17,6 +17,7 @@ public class DungeonMenus {
 	/*public static final RegistryObject<MenuType<RedstoneActivatorMenu>> REDSTONE_ACTIVATOR_MENU = register("redstone_activator",
 			(id, inv, buf) -> new RedstoneActivatorMenu(id));*/
 
+	@SuppressWarnings("unused")
 	private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, IContainerFactory<T> supplier) {
 		return MENU_TYPES.register(name, () -> IForgeMenuType.<T>create(supplier));
 	}

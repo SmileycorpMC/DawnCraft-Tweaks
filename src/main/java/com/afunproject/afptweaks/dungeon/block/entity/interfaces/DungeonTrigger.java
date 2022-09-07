@@ -3,7 +3,7 @@ package com.afunproject.afptweaks.dungeon.block.entity.interfaces;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public interface DungeonTrigger {
+public interface DungeonTrigger extends RotatableBlockEntity {
 
 	public void triggerLinkedBlocks();
 

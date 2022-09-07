@@ -2,7 +2,6 @@ package com.afunproject.afptweaks.quest.task;
 
 import java.util.Optional;
 
-import com.afunproject.afptweaks.ModUtils;
 import com.afunproject.afptweaks.capability.CapabilitiesRegister;
 import com.afunproject.afptweaks.capability.IFollowQuest;
 import com.feywild.quest_giver.quest.player.QuestData;

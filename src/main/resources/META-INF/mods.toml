@@ -4,7 +4,7 @@ license = "GNU LESSER GENERAL PUBLIC LICENSE Version 2.1"
 [[mods]]
 modId = "afptweaks"
 version = "${file.jarVersion}"
-displayName = "AFP Tweaks"
+displayName = "DawnCraft-Tweaks"
 description = '''
 
 '''

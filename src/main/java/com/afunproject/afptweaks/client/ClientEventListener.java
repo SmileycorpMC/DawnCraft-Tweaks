@@ -1,12 +1,15 @@
 package com.afunproject.afptweaks.client;
 
 import com.afunproject.afptweaks.ModDefinitions;
+import com.afunproject.afptweaks.client.screens.QuestScreen;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.MapRenderer;
@@ -33,19 +36,36 @@ public class ClientEventListener {
 	@SubscribeEvent
 	public void postRenderOverlay(RenderGameOverlayEvent.Pre event){
 		Minecraft mc = Minecraft.getInstance();
+		//hide during quest screen
+		if (mc.screen instanceof QuestScreen) {
+			event.setCanceled(true);
+			return;
+		}
+		//render minimap
 		LocalPlayer player = mc.player;
 		ItemStack stack = null;
 		if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.FILLED_MAP) {
 			stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		}
-		if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.FILLED_MAP) {
+		else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.FILLED_MAP) {
 			stack = player.getItemInHand(InteractionHand.OFF_HAND);
 		}
 		if (stack != null) {
+			float scale = 0.5f;
+			float offsetX = 12;
+			float offsetY = 12;
+			if (player.getUseItem().isEmpty() && mc.options.keyUse.isDown()) {
+				scale = scale*3;
+				Window window = mc.getWindow();
+				offsetX = (window.getGuiScaledWidth()/2f) / scale;
+				offsetY = (window.getGuiScaledHeight()/2f) /scale;
+				event.setCanceled(true);
+				if (!mc.options.getCameraType().isFirstPerson()) mc.options.setCameraType(CameraType.FIRST_PERSON);
+			}
 			int id = MapItem.getMapId(stack);
 			PoseStack poseStack = event.getMatrixStack();
 			poseStack.pushPose();
-			poseStack.scale(0.5f, 0.5f, 0.5f);
+			poseStack.scale(scale, scale, 0.5f);
 			GlStateManager._enableBlend();
 			GlStateManager._blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value,
 					GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
@@ -54,15 +74,15 @@ public class ClientEventListener {
 			VertexConsumer bg_vertices = buffers.getBuffer(mapdata == null ?
 					ItemInHandRenderer.MAP_BACKGROUND : ItemInHandRenderer.MAP_BACKGROUND_CHECKERBOARD);
 			Matrix4f bg = poseStack.last().pose();
-			bg_vertices.vertex(bg, 5.0F, 147.0F, 0.0F).color(255, 255, 255, 255).uv(0.0F, 1.0F).uv2(255).endVertex();
-			bg_vertices.vertex(bg, 147.0F, 147.0F, 0.0F).color(255, 255, 255, 255).uv(1.0F, 1.0F).uv2(255).endVertex();
-			bg_vertices.vertex(bg, 147.0F, 5.0F, 0.0F).color(255, 255, 255, 255).uv(1.0F, 0.0F).uv2(255).endVertex();
-			bg_vertices.vertex(bg, 5.0F, 5.0F, 0.0F).color(255, 255, 255, 255).uv(0.0F, 0.0F).uv2(255).endVertex();
+			bg_vertices.vertex(bg, offsetX - 7.0F, offsetY + 135.0F, 0.0F).color(255, 255, 255, 255).uv(0.0F, 1.0F).uv2(255).endVertex();
+			bg_vertices.vertex(bg, offsetX + 135.0F, offsetY + 135.0F, 0.0F).color(255, 255, 255, 255).uv(1.0F, 1.0F).uv2(255).endVertex();
+			bg_vertices.vertex(bg, offsetX + 135.0F, offsetY - 7.0F, 0.0F).color(255, 255, 255, 255).uv(1.0F, 0.0F).uv2(255).endVertex();
+			bg_vertices.vertex(bg, offsetX - 7.0F, offsetY - 7.0F, 0.0F).color(255, 255, 255, 255).uv(0.0F, 0.0F).uv2(255).endVertex();
 			poseStack.popPose();
 			if (mapdata != null) {
 				poseStack.pushPose();
-				poseStack.scale(0.5f, 0.5f, 0.5f);
-				poseStack.translate(12, 12, 1);
+				poseStack.scale(scale, scale, 0.5f);
+				poseStack.translate(offsetX, offsetY, scale);
 				MapInstance instance = mc.gameRenderer.getMapRenderer().getOrCreateMapInstance(id, mapdata);
 				if (instance.requiresUpload) {
 					instance.updateTexture();
@@ -79,8 +99,8 @@ public class ClientEventListener {
 				int k = 0;
 				for(MapDecoration mapdecoration : mapdata.getDecorations()) {
 					poseStack.pushPose();
-					poseStack.scale(0.5f, 0.5f, 0.5f);
-					poseStack.translate(12, 12, k+2);
+					poseStack.scale(scale, scale, 0.5f);
+					poseStack.translate(offsetX, offsetY, (k+2)*scale*2);
 					if (mapdecoration.render(k)) {
 						k++;
 						poseStack.popPose();
@@ -108,7 +128,7 @@ public class ClientEventListener {
 						float f6 = (float)font.width(component);
 						float f7 = Mth.clamp(25.0F / f6, 0.0F, 6.0F / 9.0F);
 						poseStack.pushPose();
-						poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F - f6 * f7 / 2.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F + 4.0F), k+2);
+						poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F - f6 * f7 / 2.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F + 4.0F), (k+2)*scale*2);
 						poseStack.scale(f7, f7, 1.0F);
 						font.drawInBatch(component, 0.0F, 0.0F, -1, false, poseStack.last().pose(), buffers, false, Integer.MIN_VALUE, 255);
 						poseStack.popPose();

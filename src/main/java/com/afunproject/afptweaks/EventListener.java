@@ -3,7 +3,7 @@ package com.afunproject.afptweaks;
 import com.afunproject.afptweaks.capability.CapabilitiesRegister;
 import com.afunproject.afptweaks.capability.IRestrictBlock;
 import com.afunproject.afptweaks.entities.AFPTweaksEntities;
-import com.afunproject.afptweaks.entities.Fallen;
+import com.afunproject.afptweaks.entities.QuestEntityBase;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.PathfinderMob;
@@ -45,7 +45,8 @@ public class EventListener {
 
 	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(AFPTweaksEntities.FALLEN.get(), Fallen.createAttributes());
+		event.put(AFPTweaksEntities.FALLEN.get(), QuestEntityBase.createAttributes());
+		event.put(AFPTweaksEntities.WEREWOLF_PLAYER.get(), QuestEntityBase.createAttributes());
 	}
 
 }

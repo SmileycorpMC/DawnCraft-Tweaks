@@ -60,7 +60,6 @@ public class RedstoneTriggerBlock extends Block implements EntityBlock {
 		if (p_55661_.getValue(POWERED) && !p_55662_.hasNeighborSignal(p_55663_)) {
 			p_55662_.setBlock(p_55663_, p_55661_.cycle(POWERED), 2);
 		}
-
 	}
 
 }
