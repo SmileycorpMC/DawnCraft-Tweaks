@@ -1,6 +1,6 @@
 package com.afunproject.packtweaks.data;
 
-import com.afunproject.afptweaks.ModDefinitions;
+import com.afunproject.dawncraft.ModDefinitions;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

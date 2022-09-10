@@ -1,6 +1,6 @@
 package com.afunproject.afptweaks.effects;
 
-import com.afunproject.afptweaks.ModDefinitions;
+import com.afunproject.dawncraft.ModDefinitions;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.DeferredRegister;
