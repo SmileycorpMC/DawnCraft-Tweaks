@@ -1,7 +1,5 @@
 package com.afunproject.afptweaks.quest;
 
-import com.afunproject.afptweaks.QuestType;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Mob;

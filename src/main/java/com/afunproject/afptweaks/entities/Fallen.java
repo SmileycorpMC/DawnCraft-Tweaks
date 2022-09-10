@@ -42,7 +42,7 @@ public class Fallen extends QuestPlayer {
 			}
 			if (level.isClientSide) {
 				for (int i = 0; i < random.nextInt(5)+2; i++) {
-					level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, xo+1-random.nextDouble(), yo+random.nextDouble(), zo+1-random.nextDouble(), 1-random.nextFloat(), random.nextFloat(), 1-random.nextFloat());
+					level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, xo+random.nextFloat()-0.5f, yo+random.nextFloat(), zo+random.nextFloat()-0.5f, random.nextFloat()-0.5f, random.nextFloat()-0.5f, 1-random.nextFloat()-0.5f);
 				}
 			}
 		}
@@ -69,6 +69,7 @@ public class Fallen extends QuestPlayer {
 
 	public void startFading(ItemStack drop) {
 		entityData.set(FADE_TIMER, 60);
+		this.drop = drop;
 	}
 
 }

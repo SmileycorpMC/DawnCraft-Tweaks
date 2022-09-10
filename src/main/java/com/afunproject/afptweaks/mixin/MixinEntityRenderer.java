@@ -20,7 +20,10 @@ public abstract class MixinEntityRenderer {
 
 	@Inject(at=@At("HEAD"), method = "shouldShowName(Lnet/minecraft/world/entity/Entity;)Z", cancellable = true)
 	protected void shouldShowName(Entity entity, CallbackInfoReturnable<Boolean> callback) {
-		if (!((EntityRenderDispatcherExtension)entityRenderDispatcher).shouldRenderNameplate()) callback.setReturnValue(false);
+		if (!((EntityRenderDispatcherExtension)entityRenderDispatcher).shouldRenderNameplate()) {
+			callback.setReturnValue(false);
+			callback.cancel();
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.afunproject.afptweaks;
+package com.afunproject.afptweaks.quest;
 
 public enum QuestType {
 

@@ -21,9 +21,9 @@ public abstract class AFPRenderTypes extends RenderType {
 
 	private static final Function<ResourceLocation, RenderType> GHOST_RENDERER = Util.memoize((textureLocation) -> {
 		RenderType.CompositeState state = RenderType.CompositeState.builder()
-				.setShaderState(RENDERTYPE_ENTITY_CUTOUT_NO_CULL_SHADER)
+				.setShaderState(RENDERTYPE_EYES_SHADER)
 				.setTextureState(new RenderStateShard.TextureStateShard(textureLocation, false, false))
-				.setTransparencyState(LIGHTNING_TRANSPARENCY)
+				.setTransparencyState(TRANSLUCENT_TRANSPARENCY)
 				.setCullState(CULL)
 				.setLightmapState(NO_LIGHTMAP)
 				.setOverlayState(NO_OVERLAY)

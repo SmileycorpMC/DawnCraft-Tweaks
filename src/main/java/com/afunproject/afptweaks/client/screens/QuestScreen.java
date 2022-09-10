@@ -3,10 +3,10 @@ package com.afunproject.afptweaks.client.screens;
 import java.util.List;
 import java.util.Random;
 
-import com.afunproject.afptweaks.QuestType;
 import com.afunproject.afptweaks.client.EntityRenderDispatcherExtension;
 import com.afunproject.afptweaks.network.AFPPacketHandler;
 import com.afunproject.afptweaks.network.TriggerQuestCompleteMessage;
+import com.afunproject.afptweaks.quest.QuestType;
 import com.feywild.quest_giver.screen.BackgroundWidget;
 import com.feywild.quest_giver.screen.QuestButton;
 import com.feywild.quest_giver.screen.QuestButtonSmall;

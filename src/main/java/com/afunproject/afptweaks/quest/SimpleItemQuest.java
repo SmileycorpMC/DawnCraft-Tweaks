@@ -1,7 +1,5 @@
 package com.afunproject.afptweaks.quest;
 
-import com.afunproject.afptweaks.QuestType;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 

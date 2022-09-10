@@ -104,14 +104,14 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
-		if (compound.contains("damageable")) damageable = compound.getBoolean("damageable");
+		compound.putBoolean("damageable", damageable);
 		saveQuestData(compound);
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		compound.putBoolean("damageable", damageable);
+		if (compound.contains("damageable")) damageable = compound.getBoolean("damageable");
 		loadQuestData(compound);
 	}
 

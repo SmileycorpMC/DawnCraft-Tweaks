@@ -2,11 +2,11 @@ package com.afunproject.afptweaks.client;
 
 import java.util.List;
 
-import com.afunproject.afptweaks.QuestType;
 import com.afunproject.afptweaks.client.screens.QuestScreen;
 import com.afunproject.afptweaks.network.OpenQuestMessage;
 import com.afunproject.afptweaks.quest.Quest;
 import com.afunproject.afptweaks.quest.QuestEntity;
+import com.afunproject.afptweaks.quest.QuestType;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -41,7 +41,7 @@ public class ClientHandler {
 	public static void openQuestGUI(OpenQuestMessage message) {
 		Minecraft mc = Minecraft.getInstance();
 		Mob mob = message.get(mc.level);
-		QuestEntity entity = null;;
+		QuestEntity entity = null;
 		if (mob instanceof QuestEntity) entity = (QuestEntity) mob;
 		if (entity != null) {
 			Quest quest = message.getQuest();
