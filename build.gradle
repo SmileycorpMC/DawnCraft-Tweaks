@@ -16,7 +16,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.1.4'
-group = 'com.afunproject.afptweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.afunproject.dawncraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'DawnCraft-Tweaks'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)

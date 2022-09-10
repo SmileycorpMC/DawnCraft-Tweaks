@@ -33,7 +33,7 @@ public class ClientEventRegister {
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerBlockEntityRenderer(DungeonBlockEntities.DUNGEON_DOOR.get(), DungeonDoorBlockEntityRenderer::new);
 		event.registerEntityRenderer(AFPTweaksEntities.FALLEN.get(), FallenRenderer::new);
-		event.registerEntityRenderer(AFPTweaksEntities.WEREWOLF_PLAYER.get(), QuestPlayerRenderer::new);
+		event.registerEntityRenderer(AFPTweaksEntities.QUEST_PLAYER.get(), QuestPlayerRenderer::new);
 	}
 
 	@SubscribeEvent

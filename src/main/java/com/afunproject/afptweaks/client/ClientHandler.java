@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.afunproject.afptweaks.QuestType;
 import com.afunproject.afptweaks.client.screens.QuestScreen;
+import com.afunproject.afptweaks.network.OpenQuestMessage;
+import com.afunproject.afptweaks.quest.Quest;
+import com.afunproject.afptweaks.quest.QuestEntity;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -14,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 
 public class ClientHandler {
 
@@ -23,9 +26,9 @@ public class ClientHandler {
 	public static List<KeyMapping> IMMOBILIZED_KEYS = Lists.newArrayList(options.keyAttack, options.keyUse, options.keyJump, options.keyShift,
 			options.keyUp, options.keyLeft, options.keyDown, options.keyRight);
 
-	public static void displayMessage(String message) {
+	public static void displayMessage(String message, String... args) {
 		Minecraft mc = Minecraft.getInstance();
-		MutableComponent component = new TranslatableComponent(message).withStyle(ChatFormatting.AQUA);
+		MutableComponent component = new TranslatableComponent(message, args).withStyle(ChatFormatting.AQUA);
 		mc.gui.setOverlayMessage(component, false);
 	}
 
@@ -35,9 +38,17 @@ public class ClientHandler {
 		return false;
 	}
 
-	public static void openQuestGUI(LivingEntity entity, MutableComponent text, QuestType questType) {
+	public static void openQuestGUI(OpenQuestMessage message) {
 		Minecraft mc = Minecraft.getInstance();
-		mc.setScreen(new QuestScreen(entity, text, questType));
+		Mob mob = message.get(mc.level);
+		QuestEntity entity = null;;
+		if (mob instanceof QuestEntity) entity = (QuestEntity) mob;
+		if (entity != null) {
+			Quest quest = message.getQuest();
+			QuestType type = quest == null ? QuestType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
+			String text = message.getMessage() == null ? entity.getQuestText() : message.getMessage();
+			mc.setScreen(new QuestScreen(mob, new TranslatableComponent(text, mc.player), type));
+		}
 	}
 
 }

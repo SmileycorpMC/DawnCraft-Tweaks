@@ -11,7 +11,7 @@ import com.afunproject.afptweaks.dungeon.item.DungeonItems;
 import com.afunproject.afptweaks.effects.AFPTweaksEffects;
 import com.afunproject.afptweaks.entities.AFPTweaksEntities;
 import com.afunproject.afptweaks.network.AFPPacketHandler;
-import com.afunproject.afptweaks.quest.task.QuestModule;
+import com.afunproject.afptweaks.quest_giver.quest.task.QuestModule;
 import com.mojang.logging.LogUtils;
 
 import net.minecraftforge.common.MinecraftForge;

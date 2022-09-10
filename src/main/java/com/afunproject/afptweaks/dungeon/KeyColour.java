@@ -6,7 +6,8 @@ public enum KeyColour {
 	BLUE(0x275EA5),
 	YELLOW(0xFFD800),
 	ORANGE(0xD88808),
-	PURPLE(0x7E00A8);
+	PURPLE(0x7E00A8),
+	SILVER(0xEFF9F9);
 
 	private final int colour;
 

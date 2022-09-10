@@ -1,0 +1,131 @@
+{
+	"itemGroup.dawncraft.DungeonBlocks": "Dungeon Blocks",
+	"itemGroup.dawncraft.DungeonFunctionalBlocks": "Functional Dungeon Blocks",
+	"itemGroup.dawncraft.DungeonItems": "Dungeon Items",
+
+	"block.dawncraft.forest_brick": "Forest Brick",
+	"block.dawncraft.forest_brick_stairs": "Forest Brick Stairs",
+	"block.dawncraft.forest_brick_slab": "Forest Brick Slab",
+	"block.dawncraft.forest_brick_wall": "Forest Brick Wall",
+	
+	"block.dawncraft.fire_brick": "Fire Brick",
+	"block.dawncraft.fire_brick_stairs": "Fire Brick Stairs",
+	"block.dawncraft.fire_brick_slab": "Fire Brick Slab",
+	"block.dawncraft.fire_brick_wall": "Fire Brick Wall",
+	
+	"block.dawncraft.coral": "Coral",
+	"block.dawncraft.coral_stairs": "Coral Stairs",
+	"block.dawncraft.coral_slab": "Coral Slab",
+	"block.dawncraft.coral_wall": "Coral Wall",
+	
+	"block.dawncraft.magma_slate": "Magma Slate",
+	"block.dawncraft.magma_slate_stairs": "Magma Slate Stairs",
+	"block.dawncraft.magma_slate_slab": "Magma Slate Slab",
+	"block.dawncraft.magma_slate_wall": "Magma Slate Wall",
+	
+	"block.dawncraft.moss_brick": "Moss Brick",
+	"block.dawncraft.moss_brick_stairs": "Moss Brick Stairs",
+	"block.dawncraft.moss_brick_slab": "Moss Brick Slab",
+	"block.dawncraft.moss_brick_wall": "Moss Brick Wall",
+	
+	"block.dawncraft.mud_brick": "Mud Brick",
+	"block.dawncraft.mud_brick_stairs": "Mud Brick Stairs",
+	"block.dawncraft.mud_brick_slab": "Mud Brick Slab",
+	"block.dawncraft.mud_brick_wall": "Mud Brick Wall",
+	
+	"block.dawncraft.rock": "Rock",
+	"block.dawncraft.rock_stairs": "Rock Stairs",
+	"block.dawncraft.rock_slab": "Rock Slab",
+	"block.dawncraft.rock_wall": "Rock Wall",
+	
+	"block.dawncraft.sand_brick": "Sand Brick",
+	"block.dawncraft.sand_brick_stairs": "Sand Brick Stairs",
+	"block.dawncraft.sand_brick_slab": "Sand Brick Slab",
+	"block.dawncraft.sand_brick_wall": "Sand Brick Wall",
+	
+	"block.dawncraft.sand_slate": "Sand Slate",
+	"block.dawncraft.sand_slate_stairs": "Sand Slate Stairs",
+	"block.dawncraft.sand_slate_slab": "Sand Slate Slab",
+	"block.dawncraft.sand_slate_wall": "Sand Slate Wall",
+	
+	"block.dawncraft.shadow_brick": "Shadow Brick",
+	"block.dawncraft.shadow_brick_stairs": "Shadow Brick Stairs",
+	"block.dawncraft.shadow_brick_slab": "Shadow Brick Slab",
+	"block.dawncraft.shadow_brick_wall": "Shadow Brick Wall",
+	
+	"block.dawncraft.water_brick": "Water Brick",
+	"block.dawncraft.water_brick_stairs": "Water Brick Stairs",
+	"block.dawncraft.water_brick_slab": "Water Brick Slab",
+	"block.dawncraft.water_brick_wall": "Water Brick Wall",
+	
+	"block.dawncraft.moss_slate": "Moss Slate",
+	"block.dawncraft.moss_slate_stairs": "Moss Slate Stairs",
+	"block.dawncraft.moss_slate_slab": "Moss Slate Slab",
+	"block.dawncraft.moss_slate_wall": "Moss Slate Wall",
+	
+	"block.dawncraft.fire_door": "Fire Dungeon Door",
+	"block.dawncraft.rust_door": "Rust Dungeon Door",
+	"block.dawncraft.sand_door": "Sand Dungeon Door",
+	"block.dawncraft.stone_door": "Stone Dungeon Door",
+	"block.dawncraft.wood_door": "Wood Dungeon Door",
+	
+	"block.dawncraft.chest_spawner": "Chest Spawner",
+	"block.dawncraft.redstone_activator": "Redstone Activator",
+	"block.dawncraft.redstone_trigger": "Redstone Trigger",
+	
+	"item.dawncraft.red_key": "Red Key",
+	"item.dawncraft.green_key": "Green Key",
+	"item.dawncraft.blue_key": "Blue Key",
+	"item.dawncraft.yellow_key": "Yellow Key",
+	"item.dawncraft.orange_key": "Orange Key",
+	"item.dawncraft.purple_key": "Purple Key",
+	"item.dawncraft.silver_key": "Silver Key",
+	
+	"item.dawncraft.red_lock": "Red Lock",
+	"item.dawncraft.green_lock": "Green Lock",
+	"item.dawncraft.blue_lock": "Blue Lock",
+	"item.dawncraft.yellow_lock": "Yellow Lock",
+	"item.dawncraft.orange_lock": "Orange Lock",
+	"item.dawncraft.purple_lock": "Purple Lock",
+	"item.dawncraft.silver_lock": "Silver Lock",
+	
+	"item.dawncraft.dungeon_configurator": "Dungeon Configurator",
+	
+	"entity.dawncraft.fallen": "Fallen Adventurer",
+	
+	"message.dawncraft.invasion": "You are being invaded by %1$s",
+	
+	"message.dawncraft.singlepulse": "Changed to single tick mode",
+	"message.dawncraft.toggle": "Changed to toggle mode",
+	"message.dawncraft.creative_required": "You must be in creative mode to use this item.",
+	
+	"message.dawncraft.select_functional_block": "Selected functional block %1$s",
+	"message.dawncraft.link_triggerable_block": "Linked functional block %1$s to trigger %2$s",
+	"message.dawncraft.unlink_triggerable_block": "Unlinked functional block %1$s from trigger %2$s",
+	"message.dawncraft.reset_functional_block": "Reset functional block %1$s",
+	"message.dawncraft.no_mode": "WARNING: no functionality set for configuration mode %1$s",
+	
+	"tooltip.dawncraft.configuratormode": "Shift right-click to switch modes",
+	"tooltip.dawncraft.configuratormode.link_functional": "Right-click to link a functional block, right-click again to link it to a trigger",
+	"tooltip.dawncraft.configuratormode.unlink_functional": "Right-click to link a functional block, right-click again to unlink it from a trigger",
+	"tooltip.dawncraft.configuratormode.reset_functional": "Right-click a single-use functional block to reset it",
+	"tooltip.dawncraft.configuratormode.rotate": "Right-click to rotate a block",
+	
+	"configuratormode.dawncraft.link_functional": "Mode: Link Functional Blocks",
+	"configuratormode.dawncraft.unlink_functional": "Mode: Unlink Functional Blocks",
+	"configuratormode.dawncraft.reset_functional": "Mode: Reset Functional Blocks",
+	"configuratormode.dawncraft.rotate": "Mode: Rotate Blocks",
+	
+	"tile.dawncraft.chest_spawner": "Chest Spawner",
+	
+	"effect.dawncraft.immobilized":"Immobilized",
+	
+	"text.dawncraft.quest.no_text": "Missing text for quest. %1$s",
+	"text.dawncraft.quest.lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus pharetra imperdiet. Vivamus porttitor magna eget lobortis faucibus. Pellentesque et dignissim dolor. Quisque congue pharetra nibh non consequat. Maecenas risus nisi, cursus in sem ut, pulvinar commodo nisi. Nam at euismod eros, sagittis mollis sem. Etiam vitae nibh sapien. Maecenas non magna neque. Pellentesque aliquet erat ac dolor interdum rutrum. Nullam volutpat tellus erat, ac fermentum velit auctor in. Ut non est semper, volutpat ex in, semper justo. Praesent pellentesque quam a sapien interdum faucibus. Nulla eu diam ac ligula pulvinar rhoncus. Morbi pellentesque aliquet efficitur. Mauris eleifend luctus finibus. Morbi eu iaculis turpis. Duis mauris ex, condimentum tincidunt diam ac, facilisis sodales libero. Donec sagittis mauris ligula, at porttitor dolor bibendum eget. Duis ut finibus justo, nec consequat orci. Morbi ornare suscipit mattis. Suspendisse quis mauris odio. Pellentesque tempor non lorem accumsan tincidunt. Vestibulum ultricies ex at metus laoreet interdum. Nullam ornare ultricies metus in condimentum. Nulla sit amet nisl vehicula, dignissim dolor vitae, malesuada leo. Quisque id accumsan libero.",
+	"text.dawncraft.quest.werewolf1": "Came to hunt me down, fellow adventurer? Yes, I'm the dreaded half-wolf people speak of... Slay me with your sword if you dare. I hope I don't transform before you finish, hah. Or rather, you can fetch me a golden apple. I've been told that only a golden apple will cure my curse, could you get one for me? I would do it myself, but I'm in no condition to gather resources.",
+    "text.dawncraft.quest.werewolf2": "Have you found a golden apple yet? Or have you come to execute me?",
+    "text.dawncraft.quest.werewolf3": "Thank you adventurer, I feel better already... Wait... Somethings not right.... That's not what I've been told... RUN!",
+	"text.dawncraft.quest.ghost1":"Good-day to you sire, always a pleasure to meet a fellow adventurer, although I am much less of a fellow now.¶No, quite regretably as you can see, I am dead, however I once again wish to explore this world and help those in need¶If you can bring me 6 iron, I can forge a magic bell and bind myself within it. I'll able to walk this world once more, to aid you in your quests, should require it.",
+	"text.dawncraft.quest.ghost2":"Greetings again, you only need bring me a measly 6 iron and I can aid you in your quest!",
+	"text.dawncraft.quest.ghost3":"Oh stupendous! You've brought it... I had rather missed the thrill of a good escapade..¶Just give me a moment I haven't really done this before...¶No that doesn't go there...¶Ahah, got it, hmm it doesn't seem to be working...¶Oh there we go, looks like it just needed a moment to cool..."
+}

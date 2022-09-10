@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.ModelPart;
 
 public class FallenModel extends HumanoidModel<Fallen> {
 
-	private float alpha = 0.75f;
+	private float alpha = 0.9f;
 
 	public FallenModel(ModelPart modelPart) {
 		super(modelPart);
@@ -18,7 +18,7 @@ public class FallenModel extends HumanoidModel<Fallen> {
 	@Override
 	public void setupAnim(Fallen fallen, float p_102867_, float p_102868_, float p_102869_, float p_102870_, float p_102871_) {
 		int fade = fallen.getFadeTimer();
-		if (fade > -1) alpha  = fallen.getFadeTimer()/25f * 0.9f;
+		if (fade > -1) alpha  = fallen.getFadeTimer()/(float)Fallen.FADE_LENGTH * 0.9f;
 	}
 
 	@Override

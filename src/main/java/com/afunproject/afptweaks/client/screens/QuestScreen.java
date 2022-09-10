@@ -3,10 +3,9 @@ package com.afunproject.afptweaks.client.screens;
 import java.util.List;
 import java.util.Random;
 
-import com.afunproject.afptweaks.AFPTweaks;
 import com.afunproject.afptweaks.QuestType;
 import com.afunproject.afptweaks.client.EntityRenderDispatcherExtension;
-import com.afunproject.afptweaks.entities.QuestEntity;
+import com.afunproject.afptweaks.network.AFPPacketHandler;
 import com.afunproject.afptweaks.network.TriggerQuestCompleteMessage;
 import com.feywild.quest_giver.screen.BackgroundWidget;
 import com.feywild.quest_giver.screen.QuestButton;
@@ -21,20 +20,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 
 public class QuestScreen extends Screen {
 
 	private static final int TEXT_WIDTH = 56;
 
-	protected final LivingEntity entity;
+	protected final Mob entity;
 	protected final QuestType questType;
 	protected List<List<Component>> screens = Lists.newArrayList();
 	protected Random random = new Random();
 
 	protected int screen = 0;
 
-	public QuestScreen(LivingEntity entity, MutableComponent text, QuestType questType) {
+	public QuestScreen(Mob entity, MutableComponent text, QuestType questType) {
 		super(entity.getName());
 		this.entity = entity;
 		this.questType = questType;
@@ -79,7 +78,6 @@ public class QuestScreen extends Screen {
 						break;
 					}
 					else if (str.charAt(newPos-i) == ' ') {
-						AFPTweaks.logInfo("position=" + position + ", newPos=" + newPos + ", i=" + i);
 						MutableComponent component = new TextComponent(str.substring(position, newPos-i+1));
 						component.setStyle(text.getStyle());
 						lines.add(component);
@@ -102,48 +100,26 @@ public class QuestScreen extends Screen {
 	@Override
 	protected void init() {
 		addRenderableWidget(new BackgroundWidget(this, 50, 120));
-		addRenderableWidget(new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TextComponent(">>"), button -> {
-			if (screen == screens.size()-1) {
-				if (entity instanceof QuestEntity) completeQuest(true);
-				return;
-			}
-			screen++;
-			if (!hasNextButton() && questType != QuestType.AUTO_CLOSE) {
-				removeWidget(button);
-				if (questType == QuestType.ACCEPT_QUEST) {
-					addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(getRandomAcceptMessage()), button1 -> {
-						if (entity instanceof QuestEntity) completeQuest(true);
-						onClose();
-						return;
-					}));
-
-					addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(getRandomDeclineMessage()), button1 -> {
-						if (entity instanceof QuestEntity) completeQuest(false);
-						onClose();
-						return;
-					}));
+		if (screens.size() == 1 && questType != QuestType.AUTO_CLOSE) {
+			addAcceptButtons();
+		} else {
+			addRenderableWidget(new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TextComponent(">>"), button -> {
+				if (screen == screens.size()-1) {
+					completeQuest(true);
+					onClose();
+					return;
 				}
-				else if (questType == QuestType.ACKNOWLEDGE) {
-					String[] messages = getRandomAcknowledgmentMessages();
-					addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(messages[0]), button1 -> {
-						if (entity instanceof QuestEntity) completeQuest(true);
-						onClose();
-						return;
-					}));
-
-					addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(messages[1]), button1 -> {
-						if (entity instanceof QuestEntity) completeQuest(true);
-						onClose();
-						return;
-					}));
+				screen++;
+				if (!hasNextButton() && questType != QuestType.AUTO_CLOSE) {
+					removeWidget(button);
+					addAcceptButtons();
 				}
-			}
-		}));
+			}));
+		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void completeQuest(boolean accepted) {
-		if (entity instanceof QuestEntity) minecraft.player.connection.send(new TriggerQuestCompleteMessage(entity, accepted));
+		AFPPacketHandler.NETWORK_INSTANCE.sendToServer(new TriggerQuestCompleteMessage(entity, accepted));
 	}
 
 	@Override
@@ -175,11 +151,70 @@ public class QuestScreen extends Screen {
 		return false;
 	}
 
+	@Override
+	public boolean shouldCloseOnEsc() {
+		return false;
+	}
+
+	private void addAcceptButtons() {
+		if (questType == QuestType.ACCEPT_QUEST) {
+			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(getRandomAcceptMessage()), button1 -> {
+				completeQuest(true);
+				onClose();
+				return;
+			}));
+
+			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(getRandomDeclineMessage()), button1 -> {
+				completeQuest(false);
+				onClose();
+				return;
+			}));
+		}
+		else if (questType == QuestType.ACKNOWLEDGE) {
+			String[] messages = getRandomAcknowledgmentMessages();
+			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(messages[0]), button1 -> {
+				completeQuest(true);
+				onClose();
+				return;
+			}));
+
+			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(messages[1]), button1 -> {
+				completeQuest(true);
+				onClose();
+				return;
+			}));
+		}
+		else if (questType == QuestType.DENY) {
+			String[] messages = getRandomDenyMessages();
+			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(messages[0]), button1 -> {
+				completeQuest(false);
+				onClose();
+				return;
+			}));
+
+			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(messages[1]), button1 -> {
+				completeQuest(false);
+				onClose();
+				return;
+			}));
+		}
+	}
+
 	private String[] getRandomAcknowledgmentMessages() {
 		String[] messages = new String[2];
 		messages[0] = getRandomAcknowledgmentMessage();
 		while (messages[1] == null) {
 			String message = getRandomAcknowledgmentMessage();
+			if (messages[0] != message) messages[1] = message;
+		}
+		return messages;
+	}
+
+	private String[] getRandomDenyMessages() {
+		String[] messages = new String[2];
+		messages[0] = getRandomDenyMessage();
+		while (messages[1] == null) {
+			String message = getRandomDenyMessage();
 			if (messages[0] != message) messages[1] = message;
 		}
 		return messages;
@@ -192,6 +227,15 @@ public class QuestScreen extends Screen {
 		case 3 -> "Okay!";
 		case 4 -> "Alright!";
 		default -> "Thanks!";
+		};
+	}
+
+	private String getRandomDenyMessage() {
+		return switch (random.nextInt(4)) {
+		case 1 -> "Not yet...";
+		case 2 -> "Working on it";
+		case 3 -> "Sorry, no";
+		default -> "No";
 		};
 	}
 

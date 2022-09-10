@@ -2,28 +2,33 @@ modLoader = "javafml"
 loaderVersion = "[40,)"
 license = "GNU LESSER GENERAL PUBLIC LICENSE Version 2.1"
 [[mods]]
-modId = "afptweaks"
+modId = "dawncraft"
 version = "${file.jarVersion}"
 displayName = "DawnCraft-Tweaks"
 description = '''
 
 '''
-[[dependencies.afptweaks]]
+[[dependencies.dawncraft]]
 modId = "forge"
 mandatory = true
 versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.afptweaks]]
+[[dependencies.dawncraft]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.18.2,1.19)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.afptweaks]]
+[[dependencies.dawncraft]]
 modId = "atlaslib"
 mandatory = true
 versionRange = "[1.1.5,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[mods]]
+modId = "afptweaks"
+version = "${file.jarVersion}"
+displayName = "AFPTweaks ProxyLoader"
+description = ''''''

@@ -1,28 +1,25 @@
 package com.afunproject.afptweaks.network;
 
-import com.afunproject.afptweaks.entities.QuestEntity;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.network.SimpleAbstractMessage;
 
-public class TriggerQuestCompleteMessage<T extends Entity & QuestEntity> extends SimpleAbstractMessage {
+public class TriggerQuestCompleteMessage extends SimpleAbstractMessage {
 
 	public TriggerQuestCompleteMessage() {}
 
 	private int id;
 	private boolean isAccepted;
 
-	public TriggerQuestCompleteMessage(T entity, boolean isAccepted) {
-		this.id = entity.getId();
+	public TriggerQuestCompleteMessage(Mob entity, boolean isAccepted) {
+		id = entity.getId();
 		this.isAccepted = isAccepted;
 	}
 
-	@SuppressWarnings("unchecked")
-	public T get(Level level) {
-		return (T) level.getEntity(id);
+	public Mob get(Level level) {
+		return (Mob) level.getEntity(id);
 	}
 
 	@Override

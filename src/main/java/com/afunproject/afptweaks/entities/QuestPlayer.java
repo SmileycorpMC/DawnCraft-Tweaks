@@ -15,7 +15,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-public abstract class QuestPlayer extends QuestEntityBase {
+public class QuestPlayer extends QuestEntityBase {
 
 	protected static final EntityDataAccessor<Optional<UUID>> PLAYER = SynchedEntityData.defineId(QuestPlayer.class, EntityDataSerializers.OPTIONAL_UUID);
 
@@ -69,6 +69,11 @@ public abstract class QuestPlayer extends QuestEntityBase {
 		if (optional.isPresent()) {
 			compound.putUUID("player", optional.get());
 		}
+	}
+
+	@Override
+	public boolean canSeeQuest() {
+		return true;
 	}
 
 }

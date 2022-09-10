@@ -1,16 +1,17 @@
 {
   "replace": false,
   "values": [
-	"afptweaks:forest_brick_wall",
-	"afptweaks:fire_brick_wall",
-	"afptweaks:coral_wall",
-	"afptweaks:magma_slate_wall",
-	"afptweaks:moss_brick_wall",
-	"afptweaks:mud_brick_wall",
-	"afptweaks:rock_wall",
-	"afptweaks:sand_brick_wall",
-	"afptweaks:sand_slate_wall",
-	"afptweaks:shadow_brick_wall",
-	"afptweaks:water_brick_wall"
+	"dawncraft:forest_brick_wall",
+	"dawncraft:fire_brick_wall",
+	"dawncraft:coral_wall",
+	"dawncraft:magma_slate_wall",
+	"dawncraft:moss_brick_wall",
+	"dawncraft:mud_brick_wall",
+	"dawncraft:rock_wall",
+	"dawncraft:sand_brick_wall",
+	"dawncraft:sand_slate_wall",
+	"dawncraft:shadow_brick_wall",
+	"dawncraft:water_brick_wall",
+	"dawncraft:moss_slate_wall"
   ]
 }

@@ -23,9 +23,9 @@ public abstract class AFPRenderTypes extends RenderType {
 		RenderType.CompositeState state = RenderType.CompositeState.builder()
 				.setShaderState(RENDERTYPE_ENTITY_CUTOUT_NO_CULL_SHADER)
 				.setTextureState(new RenderStateShard.TextureStateShard(textureLocation, false, false))
-				.setTransparencyState(CRUMBLING_TRANSPARENCY)
+				.setTransparencyState(LIGHTNING_TRANSPARENCY)
 				.setCullState(CULL)
-				.setLightmapState(LIGHTMAP)
+				.setLightmapState(NO_LIGHTMAP)
 				.setOverlayState(NO_OVERLAY)
 				.createCompositeState(true);
 		return create(ModDefinitions.MODID + ":ghost", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 16, true, false, state);

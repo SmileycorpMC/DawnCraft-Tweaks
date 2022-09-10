@@ -4,7 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ModDefinitions {
 
-	public static final String MODID = "afptweaks";
+	public static final String LEGACY_MODID = "afptweaks";
+	public static final String MODID = "dawncraft";
 	public static String VERSION = "N/A";
 
 	public static ResourceLocation getResource(String path) {

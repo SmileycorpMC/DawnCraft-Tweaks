@@ -1,18 +1,22 @@
 package com.afunproject.afptweaks.entities;
 
-import com.afunproject.afptweaks.QuestType;
-
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class Fallen extends QuestPlayer {
 
 	protected static final EntityDataAccessor<Integer> FADE_TIMER = SynchedEntityData.defineId(Fallen.class, EntityDataSerializers.INT);
+
+	public static int FADE_LENGTH = 60;
+
+	private ItemStack drop;
 
 	protected Fallen(EntityType<? extends Mob> type, Level level) {
 		super(type, level);
@@ -32,7 +36,15 @@ public class Fallen extends QuestPlayer {
 		noPhysics = false;
 		if (entityData.get(FADE_TIMER) > -1) {
 			entityData.set(FADE_TIMER, entityData.get(FADE_TIMER) -1);
-			if (entityData.get(FADE_TIMER) == 0) setRemoved(RemovalReason.DISCARDED);
+			if (entityData.get(FADE_TIMER) == 0) {
+				setRemoved(RemovalReason.DISCARDED);
+				if (drop != null) spawnAtLocation(drop);
+			}
+			if (level.isClientSide) {
+				for (int i = 0; i < random.nextInt(5)+2; i++) {
+					level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, xo+1-random.nextDouble(), yo+random.nextDouble(), zo+1-random.nextDouble(), 1-random.nextFloat(), random.nextFloat(), 1-random.nextFloat());
+				}
+			}
 		}
 	}
 
@@ -41,10 +53,10 @@ public class Fallen extends QuestPlayer {
 		return MobType.UNDEAD;
 	}
 
-	@Override
+	/*@Override
 	public void completeQuest(boolean isAccepted) {
-		entityData.set(FADE_TIMER, 25);
-	}
+		entityData.set(FADE_TIMER, 45);
+	}*/
 
 	public int getFadeTimer() {
 		return entityData.get(FADE_TIMER);
@@ -55,9 +67,8 @@ public class Fallen extends QuestPlayer {
 		return entityData.get(FADE_TIMER) == -1;
 	}
 
-	@Override
-	public QuestType getQuestType() {
-		return QuestType.ACKNOWLEDGE;
+	public void startFading(ItemStack drop) {
+		entityData.set(FADE_TIMER, 60);
 	}
 
 }

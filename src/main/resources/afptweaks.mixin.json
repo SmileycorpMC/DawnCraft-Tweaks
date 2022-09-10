@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "afptweaks.refmap.json",
 	"mixins": [
-		"MixinItemStack"
+		"MixinItemStack",
+		"MixinResourceLocation"
 	],
 	"client": [
 		"MixinKeyMapping",
