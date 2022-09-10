@@ -6,7 +6,7 @@ import com.afunproject.dawncraft.client.entity.QuestPlayerRenderer;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
-import com.afunproject.dawncraft.entities.AFPTweaksEntities;
+import com.afunproject.dawncraft.entities.DawnCraftEntities;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -32,8 +32,8 @@ public class ClientEventRegister {
 	@SubscribeEvent
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerBlockEntityRenderer(DungeonBlockEntities.DUNGEON_DOOR.get(), DungeonDoorBlockEntityRenderer::new);
-		event.registerEntityRenderer(AFPTweaksEntities.FALLEN.get(), FallenRenderer::new);
-		event.registerEntityRenderer(AFPTweaksEntities.QUEST_PLAYER.get(), QuestPlayerRenderer::new);
+		event.registerEntityRenderer(DawnCraftEntities.FALLEN.get(), FallenRenderer::new);
+		event.registerEntityRenderer(DawnCraftEntities.QUEST_PLAYER.get(), QuestPlayerRenderer::new);
 	}
 
 	@SubscribeEvent

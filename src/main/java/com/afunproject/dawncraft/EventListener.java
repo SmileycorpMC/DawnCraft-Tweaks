@@ -3,7 +3,7 @@ package com.afunproject.dawncraft;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.RestrictBlock;
-import com.afunproject.dawncraft.entities.AFPTweaksEntities;
+import com.afunproject.dawncraft.entities.DawnCraftEntities;
 import com.afunproject.dawncraft.entities.QuestEntityBase;
 
 import net.mcreator.simplemobs.entity.Getsuga65Entity;
@@ -83,8 +83,8 @@ public class EventListener {
 
 	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(AFPTweaksEntities.FALLEN.get(), QuestEntityBase.createAttributes());
-		event.put(AFPTweaksEntities.QUEST_PLAYER.get(), QuestEntityBase.createAttributes());
+		event.put(DawnCraftEntities.FALLEN.get(), QuestEntityBase.createAttributes());
+		event.put(DawnCraftEntities.QUEST_PLAYER.get(), QuestEntityBase.createAttributes());
 	}
 
 }

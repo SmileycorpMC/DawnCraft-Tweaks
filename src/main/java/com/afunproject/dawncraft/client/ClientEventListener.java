@@ -39,6 +39,8 @@ public class ClientEventListener {
 		if (event.getType() == ElementType.ALL) {
 			Minecraft mc = Minecraft.getInstance();
 			PoseStack poseStack = event.getMatrixStack();
+			poseStack.pushPose();
+			poseStack.popPose();
 			//hide during quest screen
 			if (mc.screen instanceof QuestScreen) {
 				event.setCanceled(true);
@@ -102,7 +104,7 @@ public class ClientEventListener {
 					for(MapDecoration mapdecoration : mapdata.getDecorations()) {
 						poseStack.pushPose();
 						poseStack.scale(scale, scale, 1);
-						poseStack.translate(offsetX, offsetY, (k+2));
+						poseStack.translate(offsetX, offsetY, -(k+5));
 						if (mapdecoration.render(k)) {
 							k++;
 							poseStack.popPose();
@@ -130,7 +132,7 @@ public class ClientEventListener {
 							float f6 = (float)font.width(component);
 							float f7 = Mth.clamp(25.0F / f6, 0.0F, 6.0F / 9.0F);
 							poseStack.pushPose();
-							poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F - f6 * f7 / 2.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F + 4.0F), (k+2));
+							poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F - f6 * f7 / 2.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F + 4.0F), -(k+5));
 							poseStack.scale(f7, f7, 1.0F);
 							font.drawInBatch(component, 0.0F, 0.0F, -1, false, poseStack.last().pose(), buffers, false, Integer.MIN_VALUE, 255);
 							poseStack.popPose();

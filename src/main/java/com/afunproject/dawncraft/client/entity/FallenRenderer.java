@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.client.entity;
 
-import com.afunproject.dawncraft.AFPRenderTypes;
 import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.client.DawnCraftRenderTypes;
 import com.afunproject.dawncraft.entities.Fallen;
 
 import net.minecraft.client.model.HumanoidModel;
@@ -22,7 +22,7 @@ public class FallenRenderer extends QuestPlayerRenderer<Fallen> {
 
 	@Override
 	protected RenderType getRenderType(Fallen entity, boolean p_230496_2_, boolean p_230496_3_, boolean p_230496_4_) {
-		return AFPRenderTypes.ghost(getTextureLocation(entity));
+		return DawnCraftRenderTypes.ghost(getTextureLocation(entity));
 	}
 
 	public static LayerDefinition createMainLayer() {

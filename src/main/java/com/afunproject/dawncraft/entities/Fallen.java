@@ -38,7 +38,7 @@ public class Fallen extends QuestPlayer {
 			entityData.set(FADE_TIMER, entityData.get(FADE_TIMER) -1);
 			if (entityData.get(FADE_TIMER) == 0) {
 				setRemoved(RemovalReason.DISCARDED);
-				if (drop != null) spawnAtLocation(drop);
+				if (drop != null) spawnAtLocation(drop, 0.5f);
 			}
 			if (level.isClientSide) {
 				for (int i = 0; i < random.nextInt(5)+2; i++) {

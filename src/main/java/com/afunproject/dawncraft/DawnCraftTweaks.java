@@ -9,7 +9,7 @@ import com.afunproject.dawncraft.client.epicfight.EpicFightClientEventListener;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
-import com.afunproject.dawncraft.entities.AFPTweaksEntities;
+import com.afunproject.dawncraft.entities.DawnCraftEntities;
 import com.afunproject.dawncraft.network.AFPPacketHandler;
 import com.afunproject.dawncraft.quest_giver.quest.task.QuestModule;
 import com.mojang.logging.LogUtils;
@@ -24,14 +24,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ModDefinitions.MODID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AFPTweaks {
+public class DawnCraftTweaks {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public AFPTweaks() {
+	public DawnCraftTweaks() {
 		ModList.get().getModContainerById(ModDefinitions.MODID)
 		.ifPresent(container -> ModDefinitions.VERSION = container.getModInfo().getVersion().toString());
-		LOGGER.info("AFP Tweaks " + ModDefinitions.VERSION + " initialized");
+		LOGGER.info("DawnCraft Tweaks " + ModDefinitions.VERSION + " initialized");
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
 		if(ModList.get().isLoaded("quest_giver") && ModList.get().isLoaded("followme")) QuestModule.init();
 		MinecraftForge.EVENT_BUS.register(new EventListener());
@@ -44,7 +44,7 @@ public class AFPTweaks {
 		DungeonBlocks.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonBlockEntities.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		AFPTweaksEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		DawnCraftEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		AFPTweaksEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
