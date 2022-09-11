@@ -14,7 +14,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import net.smileycorp.atlas.api.block.ShapedBlock;
 
 public class DungeonBlocks {
 
@@ -24,18 +23,18 @@ public class DungeonBlocks {
 	private static Properties DUNGEON_PROPS = Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).strength(-1, 18000000);
 
 	//decorational blocks
-	public static final ShapedBlock FOREST_BRICK = new ShapedBlock("forest_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock FIRE_BRICK = new ShapedBlock("fire_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock CORAL = new ShapedBlock("coral", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock MAGMA_SLATE = new ShapedBlock("magma_slate", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock MOSS_BRICK = new ShapedBlock("moss_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock MUD_BRICK = new ShapedBlock("mud_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock ROCK = new ShapedBlock("rock", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock SAND_BRICK = new ShapedBlock("sand_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock SAND_SLATE = new ShapedBlock("sand_slate", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock SHADOW_BRICK = new ShapedBlock("shadow_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock WATER_BRICK = new ShapedBlock("water_brick", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
-	public static final ShapedBlock MOSS_SLATE = new ShapedBlock("moss_slate", CreativeTabs.DUNGEON_BLOCKS, DUNGEON_PROPS, ITEMS, BLOCKS, true);
+	public static final DungeonBlock FOREST_BRICK = new DungeonBlock("forest_brick", MaterialColor.PODZOL, ITEMS, BLOCKS);
+	public static final DungeonBlock FIRE_BRICK = new DungeonBlock("fire_brick", MaterialColor.TERRACOTTA_YELLOW, ITEMS, BLOCKS);
+	public static final DungeonBlock CORAL = new DungeonBlock("coral", MaterialColor.WARPED_WART_BLOCK, ITEMS, BLOCKS);
+	public static final DungeonBlock MAGMA_SLATE = new DungeonBlock("magma_slate", MaterialColor.TERRACOTTA_ORANGE, ITEMS, BLOCKS);
+	public static final DungeonBlock MOSS_BRICK = new DungeonBlock("moss_brick", MaterialColor.STONE, ITEMS, BLOCKS);
+	public static final DungeonBlock MUD_BRICK = new DungeonBlock("mud_brick", MaterialColor.DIRT, ITEMS, BLOCKS);
+	public static final DungeonBlock ROCK = new DungeonBlock("rock", MaterialColor.TERRACOTTA_ORANGE, ITEMS, BLOCKS);
+	public static final DungeonBlock SAND_BRICK = new DungeonBlock("sand_brick", MaterialColor.COLOR_ORANGE, ITEMS, BLOCKS);
+	public static final DungeonBlock SAND_SLATE = new DungeonBlock("sand_slate", MaterialColor.COLOR_ORANGE, ITEMS, BLOCKS);
+	public static final DungeonBlock SHADOW_BRICK = new DungeonBlock("shadow_brick", MaterialColor.TERRACOTTA_LIGHT_BLUE, ITEMS, BLOCKS);
+	public static final DungeonBlock WATER_BRICK = new DungeonBlock("water_brick", MaterialColor.COLOR_CYAN, ITEMS, BLOCKS);
+	public static final DungeonBlock MOSS_SLATE = new DungeonBlock("moss_slate", MaterialColor.WOOD, ITEMS, BLOCKS);
 
 	//dungeon doors
 	public static final RegistryObject<Block> FIRE_DOOR = registerDoor("fire_door");

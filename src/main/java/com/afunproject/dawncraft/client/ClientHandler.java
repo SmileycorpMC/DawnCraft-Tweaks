@@ -26,9 +26,9 @@ public class ClientHandler {
 	public static List<KeyMapping> IMMOBILIZED_KEYS = Lists.newArrayList(options.keyAttack, options.keyUse, options.keyJump, options.keyShift,
 			options.keyUp, options.keyLeft, options.keyDown, options.keyRight);
 
-	public static void displayMessage(String message, String... args) {
+	public static void displayMessage(String message) {
 		Minecraft mc = Minecraft.getInstance();
-		MutableComponent component = new TranslatableComponent(message, args).withStyle(ChatFormatting.AQUA);
+		MutableComponent component = new TranslatableComponent(message).withStyle(ChatFormatting.AQUA);
 		mc.gui.setOverlayMessage(component, false);
 	}
 

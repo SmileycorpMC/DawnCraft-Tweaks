@@ -10,6 +10,7 @@ import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.entities.DawnCraftEntities;
+import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.afunproject.dawncraft.network.AFPPacketHandler;
 import com.afunproject.dawncraft.quest_giver.quest.task.QuestModule;
 import com.mojang.logging.LogUtils;
@@ -19,6 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -46,6 +48,11 @@ public class DawnCraftTweaks {
 		DungeonBlockEntities.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DawnCraftEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		AFPTweaksEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+	}
+
+	@SubscribeEvent
+	public static void modSetup(FMLCommonSetupEvent event) {
+		InvasionRegistry.init();
 	}
 
 	@SubscribeEvent

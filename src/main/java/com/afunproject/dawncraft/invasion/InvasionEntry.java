@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
@@ -68,7 +69,7 @@ public class InvasionEntry {
 			entity.goalSelector.addGoal(6, new GoToEntityPositionGoal(entity, player, 1.5));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
-			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name), true);
+			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0xED000F).withBold(true)), true);
 		}
 	}
 
