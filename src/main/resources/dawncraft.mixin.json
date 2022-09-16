@@ -5,6 +5,7 @@
 	"refmap": "dawncraft.refmap.json",
 	"mixins": [
 		"MixinItemStack",
+		"MixinMob",
 		"MixinResourceLocation"
 	],
 	"client": [

@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.smileycorp.atlas.api.entity.ai.GoToEntityPositionGoal;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
 public class InvasionEntry {
@@ -66,7 +65,7 @@ public class InvasionEntry {
 				entity.targetSelector.addGoal(1, new HurtByTargetGoal((PathfinderMob)entity));
 			}
 			entity.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(entity, Player.class, true));
-			entity.goalSelector.addGoal(6, new GoToEntityPositionGoal(entity, player, 1.5));
+			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
 			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0xED000F).withBold(true)), true);

@@ -2,13 +2,13 @@ package com.afunproject.dawncraft;
 
 import org.slf4j.Logger;
 
-import com.afunproject.afptweaks.effects.AFPTweaksEffects;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.client.ClientEventListener;
 import com.afunproject.dawncraft.client.epicfight.EpicFightClientEventListener;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.entities.DawnCraftEntities;
 import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.afunproject.dawncraft.network.AFPPacketHandler;
@@ -47,7 +47,7 @@ public class DawnCraftTweaks {
 		DungeonItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonBlockEntities.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DawnCraftEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		AFPTweaksEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		DawnCraftEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
 	@SubscribeEvent

@@ -16,8 +16,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Mob;
@@ -28,15 +28,19 @@ public class QuestScreen extends Screen {
 
 	protected final Mob entity;
 	protected final QuestType questType;
-	protected List<List<Component>> screens = Lists.newArrayList();
+	protected List<List<String>> screens = Lists.newArrayList();
 	protected Random random = new Random();
+	protected final Style style;
 
-	protected int screen = 0;
+	protected int screenIndex = 0;
+	protected int lineIndex = 0;
+	protected int position = 0;
 
 	public QuestScreen(Mob entity, MutableComponent text, QuestType questType) {
 		super(entity.getName());
 		this.entity = entity;
 		this.questType = questType;
+		style = text.getStyle();
 		generateLines(text);
 	}
 
@@ -44,32 +48,26 @@ public class QuestScreen extends Screen {
 		if (text != null) {
 			String str = text.getString();
 			int position = 0;
-			List<Component> lines = Lists.newArrayList();
-			if (str.length() == 0) lines.add(new TranslatableComponent("text.afptweaks.quest.no_text"));
+			List<String> lines = Lists.newArrayList();
+			if (str.length() == 0) lines.add(new TranslatableComponent("text.afptweaks.quest.no_text").getString());
 			while (position < str.length()) {
-				int size = Math.min(TEXT_WIDTH, str.length()-position-1);
+				int size = Math.min(TEXT_WIDTH, str.length()-position);
 				int newPos = position + size;
 				if (str.substring(position, newPos).contains("¶")) {
 					int i = str.substring(position, newPos).indexOf("¶");
-					MutableComponent component = new TextComponent(str.substring(position, position + i));
-					component.setStyle(text.getStyle());
-					lines.add(component);
+					lines.add(str.substring(position, position + i));
 					screens.add(lines);
 					lines = Lists.newArrayList();
 					position = position + i + 1;
 					continue;
 				}
 				if (size < TEXT_WIDTH) {
-					MutableComponent component = new TextComponent(str.substring(position, str.length()-1));
-					component.setStyle(text.getStyle());
-					lines.add(component);
+					lines.add(str.substring(position));
 					break;
 				}
 				for (int i = 0; i <= size; i++) {
 					if (i == size) {
-						MutableComponent component = new TextComponent(str.substring(position, newPos+1));
-						component.setStyle(text.getStyle());
-						lines.add(component);
+						lines.add(str.substring(position, newPos+1));
 						position = newPos;
 						if (lines.size() >= 10) {
 							screens.add(lines);
@@ -78,9 +76,7 @@ public class QuestScreen extends Screen {
 						break;
 					}
 					else if (str.charAt(newPos-i) == ' ') {
-						MutableComponent component = new TextComponent(str.substring(position, newPos-i+1));
-						component.setStyle(text.getStyle());
-						lines.add(component);
+						lines.add(str.substring(position, newPos-i+1));
 						position = newPos-i+1;
 						if (lines.size() >= 10) {
 							screens.add(lines);
@@ -93,23 +89,33 @@ public class QuestScreen extends Screen {
 			}
 			screens.add(lines);
 		} else {
-			screens.add(Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null")));
+			screens.add(Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString()));
 		}
 	}
 
 	@Override
 	protected void init() {
-		addRenderableWidget(new BackgroundWidget(this, 50, 120));
+		addRenderableWidget(new BackgroundWidget(this, 50, 120){
+			@Override
+			public void onClick(double mouseX, double mouseY) {
+				if (lineIndex < screens.get(screenIndex).size() || position < screens.get(screenIndex).get(lineIndex).length()) {
+					lineIndex = screens.get(screenIndex).size() - 1;
+					position = screens.get(screenIndex).get(lineIndex).length() - 1;
+				}
+			}
+		});
 		if (screens.size() == 1 && questType != QuestType.AUTO_CLOSE) {
 			addAcceptButtons();
 		} else {
 			addRenderableWidget(new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TextComponent(">>"), button -> {
-				if (screen == screens.size()-1) {
+				if (screenIndex == screens.size()-1) {
 					completeQuest(true);
 					onClose();
 					return;
 				}
-				screen++;
+				screenIndex++;
+				lineIndex = 0;
+				position = 0;
 				if (!hasNextButton() && questType != QuestType.AUTO_CLOSE) {
 					removeWidget(button);
 					addAcceptButtons();
@@ -134,8 +140,15 @@ public class QuestScreen extends Screen {
 		drawString(poseStack, minecraft.font, title, (width / 2) - (minecraft.font.width(title)), 125, 0xFFFFFF);
 		if (screens.size() > 0) {
 			int i = 0;
-			for (Component component : screens.get(screen)) {
-				drawString(poseStack, minecraft.font, component, 72, 142 + (i*10), 0xFFFFFF);
+			for (String string : screens.get(screenIndex)) {
+				drawString(poseStack, minecraft.font, i < lineIndex ? string : string.substring(0, position), 72, 142 + (i*10), 0xFFFFFF);
+				if (i == lineIndex) {
+					if (position++ >= string.length()) {
+						position = 0;
+						lineIndex++;
+					}
+					break;
+				}
 				i++;
 			}
 		}
@@ -143,7 +156,7 @@ public class QuestScreen extends Screen {
 	}
 
 	private boolean hasNextButton() {
-		return screen < screens.size() -1;
+		return screenIndex < screens.size() -1;
 	}
 
 	@Override

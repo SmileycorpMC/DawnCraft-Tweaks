@@ -18,7 +18,7 @@ public class InvasionRegistry {
 	}
 
 	public static void register(InvasionEntry entry) {
-		ENTRIES.put(InvasionKey.create(entry.name.toUpperCase()), entry);
+		ENTRIES.put(InvasionKey.create(entry.name.toUpperCase(), entry.name), entry);
 	}
 
 	public static InvasionEntry getInvasion(String name) {

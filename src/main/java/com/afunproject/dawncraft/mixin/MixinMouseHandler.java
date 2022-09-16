@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.afunproject.afptweaks.effects.AFPTweaksEffects;
 import com.afunproject.dawncraft.client.ClientHandler;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
@@ -21,7 +21,7 @@ public class MixinMouseHandler {
 		if (mc.screen == null) {
 			LocalPlayer player = mc.player;
 			if (player != null) {
-				if (player.hasEffect(AFPTweaksEffects.IMMOBILIZED.get())) {
+				if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 					if (ClientHandler.shouldImmobilize(button, true)) {
 						callback.cancel();
 					}

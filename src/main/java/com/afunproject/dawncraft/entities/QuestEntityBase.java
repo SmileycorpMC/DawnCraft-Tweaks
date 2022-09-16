@@ -44,7 +44,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 6.0F, 0.02F, true));
 	}
 
 	@Override

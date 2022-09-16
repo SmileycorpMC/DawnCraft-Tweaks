@@ -94,6 +94,7 @@
 	"entity.dawncraft.fallen": "Fallen Adventurer",
 	
 	"message.dawncraft.invasion": "You are being invaded by %1$s",
+	"message.dawncraft.spawn_npc": "Succesfully spawned NPC %1$s at %2$s",
 	
 	"message.dawncraft.singlepulse": "Changed to single tick mode",
 	"message.dawncraft.toggle": "Changed to toggle mode",

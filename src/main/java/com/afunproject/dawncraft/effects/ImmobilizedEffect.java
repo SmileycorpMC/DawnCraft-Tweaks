@@ -1,4 +1,4 @@
-package com.afunproject.afptweaks.effects;
+package com.afunproject.dawncraft.effects;
 
 import java.util.List;
 

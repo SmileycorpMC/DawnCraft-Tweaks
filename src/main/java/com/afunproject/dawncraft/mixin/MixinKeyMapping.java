@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.afunproject.afptweaks.effects.AFPTweaksEffects;
 import com.afunproject.dawncraft.client.ClientHandler;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -20,7 +20,7 @@ public class MixinKeyMapping {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
-			if (player.hasEffect(AFPTweaksEffects.IMMOBILIZED.get())) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
@@ -35,7 +35,7 @@ public class MixinKeyMapping {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
-			if (player.hasEffect(AFPTweaksEffects.IMMOBILIZED.get())) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
@@ -50,7 +50,7 @@ public class MixinKeyMapping {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
-			if (player.hasEffect(AFPTweaksEffects.IMMOBILIZED.get())) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
@@ -65,7 +65,7 @@ public class MixinKeyMapping {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
-			if (player.hasEffect(AFPTweaksEffects.IMMOBILIZED.get())) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);

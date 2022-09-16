@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
@@ -38,6 +39,7 @@ public class Fallen extends QuestPlayer {
 			entityData.set(FADE_TIMER, entityData.get(FADE_TIMER) -1);
 			if (entityData.get(FADE_TIMER) == 0) {
 				setRemoved(RemovalReason.DISCARDED);
+				playSound(SoundEvents.ZOMBIE_VILLAGER_CONVERTED, 1f, 1f);
 				if (drop != null) spawnAtLocation(drop, 0.5f);
 			}
 			if (level.isClientSide) {

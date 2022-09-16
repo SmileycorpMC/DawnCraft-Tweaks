@@ -1,4 +1,4 @@
-package com.afunproject.afptweaks.effects;
+package com.afunproject.dawncraft.effects;
 
 import com.afunproject.dawncraft.ModDefinitions;
 
@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AFPTweaksEffects {
+public class DawnCraftEffects {
 
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ModDefinitions.MODID);
 
