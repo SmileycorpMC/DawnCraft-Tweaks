@@ -1,8 +1,8 @@
 package com.afunproject.dawncraft.network;
 
-import com.afunproject.dawncraft.quest.Quest;
 import com.afunproject.dawncraft.quest.QuestEntity;
-import com.afunproject.dawncraft.quest.QuestsRegistry;
+import com.afunproject.dawncraft.quest.quests.Quest;
+import com.afunproject.dawncraft.quest.quests.QuestsRegistry;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
@@ -23,10 +23,9 @@ public class OpenQuestMessage extends SimpleAbstractMessage {
 	public OpenQuestMessage(Mob entity, Quest quest) {
 		id = entity.getId();
 		this.quest = quest.getRegistryName().toString();
-		if (entity instanceof QuestEntity) {
-			message = ((QuestEntity) entity).getQuestText();
-			phase = ((QuestEntity) entity).getQuestPhase();
-		}
+		QuestEntity questEntity = QuestEntity.safeCast(entity);
+		message = questEntity.getQuestText();
+		phase = questEntity.getQuestPhase();
 	}
 
 	public Mob get(Level level) {

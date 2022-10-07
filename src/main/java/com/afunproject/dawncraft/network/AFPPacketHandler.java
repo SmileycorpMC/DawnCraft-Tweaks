@@ -2,8 +2,8 @@ package com.afunproject.dawncraft.network;
 
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.client.ClientHandler;
-import com.afunproject.dawncraft.quest.Quest;
 import com.afunproject.dawncraft.quest.QuestEntity;
+import com.afunproject.dawncraft.quest.quests.Quest;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,11 +37,10 @@ public class AFPPacketHandler {
 	public static void processQuestCompleteMessage(TriggerQuestCompleteMessage message, Context ctx) {
 		ctx.enqueueWork(() -> {
 			Mob entity = message.get(ctx.getSender().level);
-			if (entity instanceof QuestEntity) {
-				Quest quest = ((QuestEntity) entity).getCurrentQuest();
-				if (quest != null) {
-					quest.completeQuest(entity, ((QuestEntity) entity).getQuestPhase(), message.isAccepted());
-				}
+			QuestEntity questEntity = QuestEntity.safeCast(entity);
+			Quest quest = questEntity.getCurrentQuest();
+			if (quest != null) {
+				quest.completeQuest(ctx.getSender(), entity, questEntity.getQuestPhase(), message.isAccepted());
 			}
 		});
 		ctx.setPacketHandled(true);

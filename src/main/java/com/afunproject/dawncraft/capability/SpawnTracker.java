@@ -6,45 +6,38 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface FollowQuest {
+public interface SpawnTracker {
 
-	public boolean hasStructure();
+	public boolean hasSpawned();
 
-	public String getStructure();
-
-	public void setStructure(String loc);
+	public void setSpawned();
 
 	public void readNBT(CompoundTag nbt);
 
 	public CompoundTag writeNBT(CompoundTag nbt);
 
-	public static class Implementation implements FollowQuest {
+	public static class Implementation implements SpawnTracker {
 
-		private String structure = null;
+		private boolean has_spawned;
 
 		@Override
-		public boolean hasStructure() {
-			return structure != null;
+		public boolean hasSpawned() {
+			return has_spawned;
 		}
 
 		@Override
-		public String getStructure() {
-			return structure;
-		}
-
-		@Override
-		public void setStructure(String loc) {
-			structure = loc;
+		public void setSpawned() {
+			has_spawned = true;
 		}
 
 		@Override
 		public void readNBT(CompoundTag nbt) {
-			if (nbt.contains("structure")) structure = nbt.getString("structure");
+			if (nbt.contains("has_spawned")) has_spawned = nbt.getBoolean("has_spawned");
 		}
 
 		@Override
 		public CompoundTag writeNBT(CompoundTag nbt) {
-			if (structure != null) nbt.putString("structure", structure);
+			if (has_spawned) nbt.putBoolean("has_spawned", has_spawned);
 			return nbt;
 		}
 
@@ -52,7 +45,7 @@ public interface FollowQuest {
 
 	public static class Provider implements ICapabilitySerializable<CompoundTag> {
 
-		private final FollowQuest impl;
+		private final SpawnTracker impl;
 
 		public Provider() {
 			impl = new Implementation();
@@ -60,7 +53,7 @@ public interface FollowQuest {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.FOLLOW_QUEST ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == CapabilitiesRegister.SPAWN_TRACKER ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

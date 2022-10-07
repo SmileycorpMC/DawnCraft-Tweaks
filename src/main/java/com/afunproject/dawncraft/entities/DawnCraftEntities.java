@@ -16,6 +16,9 @@ public class DawnCraftEntities {
 	EntityType.Builder.<Fallen>of(Fallen::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("fallen"));
 
 	public static RegistryObject<EntityType<QuestPlayer>> QUEST_PLAYER = ENTITIES.register("quest_player",  () ->
-	EntityType.Builder.<QuestPlayer>of(QuestPlayer::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("quest_player"));
+	EntityType.Builder.<QuestPlayer>of(QuestPlayer::new, MobCategory.CREATURE).sized(0.6F, 1.95F).clientTrackingRange(16).build("quest_player"));
+
+	public static RegistryObject<EntityType<KnightPlayer>> KNIGHT_PLAYER = ENTITIES.register("knight_player",  () ->
+	EntityType.Builder.<KnightPlayer>of(KnightPlayer::new, MobCategory.AMBIENT).sized(0.6F, 1.8F).build("knight_player"));
 
 }

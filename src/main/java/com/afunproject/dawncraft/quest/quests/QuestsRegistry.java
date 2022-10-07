@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.quest;
+package com.afunproject.dawncraft.quest.quests;
 
 import java.util.Map;
 
@@ -13,6 +13,7 @@ public class QuestsRegistry {
 
 	public static Quest WEREWOLF_QUEST = registerQuest(ModDefinitions.getResource("werewolf"), new WerewolfQuest());
 	public static Quest GHOST_QUEST = registerQuest(ModDefinitions.getResource("ghost"), new GhostQuest());
+	public static Quest CULT_QUEST = registerQuest(ModDefinitions.getResource("cult"), new CultQuest());
 
 	public static Quest registerQuest(ResourceLocation registry, Quest quest) {
 		quest.setRegistryName(registry);

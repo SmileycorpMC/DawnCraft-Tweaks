@@ -27,18 +27,15 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 
 public class InvasionEntry {
 
-	protected final int time;
 	protected final String name;
 	protected final List<EntityType<?>> entities = Lists.newArrayList();
 
-	public InvasionEntry(int time, String name, EntityType<?>... entities) {
-		this.time = time;
+	public InvasionEntry(String name, EntityType<?>... entities) {
 		this.name = name;
 		for (EntityType<?> entity : entities) this.entities.add(entity);
 	}
 
 	public InvasionEntry(CompoundTag tag) {
-		time = tag.getInt("time");
 		name = tag.getString("name");
 		for (Tag value : tag.getList("tag", 8)) {
 			try {
@@ -46,10 +43,6 @@ public class InvasionEntry {
 				entities.add(ForgeRegistries.ENTITIES.getValue(loc));
 			} catch (Exception e) {}
 		}
-	}
-
-	public int getTime() {
-		return time;
 	}
 
 	public void spawnEntities(Player player) {
@@ -68,13 +61,12 @@ public class InvasionEntry {
 			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
-			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0xED000F).withBold(true)), true);
+			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0x8E0009).withBold(true)), true);
 		}
 	}
 
 	public CompoundTag save() {
 		CompoundTag tag =  new CompoundTag();
-		tag.putInt("time", time);
 		tag.putString("name", name);
 		ListTag list = new ListTag();
 		for (EntityType<?> type : entities) list.add(StringTag.valueOf(type.getRegistryName().toString()));
@@ -83,6 +75,6 @@ public class InvasionEntry {
 	}
 
 	public InvasionEntry copy() {
-		return new InvasionEntry(time, name, entities.toArray(new EntityType<?>[] {}));
+		return new InvasionEntry(name, entities.toArray(new EntityType<?>[] {}));
 	}
 }

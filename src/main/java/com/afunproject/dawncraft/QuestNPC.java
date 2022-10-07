@@ -15,7 +15,8 @@ import net.minecraft.world.phys.Vec3;
 public enum QuestNPC implements StringRepresentable {
 
 	WEREWOLF(DawnCraftEntities.QUEST_PLAYER.get(), "{\"username\":\"hjvu55\", \"quest\":\"dawncraft:werewolf\", \"damageable\":1b}"),
-	BELL_GHOST(DawnCraftEntities.FALLEN.get(), "{\"username\":\"NickWins\", \"quest\":\"dawncraft:ghost\"}");
+	BELL_GHOST(DawnCraftEntities.FALLEN.get(), "{\"username\":\"NickWins\", \"quest\":\"dawncraft:ghost\"}"),
+	CULT_INFORMER(DawnCraftEntities.QUEST_PLAYER.get(), "{\"username\":\"dg2q\", \"quest\":\"dawncraft:cult\"}");
 
 	private final EntityType<?> type;
 	private CompoundTag tag = new CompoundTag();

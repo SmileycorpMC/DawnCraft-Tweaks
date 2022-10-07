@@ -13,8 +13,12 @@ public class InvasionRegistry {
 	private static final Map<InvasionKey, InvasionEntry> ENTRIES = Maps.newHashMap();
 
 	public static void init() {
-		register(new InvasionEntry(240000, "Getsuga65", SimpleMobsModEntities.GETSUGA_65.get()));
-		register(new InvasionEntry(600000, "Wooden_Day", SimpleMobsModEntities.WOODENDAY.get()));
+		register(new InvasionEntry("Getsuga65", SimpleMobsModEntities.GETSUGA_65.get()));
+		register(new InvasionEntry("Wooden_Day", SimpleMobsModEntities.WOODENDAY.get()));
+		register(new InvasionEntry("ShadowMewYT", SimpleMobsModEntities.SHADOW_MEW_YT.get()));
+		register(new InvasionEntry("SolarPixel", SimpleMobsModEntities.SOLAR_PIXEL.get()));
+		register(new InvasionEntry("merlin1306", SimpleMobsModEntities.MERLIN_1306.get()));
+		register(new InvasionEntry("uGone", SimpleMobsModEntities.U_GONE.get()));
 	}
 
 	public static void register(InvasionEntry entry) {

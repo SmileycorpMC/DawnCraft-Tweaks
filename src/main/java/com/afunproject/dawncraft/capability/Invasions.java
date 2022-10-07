@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.capability;
 
 import java.util.List;
+import java.util.Random;
 
 import com.afunproject.dawncraft.invasion.InvasionEntry;
 import com.afunproject.dawncraft.invasion.InvasionRegistry;
@@ -25,6 +26,7 @@ public interface Invasions {
 
 	public static class Implementation implements Invasions {
 
+		private Random rand = new Random();
 		private List<InvasionEntry> invasions = Lists.newArrayList();
 
 		public Implementation() {
@@ -33,12 +35,10 @@ public interface Invasions {
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
-			if (!player.level.isClientSide &! invasions.isEmpty()) {
-				InvasionEntry invasion = invasions.get(0);
-				if (invasion.getTime() <= player.tickCount) {
-					invasion.spawnEntities(player);
-					invasions.remove(invasion);
-				}
+			if (!player.level.isClientSide && player.tickCount % 240000 == 0 && player.tickCount > 0 &! invasions.isEmpty()) {
+				InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
+				invasion.spawnEntities(player);
+				invasions.remove(invasion);
 			}
 		}
 

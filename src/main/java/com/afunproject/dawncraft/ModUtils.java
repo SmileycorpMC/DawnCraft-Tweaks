@@ -3,6 +3,7 @@ package com.afunproject.dawncraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -36,6 +37,15 @@ public class ModUtils {
 		int y = nbt.getInt("y");
 		int z = nbt.getInt("z");
 		return isBlockPos ? new BlockPos(x, y, z) : new Vec3i(x, y, z);
+	}
+
+	public static boolean isValidResourceLocation(String structure) {
+		try {
+			new ResourceLocation(structure.replace("#", ""));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

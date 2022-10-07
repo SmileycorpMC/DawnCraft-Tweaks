@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.afunproject.dawncraft.client.screens.QuestScreen;
 import com.afunproject.dawncraft.network.OpenQuestMessage;
-import com.afunproject.dawncraft.quest.Quest;
 import com.afunproject.dawncraft.quest.QuestEntity;
 import com.afunproject.dawncraft.quest.QuestType;
+import com.afunproject.dawncraft.quest.quests.Quest;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -41,14 +41,11 @@ public class ClientHandler {
 	public static void openQuestGUI(OpenQuestMessage message) {
 		Minecraft mc = Minecraft.getInstance();
 		Mob mob = message.get(mc.level);
-		QuestEntity entity = null;
-		if (mob instanceof QuestEntity) entity = (QuestEntity) mob;
-		if (entity != null) {
-			Quest quest = message.getQuest();
-			QuestType type = quest == null ? QuestType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
-			String text = message.getMessage() == null ? entity.getQuestText() : message.getMessage();
-			mc.setScreen(new QuestScreen(mob, new TranslatableComponent(text, mc.player), type));
-		}
+		QuestEntity entity = QuestEntity.safeCast(mob);
+		Quest quest = message.getQuest();
+		QuestType type = quest == null ? QuestType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
+		String text = message.getMessage() == null ? entity.getQuestText() : message.getMessage();
+		mc.setScreen(new QuestScreen(mob, new TranslatableComponent(text, mc.player), type));
 	}
 
 }

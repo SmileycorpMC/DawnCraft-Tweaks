@@ -7,9 +7,9 @@ import com.afunproject.dawncraft.client.EntityRenderDispatcherExtension;
 import com.afunproject.dawncraft.network.AFPPacketHandler;
 import com.afunproject.dawncraft.network.TriggerQuestCompleteMessage;
 import com.afunproject.dawncraft.quest.QuestType;
-import com.feywild.quest_giver.screen.BackgroundWidget;
-import com.feywild.quest_giver.screen.QuestButton;
-import com.feywild.quest_giver.screen.QuestButtonSmall;
+import com.feywild.quest_giver.screen.button.QuestButton;
+import com.feywild.quest_giver.screen.button.QuestButtonSmall;
+import com.feywild.quest_giver.screen.widget.BackgroundWidget;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 

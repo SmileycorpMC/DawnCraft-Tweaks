@@ -55,11 +55,6 @@ public class Fallen extends QuestPlayer {
 		return MobType.UNDEAD;
 	}
 
-	/*@Override
-	public void completeQuest(boolean isAccepted) {
-		entityData.set(FADE_TIMER, 45);
-	}*/
-
 	public int getFadeTimer() {
 		return entityData.get(FADE_TIMER);
 	}

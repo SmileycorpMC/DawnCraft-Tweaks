@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.client.entity.FallenRenderer;
-import com.afunproject.dawncraft.client.entity.QuestPlayerRenderer;
+import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
@@ -33,12 +33,14 @@ public class ClientEventRegister {
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerBlockEntityRenderer(DungeonBlockEntities.DUNGEON_DOOR.get(), DungeonDoorBlockEntityRenderer::new);
 		event.registerEntityRenderer(DawnCraftEntities.FALLEN.get(), FallenRenderer::new);
-		event.registerEntityRenderer(DawnCraftEntities.QUEST_PLAYER.get(), QuestPlayerRenderer::new);
+		event.registerEntityRenderer(DawnCraftEntities.QUEST_PLAYER.get(), PlayerEntityRenderer::new);
+		event.registerEntityRenderer(DawnCraftEntities.KNIGHT_PLAYER.get(), PlayerEntityRenderer::new);
 	}
 
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(QuestPlayerRenderer.MAIN_LAYER, QuestPlayerRenderer::createMainLayer);
+		event.registerLayerDefinition(PlayerEntityRenderer.MAIN_LAYER, PlayerEntityRenderer::createMainLayer);
+		//event.registerLayerDefinition(PlayerEntityRenderer.MAIN_LAYER, PlayerEntityRenderer::createThinLayer);
 		event.registerLayerDefinition(FallenRenderer.MAIN_LAYER, FallenRenderer::createMainLayer);
 	}
 

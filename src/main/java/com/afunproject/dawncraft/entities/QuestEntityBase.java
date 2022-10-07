@@ -2,9 +2,9 @@ package com.afunproject.dawncraft.entities;
 
 import com.afunproject.dawncraft.network.AFPPacketHandler;
 import com.afunproject.dawncraft.network.OpenQuestMessage;
-import com.afunproject.dawncraft.quest.Quest;
 import com.afunproject.dawncraft.quest.QuestEntity;
-import com.afunproject.dawncraft.quest.QuestsRegistry;
+import com.afunproject.dawncraft.quest.quests.Quest;
+import com.afunproject.dawncraft.quest.quests.QuestsRegistry;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -37,6 +37,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	protected Quest quest = null;
 	protected boolean damageable;
+	private boolean shouldDespawn;
 
 	protected QuestEntityBase(EntityType<? extends Mob> type, Level level) {
 		super(type, level);
@@ -83,7 +84,12 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	@Override
 	public boolean isPersistenceRequired() {
-		return true;
+		return !shouldDespawn;
+	}
+
+	@Override
+	public boolean removeWhenFarAway(double range) {
+		return range >= 50 && shouldDespawn;
 	}
 
 	@Override
@@ -105,6 +111,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("damageable", damageable);
+		compound.putBoolean("shouldDespawn", shouldDespawn);
 		saveQuestData(compound);
 	}
 
@@ -112,6 +119,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("damageable")) damageable = compound.getBoolean("damageable");
+		if (compound.contains("shouldDespawn")) shouldDespawn = compound.getBoolean("shouldDespawn");
 		loadQuestData(compound);
 	}
 
@@ -166,6 +174,10 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 			setQuest(QuestsRegistry.getQuest(new ResourceLocation(tag.getString("quest"))));
 			if (quest != null) entityData.set(TEXT, quest.getText(entityData.get(QUEST_PHASE), true));
 		}
+	}
+
+	public void setDespawnable(boolean shouldDespawn) {
+		this.shouldDespawn = shouldDespawn;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.afunproject.dawncraft.entities;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.github.justinwon777.humancompanions.entity.Knight;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.nbt.CompoundTag;
@@ -11,15 +12,14 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-public class QuestPlayer extends QuestEntityBase implements PlayerEntity {
+public class KnightPlayer extends Knight implements PlayerEntity {
 
-	protected static final EntityDataAccessor<Optional<UUID>> PLAYER = SynchedEntityData.defineId(QuestPlayer.class, EntityDataSerializers.OPTIONAL_UUID);
+	protected static final EntityDataAccessor<Optional<UUID>> PLAYER = SynchedEntityData.defineId(KnightPlayer.class, EntityDataSerializers.OPTIONAL_UUID);
 
-	protected QuestPlayer(EntityType<? extends Mob> type, Level level) {
+	protected KnightPlayer(EntityType<? extends Knight> type, Level level) {
 		super(type, level);
 	}
 
@@ -70,11 +70,6 @@ public class QuestPlayer extends QuestEntityBase implements PlayerEntity {
 		if (optional.isPresent()) {
 			compound.putUUID("player", optional.get());
 		}
-	}
-
-	@Override
-	public boolean canSeeQuest() {
-		return true;
 	}
 
 }

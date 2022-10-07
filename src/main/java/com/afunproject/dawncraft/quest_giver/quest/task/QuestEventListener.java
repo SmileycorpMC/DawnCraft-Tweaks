@@ -2,6 +2,7 @@ package com.afunproject.dawncraft.quest_giver.quest.task;
 
 import java.util.Optional;
 
+import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.FollowQuest;
 import com.feywild.quest_giver.quest.player.QuestData;
@@ -42,7 +43,7 @@ public class QuestEventListener {
 		if (event.getEntity() instanceof Mob) {
 			Mob entity  = (Mob) event.getEntity();
 			if (entity.level instanceof ServerLevel) {
-				LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST_CAPABILITY);
+				LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST);
 				if (questOptional.isPresent()) {
 					FollowQuest questCap = questOptional.resolve().get();
 					if (questCap.hasStructure()) {
@@ -80,7 +81,7 @@ public class QuestEventListener {
 
 	private static boolean isInStructure(BlockPos pos, ServerLevel level, String structure) {
 		if (structure.contains("#")) return isInStructureTag(pos, level , structure.replace("#", ""));
-		if (!isValidResourceLocation(structure)) return false;
+		if (!ModUtils.isValidResourceLocation(structure)) return false;
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
 		ResourceKey<ConfiguredStructureFeature<?, ?>> structureKey = ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(structure));
 		Optional<Holder<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.m_203636_(structureKey);
@@ -95,7 +96,7 @@ public class QuestEventListener {
 	}
 
 	private static boolean isInStructureTag(BlockPos pos, ServerLevel level, String structure) {
-		if (!isValidResourceLocation(structure)) return false;
+		if (!ModUtils.isValidResourceLocation(structure)) return false;
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
 		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.m_203882_(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(structure));
 		Optional<HolderSet.Named<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.m_203431_(structureTag);
@@ -106,15 +107,6 @@ public class QuestEventListener {
 			BlockPos villagePos = pair.getFirst();
 			return Math.pow(villagePos.getX()-pos.getX(), 2) + Math.pow(villagePos.getZ()-pos.getZ(), 2)<=1024;
 		} return false;
-	}
-
-	private static boolean isValidResourceLocation(String structure) {
-		try {
-			new ResourceLocation(structure.replace("#", ""));
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 }
