@@ -2,6 +2,7 @@ package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.client.screens.QuestScreen;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.CameraType;
@@ -11,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,6 +52,19 @@ public class ClientEventListener {
 				}
 				MinimapRenderer.renderBasicMinimap(poseStack, stack, player.getUseItem().isEmpty() && mc.options.keyUse.isDown());
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void renderWorld(CameraSetup event){
+		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer player = mc.player;
+		if (player.hasEffect(DawnCraftEffects.TREMOR.get())) {
+			float a = (player.getEffect(DawnCraftEffects.TREMOR.get()).getAmplifier() + 1)*0.5f;
+			float t = (mc.getFrameTime() + player.tickCount)*a*0.75f;
+			event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
+			event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
+			event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
 		}
 	}
 

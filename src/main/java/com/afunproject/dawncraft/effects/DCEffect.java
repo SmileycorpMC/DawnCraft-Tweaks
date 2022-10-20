@@ -8,10 +8,10 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.item.ItemStack;
 
-public class ImmobilizedEffect extends MobEffect {
+public class DCEffect extends MobEffect {
 
-	protected ImmobilizedEffect() {
-		super(MobEffectCategory.HARMFUL, 0xFFB8DBDB);
+	protected DCEffect(int colour) {
+		super(MobEffectCategory.HARMFUL, colour);
 	}
 
 	@Override
