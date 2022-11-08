@@ -9,7 +9,6 @@ import com.afunproject.dawncraft.network.TriggerQuestCompleteMessage;
 import com.afunproject.dawncraft.quest.QuestType;
 import com.feywild.quest_giver.screen.button.QuestButton;
 import com.feywild.quest_giver.screen.button.QuestButtonSmall;
-import com.feywild.quest_giver.screen.widget.BackgroundWidget;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -28,13 +27,11 @@ public class QuestScreen extends Screen {
 
 	protected final Mob entity;
 	protected final QuestType questType;
-	protected List<List<String>> screens = Lists.newArrayList();
+	protected List<Page> pages = Lists.newArrayList();
 	protected Random random = new Random();
 	protected final Style style;
 
 	protected int screenIndex = 0;
-	protected int lineIndex = 0;
-	protected int position = 0;
 
 	public QuestScreen(Mob entity, MutableComponent text, QuestType questType) {
 		super(entity.getName());
@@ -56,7 +53,7 @@ public class QuestScreen extends Screen {
 				if (str.substring(position, newPos).contains("¶")) {
 					int i = str.substring(position, newPos).indexOf("¶");
 					lines.add(str.substring(position, position + i));
-					screens.add(lines);
+					pages.add(new TextPage(this, lines));
 					lines = Lists.newArrayList();
 					position = position + i + 1;
 					continue;
@@ -70,7 +67,7 @@ public class QuestScreen extends Screen {
 						lines.add(str.substring(position, newPos+1));
 						position = newPos;
 						if (lines.size() >= 10) {
-							screens.add(lines);
+							pages.add(new TextPage(this, lines));
 							lines = Lists.newArrayList();
 						}
 						break;
@@ -79,7 +76,7 @@ public class QuestScreen extends Screen {
 						lines.add(str.substring(position, newPos-i+1));
 						position = newPos-i+1;
 						if (lines.size() >= 10) {
-							screens.add(lines);
+							pages.add(new TextPage(this, lines));
 							lines = Lists.newArrayList();
 						}
 						break;
@@ -87,35 +84,24 @@ public class QuestScreen extends Screen {
 				}
 
 			}
-			screens.add(lines);
+			pages.add(new TextPage(this, lines));
 		} else {
-			screens.add(Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString()));
+			pages.add(new TextPage(this, Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString())));
 		}
 	}
 
 	@Override
 	protected void init() {
-		addRenderableWidget(new BackgroundWidget(this, 50, 120){
-			@Override
-			public void onClick(double mouseX, double mouseY) {
-				if (lineIndex < screens.get(screenIndex).size() || position < screens.get(screenIndex).get(lineIndex).length()) {
-					lineIndex = screens.get(screenIndex).size() - 1;
-					position = screens.get(screenIndex).get(lineIndex).length() - 1;
-				}
-			}
-		});
-		if (screens.size() == 1 && questType != QuestType.AUTO_CLOSE) {
+		if (pages.size() == 1 && questType != QuestType.AUTO_CLOSE) {
 			addAcceptButtons();
 		} else {
 			addRenderableWidget(new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TextComponent(">>"), button -> {
-				if (screenIndex == screens.size()-1) {
+				if (screenIndex == pages.size()-1) {
 					completeQuest(true);
 					onClose();
 					return;
 				}
 				screenIndex++;
-				lineIndex = 0;
-				position = 0;
 				if (!hasNextButton() && questType != QuestType.AUTO_CLOSE) {
 					removeWidget(button);
 					addAcceptButtons();
@@ -138,25 +124,14 @@ public class QuestScreen extends Screen {
 		InventoryScreen.renderEntityInInventory(entityX, entityY, size, entityX - mouseX, entityY + (entity.getEyeHeight()) - mouseY, entity);
 		((EntityRenderDispatcherExtension)dispatcher).setRenderNameplate(true);
 		drawString(poseStack, minecraft.font, title, (width / 2) - (minecraft.font.width(title)), 125, 0xFFFFFF);
-		if (screens.size() > 0) {
-			int i = 0;
-			for (String string : screens.get(screenIndex)) {
-				drawString(poseStack, minecraft.font, i < lineIndex ? string : string.substring(0, position), 72, 142 + (i*10), 0xFFFFFF);
-				if (i == lineIndex) {
-					if (position++ >= string.length()) {
-						position = 0;
-						lineIndex++;
-					}
-					break;
-				}
-				i++;
-			}
+		if (pages.size() > 0) {
+			pages.get(screenIndex).render(poseStack, mouseX, mouseY, partialTicks);
 		}
 		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
 
 	private boolean hasNextButton() {
-		return screenIndex < screens.size() -1;
+		return screenIndex < pages.size() -1;
 	}
 
 	@Override
