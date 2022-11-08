@@ -36,19 +36,20 @@ public enum QuestNPC implements StringRepresentable {
 		return name().toLowerCase();
 	}
 
-	public void spawnEntity(Level level, double x, double y, double z) {
-		spawnEntity(level, new Vec3(x, y, z));
+	public Entity spawnEntity(Level level, double x, double y, double z) {
+		return spawnEntity(level, new Vec3(x, y, z));
 	}
 
-	public void spawnEntity(Level level, Vec3i pos) {
-		spawnEntity(level, Vec3.atCenterOf(pos));
+	public Entity spawnEntity(Level level, Vec3i pos) {
+		return spawnEntity(level, Vec3.atCenterOf(pos));
 	}
 
-	public void spawnEntity(Level level, Vec3 pos) {
+	public Entity spawnEntity(Level level, Vec3 pos) {
 		Entity entity = type.create(level);
 		entity.load(tag);
 		entity.setPos(pos);
 		level.addFreshEntity(entity);
+		return entity;
 	}
 
 }
