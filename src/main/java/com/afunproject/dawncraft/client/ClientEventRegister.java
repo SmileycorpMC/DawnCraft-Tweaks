@@ -39,9 +39,8 @@ public class ClientEventRegister {
 
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(PlayerEntityRenderer.MAIN_LAYER, PlayerEntityRenderer::createMainLayer);
-		//event.registerLayerDefinition(PlayerEntityRenderer.MAIN_LAYER, PlayerEntityRenderer::createThinLayer);
-		event.registerLayerDefinition(FallenRenderer.MAIN_LAYER, FallenRenderer::createMainLayer);
+		event.registerLayerDefinition(PlayerEntityRenderer.DEFAULT, () -> PlayerEntityRenderer.createLayer(false));
+		event.registerLayerDefinition(PlayerEntityRenderer.SLIM, () -> PlayerEntityRenderer.createLayer(true));
 	}
 
 

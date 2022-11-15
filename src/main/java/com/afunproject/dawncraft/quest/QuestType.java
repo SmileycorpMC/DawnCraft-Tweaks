@@ -9,6 +9,8 @@ public enum QuestType {
 	//automatically denies quest when clicking on the last buttons
 	DENY,
 	//has next page button on the last page, closes when pressed
-	AUTO_CLOSE;
+	AUTO_CLOSE,
+	//has several large buttons which link to a different page
+	OPTIONS;
 
 }

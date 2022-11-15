@@ -15,6 +15,7 @@ public class QuestsRegistry {
 	public static final Quest GHOST_QUEST = registerQuest(ModDefinitions.getResource("ghost"), new GhostQuest());
 	public static final Quest CULT_QUEST = registerQuest(ModDefinitions.getResource("cult"), new CultQuest());
 	public static final Quest BARREL_QUEST = registerQuest(ModDefinitions.getResource("barrel"), new BarrelQuest());
+	public static final Quest ALCHEMIST = registerQuest(ModDefinitions.getResource("alchemist"), new AlchemistQuest());
 
 	public static Quest registerQuest(ResourceLocation registry, Quest quest) {
 		quest.setRegistryName(registry);

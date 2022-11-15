@@ -12,12 +12,13 @@ import com.feywild.quest_giver.screen.button.QuestButtonSmall;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Mob;
 
@@ -31,17 +32,37 @@ public class QuestScreen extends Screen {
 	protected Random random = new Random();
 	protected final Style style;
 
-	protected int screenIndex = 0;
+	protected int pageIndex = 0;
+
+	protected final Button NEXT_PAGE;
 
 	public QuestScreen(Mob entity, MutableComponent text, QuestType questType) {
 		super(entity.getName());
 		this.entity = entity;
 		this.questType = questType;
 		style = text.getStyle();
-		generateLines(text);
+		NEXT_PAGE = new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TranslatableComponent("text.dawncraft.next"), button -> {
+			if (pageIndex == pages.size()-1) {
+				completeQuest(true);
+				onClose();
+				return;
+			}
+			pageIndex++;
+		});
+		if (questType == QuestType.OPTIONS) {
+			String[] pages = text.getString().split("¶");
+			if (pages.length == 0) this.pages.addAll(generatePages(this, text));
+			if (pages.length > 1) {
+				for (int i = 0; i < pages.length-2; i++) this.pages.addAll(generatePages(this, new TranslatableComponent(pages[i])));
+			}
+			String[] options = pages[pages.length-1].split("¦");
+			this.pages.add(new OptionsPage(this, Lists.newArrayList(options)));
+		}
+		else pages.addAll(generatePages(this, text));
 	}
 
-	private void generateLines(MutableComponent text) {
+	public static List<Page> generatePages(QuestScreen screen, MutableComponent text) {
+		List<Page> pages = Lists.newArrayList();
 		if (text != null) {
 			String str = text.getString();
 			int position = 0;
@@ -53,7 +74,7 @@ public class QuestScreen extends Screen {
 				if (str.substring(position, newPos).contains("¶")) {
 					int i = str.substring(position, newPos).indexOf("¶");
 					lines.add(str.substring(position, position + i));
-					pages.add(new TextPage(this, lines));
+					pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 					lines = Lists.newArrayList();
 					position = position + i + 1;
 					continue;
@@ -67,7 +88,7 @@ public class QuestScreen extends Screen {
 						lines.add(str.substring(position, newPos+1));
 						position = newPos;
 						if (lines.size() >= 10) {
-							pages.add(new TextPage(this, lines));
+							pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 							lines = Lists.newArrayList();
 						}
 						break;
@@ -76,7 +97,7 @@ public class QuestScreen extends Screen {
 						lines.add(str.substring(position, newPos-i+1));
 						position = newPos-i+1;
 						if (lines.size() >= 10) {
-							pages.add(new TextPage(this, lines));
+							pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 							lines = Lists.newArrayList();
 						}
 						break;
@@ -84,30 +105,12 @@ public class QuestScreen extends Screen {
 				}
 
 			}
-			pages.add(new TextPage(this, lines));
+			if (screen.questType == QuestType.AUTO_CLOSE) pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
+			else pages.add(new TextPage(screen, lines, screen.getAcceptButtons()));
 		} else {
-			pages.add(new TextPage(this, Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString())));
+			pages.add(new TextPage(screen, Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString()), screen.NEXT_PAGE));
 		}
-	}
-
-	@Override
-	protected void init() {
-		if (pages.size() == 1 && questType != QuestType.AUTO_CLOSE) {
-			addAcceptButtons();
-		} else {
-			addRenderableWidget(new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TextComponent(">>"), button -> {
-				if (screenIndex == pages.size()-1) {
-					completeQuest(true);
-					onClose();
-					return;
-				}
-				screenIndex++;
-				if (!hasNextButton() && questType != QuestType.AUTO_CLOSE) {
-					removeWidget(button);
-					addAcceptButtons();
-				}
-			}));
-		}
+		return pages;
 	}
 
 	private void completeQuest(boolean accepted) {
@@ -123,15 +126,20 @@ public class QuestScreen extends Screen {
 		((EntityRenderDispatcherExtension)dispatcher).setRenderNameplate(false);
 		InventoryScreen.renderEntityInInventory(entityX, entityY, size, entityX - mouseX, entityY + (entity.getEyeHeight()) - mouseY, entity);
 		((EntityRenderDispatcherExtension)dispatcher).setRenderNameplate(true);
-		drawString(poseStack, minecraft.font, title, (width / 2) - (minecraft.font.width(title)), 125, 0xFFFFFF);
 		if (pages.size() > 0) {
-			pages.get(screenIndex).render(poseStack, mouseX, mouseY, partialTicks);
+			pages.get(pageIndex).render(poseStack, mouseX, mouseY, partialTicks);
 		}
 		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
 
-	private boolean hasNextButton() {
-		return screenIndex < pages.size() -1;
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int p_95587_) {
+		if (pages.size() > 0) {
+			for (AbstractWidget widget : pages.get(pageIndex).getWidgets()) {
+				if (widget.isMouseOver(mouseX, mouseY)) widget.mouseClicked(mouseX, mouseY, p_95587_);
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -141,110 +149,61 @@ public class QuestScreen extends Screen {
 
 	@Override
 	public boolean shouldCloseOnEsc() {
-		return false;
+		return questType == QuestType.OPTIONS;
 	}
 
-	private void addAcceptButtons() {
+	private Button[] getAcceptButtons() {
 		if (questType == QuestType.ACCEPT_QUEST) {
-			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(getRandomAcceptMessage()), button1 -> {
+			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomAcceptMessage(), button1 -> {
 				completeQuest(true);
 				onClose();
 				return;
-			}));
-
-			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(getRandomDeclineMessage()), button1 -> {
+			}), new QuestButton(380, 218, false, entity.blockPosition(), getRandomDeclineMessage(), button1 -> {
 				completeQuest(false);
 				onClose();
 				return;
-			}));
+			})
+			};
 		}
 		else if (questType == QuestType.ACKNOWLEDGE) {
-			String[] messages = getRandomAcknowledgmentMessages();
-			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(messages[0]), button1 -> {
+			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomAcknowledgmentMessage(), button1 -> {
 				completeQuest(true);
 				onClose();
 				return;
-			}));
-
-			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(messages[1]), button1 -> {
+			}), new QuestButton(380, 218, false, entity.blockPosition(), getRandomAcknowledgmentMessage(), button1 -> {
 				completeQuest(true);
 				onClose();
 				return;
-			}));
+			})};
 		}
 		else if (questType == QuestType.DENY) {
-			String[] messages = getRandomDenyMessages();
-			addRenderableWidget(new QuestButton(380, 190, true, entity.blockPosition(), new TextComponent(messages[0]), button1 -> {
+			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomDenyMessage(), button1 -> {
 				completeQuest(false);
 				onClose();
 				return;
-			}));
-
-			addRenderableWidget(new QuestButton(380, 218, false, entity.blockPosition(), new TextComponent(messages[1]), button1 -> {
+			}), new QuestButton(380, 218, false, entity.blockPosition(), getRandomDenyMessage(), button1 -> {
 				completeQuest(false);
 				onClose();
 				return;
-			}));
+			})};
 		}
+		return new Button[]{};
 	}
 
-	private String[] getRandomAcknowledgmentMessages() {
-		String[] messages = new String[2];
-		messages[0] = getRandomAcknowledgmentMessage();
-		while (messages[1] == null) {
-			String message = getRandomAcknowledgmentMessage();
-			if (messages[0] != message) messages[1] = message;
-		}
-		return messages;
+	private TranslatableComponent getRandomAcknowledgmentMessage() {
+		return new TranslatableComponent("text.dawncraft.acknowledge" + (random.nextInt(5)+1));
 	}
 
-	private String[] getRandomDenyMessages() {
-		String[] messages = new String[2];
-		messages[0] = getRandomDenyMessage();
-		while (messages[1] == null) {
-			String message = getRandomDenyMessage();
-			if (messages[0] != message) messages[1] = message;
-		}
-		return messages;
+	private TranslatableComponent getRandomDenyMessage() {
+		return new TranslatableComponent("text.dawncraft.deny" + (random.nextInt(4)+1));
 	}
 
-	private String getRandomAcknowledgmentMessage() {
-		return switch (random.nextInt(5)) {
-		case 1 -> "Got it";
-		case 2 -> "Sure";
-		case 3 -> "Okay!";
-		case 4 -> "Alright!";
-		default -> "Thanks!";
-		};
+	private TranslatableComponent getRandomAcceptMessage() {
+		return new TranslatableComponent("text.dawncraft.accept" + (random.nextInt(5)+1));
 	}
 
-	private String getRandomDenyMessage() {
-		return switch (random.nextInt(4)) {
-		case 1 -> "Not yet...";
-		case 2 -> "Working on it";
-		case 3 -> "Sorry, no";
-		default -> "No";
-		};
-	}
-
-	private String getRandomAcceptMessage() {
-		return switch (random.nextInt(5)) {
-		case 1 -> "I'll do it!";
-		case 2 -> "Sure";
-		case 3 -> "Okay!";
-		case 4 -> "Alright!";
-		default -> "I accept!";
-		};
-	}
-
-	private String getRandomDeclineMessage() {
-		return switch (random.nextInt(5)) {
-		case 1 -> "Maybe later.";
-		case 2 -> "I'm Busy";
-		case 3 -> "No, Sorry.";
-		case 4 -> "Not right now";
-		default -> "I decline!";
-		};
+	private TranslatableComponent getRandomDeclineMessage() {
+		return new TranslatableComponent("text.dawncraft.decline" + (random.nextInt(5)+1));
 	}
 
 }

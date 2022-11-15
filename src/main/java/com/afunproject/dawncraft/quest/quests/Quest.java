@@ -41,7 +41,7 @@ public abstract class Quest {
 		return registry;
 	}
 
-	public final boolean isQuestComplete(Player player, Mob entity, int phase) {
+	public boolean isQuestComplete(Player player, Mob entity, int phase) {
 		for (QuestCondition condition : conditions) if (!condition.apply(player, entity, phase)) return false;
 		return true;
 	}
