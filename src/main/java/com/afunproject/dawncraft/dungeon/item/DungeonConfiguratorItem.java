@@ -9,7 +9,7 @@ import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.DungeonTrigger;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Functional;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.SingleUse;
-import com.afunproject.dawncraft.network.AFPPacketHandler;
+import com.afunproject.dawncraft.network.DCNetworkHandler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -70,7 +70,7 @@ public class DungeonConfiguratorItem extends Item {
 			if (player.isCrouching()) {
 				ConfiguratorMode mode = shiftMode(player.getItemInHand(hand));
 				if (player instanceof ServerPlayer) {
-					AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+					DCNetworkHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 				}
 			}
 		} else player.sendMessage(new TranslatableComponent("message.afptweaks.creative_required"), null);
@@ -90,7 +90,7 @@ public class DungeonConfiguratorItem extends Item {
 			if (player.isCrouching()) {
 				ConfiguratorMode mode = shiftMode(stack);
 				if (player instanceof ServerPlayer) {
-					AFPPacketHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+					DCNetworkHandler.NETWORK_INSTANCE.sendTo(new SimpleStringMessage(mode.getModeMessage()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 				}
 			} else {
 				ConfiguratorMode mode = ConfiguratorMode.getmode(stack);

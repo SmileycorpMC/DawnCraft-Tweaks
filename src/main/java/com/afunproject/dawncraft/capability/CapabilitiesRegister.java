@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.capability;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.afunproject.dawncraft.ModDefinitions;
-import com.afunproject.dawncraft.quest.QuestEntity;
+import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

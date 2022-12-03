@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.capability;
 
-import com.afunproject.dawncraft.quest.QuestEntity;
-import com.afunproject.dawncraft.quest.quests.Quest;
+import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
+import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

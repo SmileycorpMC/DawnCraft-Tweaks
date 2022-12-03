@@ -1,0 +1,20 @@
+package com.afunproject.dawncraft.integration.quests.custom.conditions;
+
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+
+public class AndCondition implements QuestCondition {
+
+	protected final QuestCondition[] conditions;
+
+	public AndCondition(QuestCondition... conditions) {
+		this.conditions = conditions;
+	}
+
+	@Override
+	public boolean apply(Player player, Mob entity, int phase) {
+		for (QuestCondition condition : conditions) if (!condition.apply(player, entity, phase)) return false;
+		return true;
+	}
+
+}

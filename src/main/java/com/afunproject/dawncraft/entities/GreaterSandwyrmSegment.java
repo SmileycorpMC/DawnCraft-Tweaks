@@ -1,5 +1,7 @@
 package com.afunproject.dawncraft.entities;
 
+import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlayer;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

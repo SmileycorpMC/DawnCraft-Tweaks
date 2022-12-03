@@ -1,0 +1,37 @@
+package com.afunproject.dawncraft.integration.simplemobs.invasion;
+
+import net.minecraft.util.StringRepresentable;
+import net.minecraftforge.common.IExtensibleEnum;
+
+public enum InvasionKey implements IExtensibleEnum, StringRepresentable{
+
+	;
+
+	private final String name;
+
+	private InvasionKey(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	static InvasionKey create(String registry, String name) {
+		throw new IllegalStateException("Enum not extended");
+	}
+
+	static InvasionKey getKey(String name) {
+		for (InvasionKey key : values()) {
+			if (key.getSerializedName().equals(name)) return key;
+		}
+		return valueOf(name.toUpperCase());
+	}
+
+	@Override
+	public String getSerializedName() {
+		return name;
+	}
+
+}

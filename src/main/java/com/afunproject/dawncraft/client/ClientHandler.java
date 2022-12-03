@@ -2,11 +2,6 @@ package com.afunproject.dawncraft.client;
 
 import java.util.List;
 
-import com.afunproject.dawncraft.client.screens.QuestScreen;
-import com.afunproject.dawncraft.network.OpenQuestMessage;
-import com.afunproject.dawncraft.quest.QuestEntity;
-import com.afunproject.dawncraft.quest.QuestType;
-import com.afunproject.dawncraft.quest.quests.Quest;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -17,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.Mob;
 
 public class ClientHandler {
 
@@ -36,16 +30,6 @@ public class ClientHandler {
 		Key key = isMouse ? InputConstants.Type.MOUSE.getOrCreate(keycode) : InputConstants.Type.KEYSYM.getOrCreate(keycode);
 		for (KeyMapping mapping : IMMOBILIZED_KEYS) if (mapping.getKey() == key) return true;
 		return false;
-	}
-
-	public static void openQuestGUI(OpenQuestMessage message) {
-		Minecraft mc = Minecraft.getInstance();
-		Mob mob = message.get(mc.level);
-		QuestEntity entity = QuestEntity.safeCast(mob);
-		Quest quest = message.getQuest();
-		QuestType type = quest == null ? QuestType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
-		String text = message.getMessage() == null ? entity.getQuestText() : message.getMessage();
-		mc.setScreen(new QuestScreen(mob, new TranslatableComponent(text, mc.player), type));
 	}
 
 }

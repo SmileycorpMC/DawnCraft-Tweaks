@@ -1,8 +1,8 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
-import com.afunproject.dawncraft.client.screens.QuestScreen;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
+import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.CameraType;

@@ -3,8 +3,8 @@ package com.afunproject.dawncraft.capability;
 import java.util.List;
 import java.util.Random;
 
-import com.afunproject.dawncraft.invasion.InvasionEntry;
-import com.afunproject.dawncraft.invasion.InvasionRegistry;
+import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionEntry;
+import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionRegistry;
 import com.google.common.collect.Lists;
 
 import net.minecraft.core.Direction;

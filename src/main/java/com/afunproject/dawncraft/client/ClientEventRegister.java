@@ -1,12 +1,10 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
-import com.afunproject.dawncraft.client.entity.FallenRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
-import com.afunproject.dawncraft.entities.DawnCraftEntities;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -32,9 +30,6 @@ public class ClientEventRegister {
 	@SubscribeEvent
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerBlockEntityRenderer(DungeonBlockEntities.DUNGEON_DOOR.get(), DungeonDoorBlockEntityRenderer::new);
-		event.registerEntityRenderer(DawnCraftEntities.FALLEN.get(), FallenRenderer::new);
-		event.registerEntityRenderer(DawnCraftEntities.QUEST_PLAYER.get(), PlayerEntityRenderer::new);
-		event.registerEntityRenderer(DawnCraftEntities.KNIGHT_PLAYER.get(), PlayerEntityRenderer::new);
 	}
 
 	@SubscribeEvent

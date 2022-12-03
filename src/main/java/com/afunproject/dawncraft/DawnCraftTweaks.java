@@ -4,15 +4,13 @@ import org.slf4j.Logger;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.client.ClientEventListener;
-import com.afunproject.dawncraft.client.epicfight.EpicFightClientEventListener;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.entities.DawnCraftEntities;
-import com.afunproject.dawncraft.invasion.InvasionRegistry;
-import com.afunproject.dawncraft.network.AFPPacketHandler;
-import com.afunproject.dawncraft.quest_giver.quest.task.QuestModule;
+import com.afunproject.dawncraft.integration.IntegrationHandler;
+import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.mojang.logging.LogUtils;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -35,9 +33,8 @@ public class DawnCraftTweaks {
 		.ifPresent(container -> ModDefinitions.VERSION = container.getModInfo().getVersion().toString());
 		LOGGER.info("DawnCraft Tweaks " + ModDefinitions.VERSION + " initialized");
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
-		if(ModList.get().isLoaded("quest_giver") && ModList.get().isLoaded("followme")) QuestModule.init();
 		MinecraftForge.EVENT_BUS.register(new EventListener());
-		AFPPacketHandler.initPackets();
+		DCNetworkHandler.initPackets();
 	}
 
 	@SubscribeEvent
@@ -48,20 +45,18 @@ public class DawnCraftTweaks {
 		DungeonBlockEntities.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DawnCraftEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DawnCraftEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		IntegrationHandler.construct();
 	}
 
 	@SubscribeEvent
 	public static void modSetup(FMLCommonSetupEvent event) {
-		InvasionRegistry.init();
+		IntegrationHandler.setup();
 	}
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
-		if(ModList.get().isLoaded("epicfight")) {
-			EpicFightCompat.registerKeybinds();
-			if (ModList.get().isLoaded("paraglider")) MinecraftForge.EVENT_BUS.register(new EpicFightClientEventListener());
-		}
+		IntegrationHandler.clientSetup();
 	}
 
 	public static void logInfo(Object message) {
