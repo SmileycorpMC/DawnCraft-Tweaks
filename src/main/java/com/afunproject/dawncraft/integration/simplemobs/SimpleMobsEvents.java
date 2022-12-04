@@ -37,7 +37,6 @@ import yesman.epicfight.world.item.EpicFightItems;
 public class SimpleMobsEvents {
 
 	public static void init() {
-		InvasionRegistry.init();
 		MinecraftForge.EVENT_BUS.register(new SimpleMobsEvents());
 	}
 

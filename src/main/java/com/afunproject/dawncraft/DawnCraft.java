@@ -24,11 +24,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ModDefinitions.MODID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class DawnCraftTweaks {
+public class DawnCraft {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public DawnCraftTweaks() {
+	public DawnCraft() {
 		ModList.get().getModContainerById(ModDefinitions.MODID)
 		.ifPresent(container -> ModDefinitions.VERSION = container.getModInfo().getVersion().toString());
 		LOGGER.info("DawnCraft Tweaks " + ModDefinitions.VERSION + " initialized");

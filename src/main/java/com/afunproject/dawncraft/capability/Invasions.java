@@ -28,17 +28,20 @@ public interface Invasions {
 
 		private Random rand = new Random();
 		private List<InvasionEntry> invasions = Lists.newArrayList();
+		private int nextSpawn;
 
 		public Implementation() {
 			invasions.addAll(InvasionRegistry.getInvasions());
+			nextSpawn = rand.nextInt(120000, 240000);
 		}
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
-			if (!player.level.isClientSide && player.tickCount % 240000 == 0 && player.tickCount > 0 &! invasions.isEmpty()) {
+			if (!player.level.isClientSide && player.tickCount >= nextSpawn && player.tickCount > 0 &! invasions.isEmpty()) {
 				InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
 				invasion.spawnEntities(player);
 				invasions.remove(invasion);
+				nextSpawn = player.tickCount + rand.nextInt(120000, 240000);
 			}
 		}
 
@@ -48,6 +51,7 @@ public interface Invasions {
 			ListTag list = new ListTag();
 			for (InvasionEntry invasion : invasions) list.add(invasion.save());
 			tag.put("invasions", list);
+			tag.putInt("nextSpawn", nextSpawn);
 			return tag;
 		}
 
@@ -57,6 +61,7 @@ public interface Invasions {
 			for (Tag invasion : tag.getList("invasions", 10)) try {
 				invasions.add(new InvasionEntry((CompoundTag)invasion));
 			} catch (Exception e) {}
+			if (tag.contains("nextSpawn")) nextSpawn = tag.getInt("nextSpawn");
 		}
 
 	}
