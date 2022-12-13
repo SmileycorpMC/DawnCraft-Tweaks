@@ -6,7 +6,8 @@
 	"mixins": [
 		"MixinItemStack",
 		"MixinMob",
-		"MixinResourceLocation"
+		"MixinResourceLocation",
+		"MixinCompoundTag"
 	],
 	"client": [
 		"MixinKeyMapping",
