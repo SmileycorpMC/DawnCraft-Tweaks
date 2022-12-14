@@ -16,9 +16,9 @@ import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
 
 	@SubscribeEvent
@@ -56,7 +56,7 @@ public class ClientEventListener {
 	}
 
 	@SubscribeEvent
-	public void renderWorld(CameraSetup event){
+	public void renderCamera(CameraSetup event){
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player.hasEffect(DawnCraftEffects.TREMOR.get())) {
@@ -68,18 +68,22 @@ public class ClientEventListener {
 		}
 	}
 
-	/*@SubscribeEvent
-	public void renderWorld(RenderLevelStageEvent event){
-		if (event.getStage() == Stage.AFTER_SOLID_BLOCKS) {
-			Minecraft mc = Minecraft.getInstance();
-			LocalPlayer player = mc.player;
-			ItemStack stack = player.getMainHandItem();
-			if (stack.getItem() == DungeonItems.DUNGEON_CONFIGURATOR.get()) {
-				BlockPos pos = DungeonConfiguratorItem.getSelectedPos(stack);
-				if (pos != null) {
-					RenderingUtils.renderCubeQuad(Tesselator.getInstance().getBuilder(), 1, 1, 1, 1, new Color(5636095),
-							mc.getTextureAtlas(null).apply(new ResourceLocation("white_concrete")), mc.level, 15, pos);
-				}
+	/*@SuppressWarnings("deprecation")
+	@SubscribeEvent
+	public static void renderWorld(RenderLevelStageEvent event){
+		DawnCraft.logInfo("bing");
+		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer player = mc.player;
+		ItemStack stack = player.getMainHandItem();
+		if (stack.getItem() == DungeonItems.DUNGEON_CONFIGURATOR.get()) {
+			DawnCraft.logInfo("bong");
+			BlockPos pos = DungeonConfiguratorItem.getSelectedPos(stack);
+			if (pos != null) {
+				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
+				buffer.begin(Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP);
+				RenderingUtils.renderCubeQuad(buffer, 1, 1, 1, 1, new Color(5636095),
+						mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation("white_concrete")), mc.level, 15, pos);
+				buffer.end();
 			}
 		}
 	}*/

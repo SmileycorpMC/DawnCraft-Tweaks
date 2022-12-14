@@ -10,11 +10,14 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.mcreator.simplemobs.entity.Getsuga65Entity;
+import net.mcreator.simplemobs.entity.LiverCirrhosisEntity;
 import net.mcreator.simplemobs.entity.Merlin1306Entity;
+import net.mcreator.simplemobs.entity.MonikaSunriseEntity;
 import net.mcreator.simplemobs.entity.ShadowMewYTEntity;
 import net.mcreator.simplemobs.entity.SolarPixelEntity;
 import net.mcreator.simplemobs.entity.UGoneEntity;
 import net.mcreator.simplemobs.entity.WoodendayEntity;
+import net.mcreator.simplemobs.entity.YesImDavidEntity;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -56,11 +59,13 @@ public class SimpleMobsEvents {
 		if (event.getEntity() instanceof Getsuga65Entity) {
 			Getsuga65Entity entity = (Getsuga65Entity) event.getEntity();
 			entity.setCustomName(new TextComponent("Getsuga65"));
+			entity.setCustomNameVisible(true);
 			entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("hexerei", "warhammer"))));
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("scattered_weapons", "hunter_armor_chestplate"))));
 		}
 		if (event.getEntity() instanceof WoodendayEntity) {
 			WoodendayEntity entity = (WoodendayEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
 			entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(EpicFightItems.IRON_TACHI.get()));
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SimpleMobsModItems.DIABOLIUM_CHESTPLATE.get()));
 			entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(SimpleMobsModItems.DIABOLIUM_LEGGINGS.get()));
@@ -68,23 +73,45 @@ public class SimpleMobsEvents {
 		}
 		if (event.getEntity() instanceof ShadowMewYTEntity) {
 			ShadowMewYTEntity entity = (ShadowMewYTEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
 			entity.setCustomName(new TextComponent("ShadowMewYT"));
 		}
 		if (event.getEntity() instanceof SolarPixelEntity) {
 			SolarPixelEntity entity = (SolarPixelEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("cataclysm", "ignitium_chestplate"))));
 			entity.setCustomName(new TextComponent("SolarPixel"));
 		}
 		if (event.getEntity() instanceof Merlin1306Entity) {
 			Merlin1306Entity entity = (Merlin1306Entity) event.getEntity();
+			entity.setCustomNameVisible(true);
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_aquamirae", "abyssal_chestplate"))));
 			entity.setCustomName(new TextComponent("merlin1306"));
 		}
 		if (event.getEntity() instanceof UGoneEntity) {
 			UGoneEntity entity = (UGoneEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
 			entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(EpicFightItems.IRON_DAGGER.get()));
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(EpicFightItems.STRAY_ROBE.get()));
 			entity.setCustomName(new TextComponent("uGone"));
+		}
+		if (event.getEntity() instanceof MonikaSunriseEntity) {
+			MonikaSunriseEntity entity = (MonikaSunriseEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setCustomName(new TextComponent("MonikaSunrise"));
+		}
+		if (event.getEntity() instanceof YesImDavidEntity) {
+			YesImDavidEntity entity = (YesImDavidEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core", "paladin_chestplate"))));
+			entity.setCustomName(new TextComponent("YesImDavid"));
+		}
+		if (event.getEntity() instanceof LiverCirrhosisEntity) {
+			LiverCirrhosisEntity entity = (LiverCirrhosisEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core", "nourished_end:voidsteel_armor_chestplate"))));
+			entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core", "nourished_end:voidsteel_armor_leggings"))));
+			entity.setCustomName(new TextComponent("LiverCirrhosis"));
 		}
 	}
 

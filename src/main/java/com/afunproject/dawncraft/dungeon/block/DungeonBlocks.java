@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import com.afunproject.dawncraft.CreativeTabs;
 import com.afunproject.dawncraft.ModDefinitions;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
@@ -56,8 +55,7 @@ public class DungeonBlocks {
 
 	private static RegistryObject<Block> register(String name, Supplier<Block> supplier, boolean isFunctional) {
 		RegistryObject<Block> block = BLOCKS.register(name, supplier);
-		ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()
-				.tab(isFunctional ? CreativeTabs.DUNGEON_FUNCTIONAL_BLOCKS : CreativeTabs.DUNGEON_BLOCKS)));
+		ITEMS.register(block.getId().getPath(), () -> new BlockItemDungeon(block.get(), name, isFunctional ? CreativeTabs.DUNGEON_FUNCTIONAL_BLOCKS : CreativeTabs.DUNGEON_BLOCKS));
 		return block;
 	}
 

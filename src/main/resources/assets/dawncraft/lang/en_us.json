@@ -109,16 +109,20 @@
 	"message.dawncraft.reset_functional_block": "Reset functional block %1$s",
 	"message.dawncraft.no_mode": "WARNING: no functionality set for configuration mode %1$s",
 	
+	"configuratormode.dawncraft.link_functional": "Mode: Link Functional Blocks",
+	"configuratormode.dawncraft.unlink_functional": "Mode: Unlink Functional Blocks",
+	"configuratormode.dawncraft.reset_functional": "Mode: Reset Functional Blocks",
+	"configuratormode.dawncraft.rotate": "Mode: Rotate Blocks",
+	
 	"tooltip.dawncraft.configuratormode": "Shift right-click to switch modes",
 	"tooltip.dawncraft.configuratormode.link_functional": "Right-click to link a functional block, right-click again to link it to a trigger",
 	"tooltip.dawncraft.configuratormode.unlink_functional": "Right-click to link a functional block, right-click again to unlink it from a trigger",
 	"tooltip.dawncraft.configuratormode.reset_functional": "Right-click a single-use functional block to reset it",
 	"tooltip.dawncraft.configuratormode.rotate": "Right-click to rotate a block",
 	
-	"configuratormode.dawncraft.link_functional": "Mode: Link Functional Blocks",
-	"configuratormode.dawncraft.unlink_functional": "Mode: Unlink Functional Blocks",
-	"configuratormode.dawncraft.reset_functional": "Mode: Reset Functional Blocks",
-	"configuratormode.dawncraft.rotate": "Mode: Rotate Blocks",
+	"tooltip.dawncraft.chest_spawner": "Spawns a chest with the contained items when a linked block is triggered.",
+	"tooltip.dawncraft.redstone_activator": "Outputs a redstone signal when a linked block is triggered.",
+	"tooltip.dawncraft.redstone_trigger": "Triggers linked blocks when it recieves a redstone signal.",
 	
 	"tile.dawncraft.chest_spawner": "Chest Spawner",
 	
