@@ -19,6 +19,9 @@ public class InvasionRegistry {
 		register(new InvasionEntry("SolarPixel", SimpleMobsModEntities.SOLAR_PIXEL.get()));
 		register(new InvasionEntry("merlin1306", SimpleMobsModEntities.MERLIN_1306.get()));
 		register(new InvasionEntry("uGone", SimpleMobsModEntities.U_GONE.get()));
+		register(new InvasionEntry("MonikaSunrise", SimpleMobsModEntities.MONIKA_SUNRISE.get()));
+		register(new InvasionEntry("YeslmDavid", SimpleMobsModEntities.YESLM_DAVID.get()));
+		register(new InvasionEntry("LiverCirrhosi", SimpleMobsModEntities.LIVER_CIRRHOSIS.get()));
 	}
 
 	public static void register(InvasionEntry entry) {
