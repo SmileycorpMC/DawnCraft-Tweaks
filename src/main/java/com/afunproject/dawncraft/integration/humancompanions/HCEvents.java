@@ -2,6 +2,7 @@ package com.afunproject.dawncraft.integration.humancompanions;
 
 import java.util.Random;
 
+import com.afunproject.dawncraft.EventListener;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
@@ -27,8 +28,8 @@ public class HCEvents {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(new HCEvents());
-		MinecraftForge.EVENT_BUS.register(HCEvents.class);
 		HCEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		EventListener.ATTRIBUTE_SUPPLIERS.add(HCEvents::registerAttributes);
 	}
 
 	@SubscribeEvent
@@ -58,7 +59,6 @@ public class HCEvents {
 		}
 	}
 
-	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(HCEntities.KNIGHT_PLAYER.get(), Knight.createAttributes().build());
 	}

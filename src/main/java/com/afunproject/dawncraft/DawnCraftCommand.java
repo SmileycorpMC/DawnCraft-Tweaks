@@ -3,6 +3,7 @@ package com.afunproject.dawncraft;
 import java.util.List;
 import java.util.function.Function;
 
+import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.google.common.collect.Lists;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -29,7 +30,7 @@ public class DawnCraftCommand {
 	private static void registerCommand(CommandDispatcher<CommandSourceStack> dispatcher, LiteralArgumentBuilder<CommandSourceStack> command) {
 		DCSubCommandsEvent event = new DCSubCommandsEvent(command.requires(src -> src.hasPermission(1)));
 		MinecraftForge.EVENT_BUS.post(event);
-		dispatcher.register(event.command);
+		dispatcher.register(event.getCommand());
 	}
 
 }

@@ -60,7 +60,7 @@ public interface RestrictBlock {
 			if (shouldRestrict) nbt.putBoolean("shouldRestrict", shouldRestrict);
 			if (timesSpawned != 0) nbt.putInt("timesSpawned", timesSpawned);
 			if (center != null) nbt.put("center", ModUtils.savePosToNBT(center));
-			if (range != 0) nbt.putInt("range", range);
+			if (range >= 0) nbt.putInt("range", range);
 			return nbt;
 		}
 

@@ -1,8 +1,8 @@
 package com.afunproject.dawncraft.integration.simplemobs;
 
-import com.afunproject.dawncraft.DCSubCommandsEvent;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;
+import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionEntry;
 import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionKey;
 import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionRegistry;

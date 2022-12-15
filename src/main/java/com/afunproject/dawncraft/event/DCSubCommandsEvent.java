@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft;
+package com.afunproject.dawncraft.event;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -14,7 +14,11 @@ public class DCSubCommandsEvent extends Event {
 	}
 
 	public void addSubCommand(LiteralArgumentBuilder<CommandSourceStack> subcommand) {
-		command = command.then(subcommand);
+		command = getCommand().then(subcommand);
+	}
+
+	public LiteralArgumentBuilder<CommandSourceStack> getCommand() {
+		return command;
 	}
 
 }

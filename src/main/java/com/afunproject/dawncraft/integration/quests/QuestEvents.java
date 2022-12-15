@@ -1,7 +1,8 @@
 package com.afunproject.dawncraft.integration.quests;
 
-import com.afunproject.dawncraft.DCSubCommandsEvent;
+import com.afunproject.dawncraft.EventListener;
 import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntities;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
@@ -31,13 +32,12 @@ public class QuestEvents {
 	public static void init() {
 		TaskTypes.register(ModDefinitions.getResource("advancement"), AdvancementTask.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(new QuestEvents());
-		MinecraftForge.EVENT_BUS.register(QuestEvents.class);
 		QuestEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		EventListener.ATTRIBUTE_SUPPLIERS.add(QuestEvents::registerAttributes);
 		QuestNetworkHandler.initPackets();
 		if(ModList.get().isLoaded("followme")) MinecraftForge.EVENT_BUS.register(new FollowMeQuestEvents());
 	}
 
-	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(QuestEntities.FALLEN.get(), QuestEntityBase.createAttributes());
 		event.put(QuestEntities.QUEST_PLAYER.get(), QuestEntityBase.createAttributes());

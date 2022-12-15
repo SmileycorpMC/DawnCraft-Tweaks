@@ -1,10 +1,14 @@
 package com.afunproject.dawncraft.client;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
+import com.google.common.collect.Lists;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -20,6 +24,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ClientEventRegister {
 
+	public static final List<Consumer<RegisterRenderers>> RENDERER_REGISTERS = Lists.newArrayList();
+
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event){
 		ItemBlockRenderTypes.setRenderLayer(DungeonBlocks.CHEST_SPAWNER.get(), RenderType.cutoutMipped());
@@ -30,6 +36,7 @@ public class ClientEventRegister {
 	@SubscribeEvent
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerBlockEntityRenderer(DungeonBlockEntities.DUNGEON_DOOR.get(), DungeonDoorBlockEntityRenderer::new);
+		for (Consumer<RegisterRenderers> supplier : RENDERER_REGISTERS) supplier.accept(event);
 	}
 
 	@SubscribeEvent

@@ -13,11 +13,12 @@ import com.afunproject.dawncraft.integration.IntegrationHandler;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.mojang.logging.LogUtils;
 
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -46,17 +47,15 @@ public class DawnCraft {
 		DawnCraftEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DawnCraftEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		IntegrationHandler.construct();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			MinecraftForge.EVENT_BUS.register(new ClientEventListener());
+			IntegrationHandler.clientSetup();
+		});
 	}
 
 	@SubscribeEvent
 	public static void modSetup(FMLCommonSetupEvent event) {
 		IntegrationHandler.setup();
-	}
-
-	@SubscribeEvent
-	public static void clientSetup(FMLClientSetupEvent event) {
-		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
-		IntegrationHandler.clientSetup();
 	}
 
 	public static void logInfo(Object message) {

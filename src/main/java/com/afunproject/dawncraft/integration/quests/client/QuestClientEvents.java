@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.client;
 
+import com.afunproject.dawncraft.client.ClientEventRegister;
 import com.afunproject.dawncraft.client.entity.FallenRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
@@ -14,15 +15,14 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class QuestClientEvents {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(QuestClientEvents.class);
+		ClientEventRegister.RENDERER_REGISTERS.add(QuestClientEvents::registerEntityRenderers);
 	}
 
-	@SubscribeEvent
 	public static void registerEntityRenderers(RegisterRenderers event) {
 		event.registerEntityRenderer(QuestEntities.FALLEN.get(), FallenRenderer::new);
 		event.registerEntityRenderer(QuestEntities.QUEST_PLAYER.get(), PlayerEntityRenderer::new);

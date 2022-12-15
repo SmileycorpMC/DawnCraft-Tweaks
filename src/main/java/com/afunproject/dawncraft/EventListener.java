@@ -2,6 +2,7 @@ package com.afunproject.dawncraft;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.RestrictBlock;
@@ -18,15 +19,19 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
+@EventBusSubscriber(modid = ModDefinitions.MODID, bus = Bus.MOD)
 public class EventListener {
 
-	//private static final List<EntityType<?>> BOSS_ENTITIES = Lists.newArrayList();
-
 	private static final UUID BOSS_MODIFIER = UUID.fromString("dd686c7a-e2c7-479c-96d5-3e193b35c7b8");
+
+	public static final List<Consumer<EntityAttributeCreationEvent>> ATTRIBUTE_SUPPLIERS = Lists.newArrayList();
 
 	List<String> bosses = Lists.newArrayList(
 			"entity.minecraft.ender_dragon","entity.minecraft.wither","entity.simple_mobs.ogre",
@@ -83,6 +88,12 @@ public class EventListener {
 				player.setGameMode(GameType.SURVIVAL);
 			}
 		}
+	}
+
+	//major jank because forge and eclipse both suck
+	@SubscribeEvent
+	public static void registerAttributes(EntityAttributeCreationEvent event) {
+		for (Consumer<EntityAttributeCreationEvent> supplier : ATTRIBUTE_SUPPLIERS) supplier.accept(event);
 	}
 
 }
