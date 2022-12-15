@@ -109,8 +109,8 @@ public class SimpleMobsEvents {
 		if (event.getEntity() instanceof LiverCirrhosisEntity) {
 			LiverCirrhosisEntity entity = (LiverCirrhosisEntity) event.getEntity();
 			entity.setCustomNameVisible(true);
-			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core", "nourished_end:voidsteel_armor_chestplate"))));
-			entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core", "nourished_end:voidsteel_armor_leggings"))));
+			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("nourished_end", "voidsteel_armor_chestplate"))));
+			entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("nourished_end", "voidsteel_armor_leggings"))));
 			entity.setCustomName(new TextComponent("LiverCirrhosis"));
 		}
 	}
