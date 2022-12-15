@@ -29,21 +29,15 @@ public interface RestrictBlock {
 
 		@Override
 		public boolean canRestrict(Mob entity) {
-			if (!shouldRestrict) return false;
-			if (timesSpawned == 2) return true;
-			if(timesSpawned++ >= 1) {
-				return true;
-			}
-			return false;
+			return shouldRestrict;
 		}
 
 		@Override
 		public void applyRestriction(Mob entity) {
-			if (timesSpawned == 1) {
-				entity.restrictTo(entity.blockPosition(), 1);
-			} else {
+			if (timesSpawned < 2) {
 				if (center == null) center = entity.blockPosition();
 				entity.restrictTo(center, range);
+				timesSpawned = 2;
 			}
 		}
 
