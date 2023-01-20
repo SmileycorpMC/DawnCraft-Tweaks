@@ -9,6 +9,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
@@ -51,6 +52,18 @@ public class ClientEventListener {
 					if (!mc.options.getCameraType().isFirstPerson()) mc.options.setCameraType(CameraType.FIRST_PERSON);
 				}
 				MinimapRenderer.renderBasicMinimap(poseStack, stack, player.getUseItem().isEmpty() && mc.options.keyUse.isDown());
+			} else {
+				Inventory inv = player.getInventory();
+				for (int i = 0; i < inv.getContainerSize(); i++) {
+					stack = inv.getItem(i);
+					if (stack != null) {
+						if (stack.getItem() == Items.FILLED_MAP) {
+							MinimapRenderer.renderBasicMinimap(poseStack, stack, false);
+							return;
+						}
+					}
+				}
+
 			}
 		}
 	}
