@@ -3,6 +3,7 @@ package com.afunproject.dawncraft.dungeon.block.entity;
 import com.afunproject.dawncraft.dungeon.block.entity.base.LockableBlockEntityBase;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +20,11 @@ public class DungeonDoorBlockEntity extends LockableBlockEntityBase {
 
 	public void open() {
 		level.setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
+	}
+
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 }

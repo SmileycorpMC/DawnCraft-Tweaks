@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.client;
+package com.afunproject.dawncraft.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;

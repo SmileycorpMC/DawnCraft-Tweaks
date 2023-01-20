@@ -7,6 +7,7 @@ import com.afunproject.dawncraft.dungeon.block.entity.base.TriggerBlockEntityBas
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,6 +66,11 @@ public class RedstoneActivatorBlockEntity extends CamouflagedFunctionalBlockEnti
 
 	public int getSignalLength() {
 		return signal_length;
+	}
+
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 }

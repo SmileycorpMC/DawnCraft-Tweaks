@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.humancompanions.client;
 
-import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
+import com.afunproject.dawncraft.client.render.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
 
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;

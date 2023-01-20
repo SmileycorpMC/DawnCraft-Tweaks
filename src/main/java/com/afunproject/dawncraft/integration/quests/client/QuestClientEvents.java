@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.integration.quests.client;
 
-import com.afunproject.dawncraft.client.entity.FallenRenderer;
-import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
+import com.afunproject.dawncraft.client.render.entity.FallenRenderer;
+import com.afunproject.dawncraft.client.render.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;

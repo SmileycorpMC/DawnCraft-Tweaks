@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.client.render.MinimapRenderer;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.mojang.blaze3d.vertex.PoseStack;

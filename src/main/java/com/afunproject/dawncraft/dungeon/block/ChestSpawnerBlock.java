@@ -27,7 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class ChestSpawnerBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
 	public ChestSpawnerBlock() {
-		super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_RED).strength(-1, 18000000));
+		super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_RED).strength(-1, 18000000).noOcclusion());
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 

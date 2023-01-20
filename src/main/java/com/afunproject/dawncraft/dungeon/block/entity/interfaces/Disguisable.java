@@ -1,16 +1,14 @@
 package com.afunproject.dawncraft.dungeon.block.entity.interfaces;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelProperty;
 
 public interface Disguisable {
 
-	public ResourceLocation getTexture();
+	public static ModelProperty<BlockState> TEXTURE = new ModelProperty<BlockState>();
 
-	public default void setTexture(Block block) {
-		setTexture(block.getRegistryName());
-	}
+	public BlockState getTexture();
 
-	public void setTexture(ResourceLocation block);
+	public void setTexture(BlockState block);
 
 }

@@ -36,7 +36,7 @@ public class RedstoneActivatorBlock extends Block implements EntityBlock {
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
 	public RedstoneActivatorBlock() {
-		super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_RED).strength(-1, 18000000));
+		super(Properties.of(Material.STONE, MaterialColor.TERRACOTTA_RED).strength(-1, 18000000).noOcclusion());
 		registerDefaultState(stateDefinition.any().setValue(POWERED, Boolean.valueOf(false)));
 	}
 

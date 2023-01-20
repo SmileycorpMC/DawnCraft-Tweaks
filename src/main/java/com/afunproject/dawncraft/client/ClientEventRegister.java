@@ -1,8 +1,9 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
-import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
+import com.afunproject.dawncraft.client.model.block.DisguisedModelLoader;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
+import com.afunproject.dawncraft.client.render.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 
@@ -11,7 +12,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -40,8 +42,8 @@ public class ClientEventRegister {
 
 
 	@SubscribeEvent
-	public static void onModelBake(ModelBakeEvent event) {
-
+	public static void loadModels(ModelRegistryEvent event) {
+		ModelLoaderRegistry.registerLoader(ModDefinitions.getResource("disguisable"), new DisguisedModelLoader());
 	}
 
 }

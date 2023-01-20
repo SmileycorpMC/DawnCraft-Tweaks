@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.client.entity;
+package com.afunproject.dawncraft.client.model.entity;
 
 import com.afunproject.dawncraft.integration.quests.custom.entity.Fallen;
 import com.mojang.blaze3d.vertex.PoseStack;
