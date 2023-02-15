@@ -24,7 +24,7 @@ public class QuestClientEvents {
 	}
 
 	public static void registerEntityRenderers(RegisterRenderers event) {
-		event.registerEntityRenderer(QuestEntities.FALLEN.get(), FallenRenderer::new);
+		event.registerEntityRenderer(QuestEntities.FALLEN_ADVENTURER.get(), FallenRenderer::new);
 		event.registerEntityRenderer(QuestEntities.QUEST_PLAYER.get(), PlayerEntityRenderer::new);
 	}
 

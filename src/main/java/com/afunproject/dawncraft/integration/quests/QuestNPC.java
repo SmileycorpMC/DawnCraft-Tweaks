@@ -16,10 +16,17 @@ import net.minecraft.world.phys.Vec3;
 public enum QuestNPC implements StringRepresentable {
 
 	WEREWOLF(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"hjvu55\", \"quest\":\"dawncraft:werewolf\", \"damageable\":1b}"),
-	BELL_GHOST(QuestEntities.FALLEN.get(), "{\"username\":\"NickWins\", \"quest\":\"dawncraft:ghost\"}"),
+	BELL_GHOST(QuestEntities.FALLEN_ADVENTURER.get(), "{\"username\":\"NickWins\", \"quest\":\"dawncraft:ghost\"}"),
 	CULT_INFORMER(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"dg2q\", \"quest\":\"dawncraft:cult\"}"),
 	BARREL(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"JosslynMC\", \"quest\":\"dawncraft:barrel\"}"),
-	ALCHEMIST(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"EmpyreanAsura\", \"quest\":\"dawncraft:alchemist\"}\"}");
+	ALCHEMIST(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"EmpyreanAsura\", \"quest\":\"dawncraft:alchemist\"}\"}"),
+	MASK_GHOST(QuestEntities.FALLEN_ADVENTURER.get(), "{\"username\":\"Sir_Sense\", \"quest\":\"dawncraft:mask_ghost\"}"),
+	WITCH(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"zherterry\", \"quest\":\"dawncraft:witch\", \"damageable\":1b}");
+	//T1(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Dark_King_0507\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
+	//T2(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"ReaperDoge\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
+	//T3(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Shinykey\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
+	//T4(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Arche_Princess\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}");
+
 
 	private final EntityType<?> type;
 	private CompoundTag tag = new CompoundTag();

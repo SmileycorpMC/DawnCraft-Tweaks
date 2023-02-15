@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "alexsmobs:bear_fur",
+	"untamedwilds:hide_bear_ashen",
+	"untamedwilds:hide_bear_black",
+	"untamedwilds:hide_bear_brown",
+	"untamedwilds:hide_bear_white"
+  ]
+}

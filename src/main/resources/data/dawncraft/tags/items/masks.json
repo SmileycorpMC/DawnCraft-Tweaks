@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "fromtheshadows:plague_doctor_mask",
+	"simple_mobs:plaguemask_helmet",
+	"savage_and_ravage:mask_of_dishonesty",
+	"mowziesmobs:barakoa_mask_fury",
+	"mowziesmobs:barakoa_mask_fear",
+	"mowziesmobs:barakoa_mask_rage",
+	"mowziesmobs:barakoa_mask_bliss",
+	"mowziesmobs:barakoa_mask_misery",
+	"mowziesmobs:barakoa_mask_faith",
+	"mowziesmobs:barako_mask",
+	"ob_core:obsidian_helmet",
+	"dawncraft:cursed_mask"
+  ]
+}

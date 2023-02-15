@@ -24,6 +24,13 @@ public class MixinMouseHandler {
 				if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 					if (ClientHandler.shouldImmobilize(button, true)) {
 						callback.cancel();
+						return;
+					}
+				}
+				if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+					if (ClientHandler.isUnusableByFrog(button, true)) {
+						callback.cancel();
+						return;
 					}
 				}
 			}

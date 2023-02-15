@@ -24,6 +24,13 @@ public class MixinKeyboardHandler {
 				if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 					if (ClientHandler.shouldImmobilize(key, false)) {
 						callback.cancel();
+						return;
+					}
+				}
+				if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+					if (ClientHandler.isUnusableByFrog(key, false)) {
+						callback.cancel();
+						return;
 					}
 				}
 			}

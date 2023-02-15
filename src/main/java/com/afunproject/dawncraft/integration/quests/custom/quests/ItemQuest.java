@@ -57,7 +57,7 @@ public abstract class ItemQuest extends Quest {
 		QuestCondition[] conditions = new QuestCondition[stacks.length];
 		for (int i = 0; i < stacks.length; i++) {
 			int j = 2*(i+1);
-			conditions[i] = new AndCondition((player, entity, phase)->phase==j, new ItemCondition(stacks[i]));
+			conditions[i] = new AndCondition((player, entity, phase, isTest)->phase==j, new ItemCondition(stacks[i]));
 		}
 		return new OrCondition(conditions);
 	}

@@ -42,7 +42,8 @@ public abstract class Quest {
 	}
 
 	public boolean isQuestComplete(Player player, Mob entity, int phase) {
-		for (QuestCondition condition : conditions) if (!condition.apply(player, entity, phase)) return false;
+		for (QuestCondition condition : conditions) if (!condition.apply(player, entity, phase, true)) return false;
+		for (QuestCondition condition : conditions) condition.apply(player, entity, phase, false);
 		return true;
 	}
 
@@ -52,6 +53,8 @@ public abstract class Quest {
 
 	public void onDeath(Mob entity, DamageSource source) {}
 
+	public void onHurt(Mob entity, DamageSource source) {}
+
 	public abstract void completeQuest(Player quest_completer, Mob entity, int phase, boolean accepted);
 
 	public abstract String getText(int phase, boolean accepted);
@@ -60,13 +63,13 @@ public abstract class Quest {
 
 	public abstract boolean isQuestActive(Mob entity, int phase);
 
-	protected void giveItem(Player player, ItemStack stack) {
+	protected final void giveItem(Player player, ItemStack stack) {
 		if (!player.addItem(stack)) {
 			player.drop(stack, false);
 		}
 	}
 
-	protected ItemStack createMap(ServerLevel level, BlockPos center, ResourceLocation structure, String name) {
+	protected final ItemStack createMap(ServerLevel level, BlockPos center, ResourceLocation structure, String name) {
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
 		ResourceKey<ConfiguredStructureFeature<?, ?>> structureKey = ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, structure);
 		Optional<Holder<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.m_203636_(structureKey);

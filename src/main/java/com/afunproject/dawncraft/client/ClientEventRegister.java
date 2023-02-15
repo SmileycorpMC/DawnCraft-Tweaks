@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.client.entity.FrogModel;
+import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.client.render.blockentity.DungeonDoorBlockEntityRenderer;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
@@ -40,11 +42,16 @@ public class ClientEventRegister {
 	}
 
 	@SubscribeEvent
+	public static void registerLayers(EntityRenderersEvent.AddLayers event) {
+		FrogRenderer.init();
+	}
+
+	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(PlayerEntityRenderer.DEFAULT, () -> PlayerEntityRenderer.createLayer(false));
 		event.registerLayerDefinition(PlayerEntityRenderer.SLIM, () -> PlayerEntityRenderer.createLayer(true));
+		event.registerLayerDefinition(FrogRenderer.DEFAULT, FrogModel::createBodyLayer);
 	}
-
 
 	@SubscribeEvent
 	public static void onModelBake(ModelBakeEvent event) {

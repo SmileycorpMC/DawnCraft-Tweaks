@@ -20,9 +20,9 @@ public class ItemCondition implements QuestCondition {
 	}
 
 	@Override
-	public boolean apply(Player player, Mob entity, int phase) {
+	public boolean apply(Player player, Mob entity, int phase, boolean isTest) {
 		if (player.getInventory().contains(stack) && player.getInventory().countItem(stack.getItem())>=stack.getCount()) {
-			if (consume) {
+			if (consume &! isTest) {
 				for (ItemStack stack : player.getInventory().items) {
 					int count = this.stack.getCount();
 					if (stack.getItem() == this.stack.getItem()) {

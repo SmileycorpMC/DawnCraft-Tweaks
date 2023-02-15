@@ -25,6 +25,15 @@ public class MixinKeyMapping {
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
 					callback.cancel();
+					return;
+				}
+			}
+			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+				KeyMapping mapping = (KeyMapping)(Object)this;
+				if (ClientHandler.FROG_KEYS.contains(mapping)) {
+					callback.setReturnValue(false);
+					callback.cancel();
+					return;
 				}
 			}
 		}
@@ -40,6 +49,15 @@ public class MixinKeyMapping {
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
 					callback.cancel();
+					return;
+				}
+			}
+			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+				KeyMapping mapping = (KeyMapping)(Object)this;
+				if (ClientHandler.FROG_KEYS.contains(mapping)) {
+					callback.setReturnValue(false);
+					callback.cancel();
+					return;
 				}
 			}
 		}
@@ -55,6 +73,15 @@ public class MixinKeyMapping {
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
 					callback.cancel();
+					return;
+				}
+			}
+			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+				KeyMapping mapping = (KeyMapping)(Object)this;
+				if (ClientHandler.FROG_KEYS.contains(mapping)) {
+					callback.setReturnValue(false);
+					callback.cancel();
+					return;
 				}
 			}
 		}
@@ -70,6 +97,15 @@ public class MixinKeyMapping {
 				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
 					callback.cancel();
+					return;
+				}
+			}
+			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+				KeyMapping mapping = (KeyMapping)(Object)this;
+				if (ClientHandler.FROG_KEYS.contains(mapping)) {
+					callback.setReturnValue(false);
+					callback.cancel();
+					return;
 				}
 			}
 		}

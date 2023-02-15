@@ -17,7 +17,7 @@ import net.minecraftforge.network.NetworkDirection;
 public class AlchemistQuest extends Quest {
 
 	public AlchemistQuest() {
-		super(new AndCondition((player, entity, phase)->phase!=-1, new ItemCondition(new ItemStack(Items.EMERALD))));
+		super(new AndCondition((player, entity, phase, isTest)->phase!=-1, new ItemCondition(new ItemStack(Items.EMERALD))));
 	}
 
 	@Override

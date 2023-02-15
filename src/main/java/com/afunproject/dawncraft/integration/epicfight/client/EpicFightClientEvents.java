@@ -17,6 +17,9 @@ public class EpicFightClientEvents {
 		ClientHandler.IMMOBILIZED_KEYS.add(EpicFightKeyMappings.DODGE);
 		ClientHandler.IMMOBILIZED_KEYS.add(EpicFightKeyMappings.SPECIAL_SKILL);
 		ClientHandler.IMMOBILIZED_KEYS.add(EpicFightKeyMappings.SPECIAL_SKILL_TOOLTIP);
+		ClientHandler.FROG_KEYS.add(EpicFightKeyMappings.DODGE);
+		ClientHandler.FROG_KEYS.add(EpicFightKeyMappings.SPECIAL_SKILL);
+		ClientHandler.FROG_KEYS.add(EpicFightKeyMappings.SPECIAL_SKILL_TOOLTIP);
 	}
 
 }

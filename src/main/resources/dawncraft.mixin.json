@@ -7,14 +7,16 @@
 		"MixinItemStack",
 		"MixinMob",
 		"MixinResourceLocation",
-		"MixinCompoundTag"
+		"MixinCompoundTag",
+		"MixinEntity",
+		"MixinLivingEntity",
+		"MixinNearestAttackableTargetGoal"
 	],
 	"client": [
 		"MixinKeyMapping",
 		"MixinKeyboardHandler",
 		"MixinMouseHandler",
-		"MixinEntityRenderer",
-		"MixinEntityRenderDispatcher"
+		"MixinEntityRenderer"
 	],
 	"minVersion": "0.8"
 }

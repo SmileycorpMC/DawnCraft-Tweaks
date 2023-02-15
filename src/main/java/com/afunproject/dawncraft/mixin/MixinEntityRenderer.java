@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.afunproject.dawncraft.client.EntityRenderDispatcherExtension;
+import com.afunproject.dawncraft.client.EntityRenderProperties;
 
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -20,7 +20,7 @@ public abstract class MixinEntityRenderer {
 
 	@Inject(at=@At("HEAD"), method = "shouldShowName(Lnet/minecraft/world/entity/Entity;)Z", cancellable = true)
 	protected void shouldShowName(Entity entity, CallbackInfoReturnable<Boolean> callback) {
-		if (!((EntityRenderDispatcherExtension)entityRenderDispatcher).shouldRenderNameplate()) {
+		if (!EntityRenderProperties.shouldRenderNameplate()) {
 			callback.setReturnValue(false);
 			callback.cancel();
 		}

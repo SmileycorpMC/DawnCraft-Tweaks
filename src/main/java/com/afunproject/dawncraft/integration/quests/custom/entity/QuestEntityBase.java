@@ -94,7 +94,9 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		return (damageable || source == DamageSource.OUT_OF_WORLD) ? super.hurt(source, amount) : false;
+		boolean result = (damageable || source == DamageSource.OUT_OF_WORLD) ? super.hurt(source, amount) : false;
+		if (damageable && quest != null) quest.onHurt(this, source);
+		return result;
 	}
 
 	@Override

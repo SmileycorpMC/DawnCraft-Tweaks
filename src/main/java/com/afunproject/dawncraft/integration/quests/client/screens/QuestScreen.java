@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.integration.quests.client.screens;
 import java.util.List;
 import java.util.Random;
 
-import com.afunproject.dawncraft.client.EntityRenderDispatcherExtension;
+import com.afunproject.dawncraft.client.EntityRenderProperties;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.network.TriggerQuestCompleteMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
@@ -16,7 +16,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -79,6 +78,16 @@ public class QuestScreen extends Screen {
 					position = position + i + 1;
 					continue;
 				}
+				if (str.substring(position, newPos).contains("¬")) {
+					int i = str.substring(position, newPos).indexOf("¬");
+					lines.add(str.substring(position, position + i));
+					position = position + i + 1;
+					if (lines.size() >= 10) {
+						pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
+						lines = Lists.newArrayList();
+					}
+					continue;
+				}
 				if (size < TEXT_WIDTH) {
 					lines.add(str.substring(position));
 					break;
@@ -122,10 +131,9 @@ public class QuestScreen extends Screen {
 		int entityX = 37;
 		int entityY = 240;
 		int size = 65;
-		EntityRenderDispatcher dispatcher = minecraft.getEntityRenderDispatcher();
-		((EntityRenderDispatcherExtension)dispatcher).setRenderNameplate(false);
+		EntityRenderProperties.setRenderNameplate(false);
 		InventoryScreen.renderEntityInInventory(entityX, entityY, size, entityX - mouseX, entityY + (entity.getEyeHeight()) - mouseY, entity);
-		((EntityRenderDispatcherExtension)dispatcher).setRenderNameplate(true);
+		EntityRenderProperties.setRenderNameplate(true);
 		if (pages.size() > 0) {
 			pages.get(pageIndex).render(poseStack, mouseX, mouseY, partialTicks);
 		}

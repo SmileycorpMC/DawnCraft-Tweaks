@@ -1,14 +1,16 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
-import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -16,17 +18,46 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
 
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void renderLivingEventStart(RenderLivingEvent.Pre<?, ?> event) {
+		LivingEntity entity = event.getEntity();
+		if (event.getRenderer() instanceof FrogRenderer) {
+			event.setCanceled(true);
+		}
+		else if (entity.hasEffect(DawnCraftEffects.FROGFORM.get())) {
+			event.setCanceled(true);
+			float pt = event.getPartialTick();
+			FrogRenderer.INSTANCE.render(entity, Mth.lerp(pt, entity.yRotO, entity.getYRot()), pt, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+	public void renderLivingEventEnd(RenderLivingEvent.Pre<?, ?> event) {
+		if (event.getRenderer() instanceof FrogRenderer) {
+			event.setCanceled(false);
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void renderHandEventStart(RenderHandEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		if (mc.player.hasEffect(DawnCraftEffects.FROGFORM.get())) event.setCanceled(true);
+	}
+
 	@SubscribeEvent
-	public void renderOverlay(RenderGameOverlayEvent.Pre event){
+	public void renderOverlay(RenderGameOverlayEvent.Pre event) {
 		Minecraft mc = Minecraft.getInstance();
 		//hide during quest screen
-		if (mc.screen instanceof QuestScreen) {
+		if (mc.screen != null) {
 			event.setCanceled(true);
 			return;
 		}

@@ -13,12 +13,14 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DungeonItems {
 
-	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
 
-	private static Map<KeyColour, RegistryObject<Item>> KEY_MAP = Maps.newHashMap();
-	private static Map<KeyColour, RegistryObject<Item>> LOCK_MAP = Maps.newHashMap();
+	private static final Map<KeyColour, RegistryObject<Item>> KEY_MAP = Maps.newHashMap();
+	private static final Map<KeyColour, RegistryObject<Item>> LOCK_MAP = Maps.newHashMap();
 
 	public static final RegistryObject<Item> DUNGEON_CONFIGURATOR = ITEMS.register("dungeon_configurator", DungeonConfiguratorItem :: new);
+	public static final RegistryObject<Item> SKELETON_KEY = ITEMS.register("skeleton_key", SkeletonKeyItem :: new);
+	public static final RegistryObject<Item> CURSED_MASK = ITEMS.register("cursed_mask", CursedMaskItem :: new);
 
 	static {
 		for (KeyColour colour : KeyColour.values()) {

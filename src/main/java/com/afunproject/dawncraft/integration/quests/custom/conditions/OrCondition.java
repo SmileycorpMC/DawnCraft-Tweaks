@@ -12,8 +12,8 @@ public class OrCondition implements QuestCondition {
 	}
 
 	@Override
-	public boolean apply(Player player, Mob entity, int phase) {
-		for (QuestCondition condition : conditions) if (condition.apply(player, entity, phase)) return true;
+	public boolean apply(Player player, Mob entity, int phase, boolean isTest) {
+		for (QuestCondition condition : conditions) if (condition.apply(player, entity, phase, isTest)) return true;
 		return false;
 	}
 

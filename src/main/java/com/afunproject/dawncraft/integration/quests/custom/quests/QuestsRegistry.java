@@ -9,13 +9,17 @@ import net.minecraft.resources.ResourceLocation;
 
 public class QuestsRegistry {
 
-	private static Map<ResourceLocation, Quest> QUESTS = Maps.newHashMap();
+	private final static Map<ResourceLocation, Quest> QUESTS = Maps.newHashMap();
+
+	public static final Quest INTRO_QUEST = registerQuest(ModDefinitions.getResource("intro"), new IntroQuest());
 
 	public static final Quest WEREWOLF_QUEST = registerQuest(ModDefinitions.getResource("werewolf"), new WerewolfQuest());
-	public static final Quest GHOST_QUEST = registerQuest(ModDefinitions.getResource("ghost"), new GhostQuest());
+	public static final Quest BELL_GHOST_QUEST = registerQuest(ModDefinitions.getResource("ghost"), new BellGhostQuest());
 	public static final Quest CULT_QUEST = registerQuest(ModDefinitions.getResource("cult"), new CultQuest());
 	public static final Quest BARREL_QUEST = registerQuest(ModDefinitions.getResource("barrel"), new BarrelQuest());
 	public static final Quest ALCHEMIST = registerQuest(ModDefinitions.getResource("alchemist"), new AlchemistQuest());
+	public static final Quest MASK_GHOST_QUEST = registerQuest(ModDefinitions.getResource("mask_ghost"), new MaskGhostQuest());
+	public static final Quest WITCH_QUEST = registerQuest(ModDefinitions.getResource("witch"), new WitchQuest());
 
 	public static Quest registerQuest(ResourceLocation registry, Quest quest) {
 		quest.setRegistryName(registry);

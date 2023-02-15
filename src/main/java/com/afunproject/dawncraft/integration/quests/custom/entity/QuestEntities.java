@@ -12,7 +12,7 @@ public class QuestEntities {
 
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, ModDefinitions.MODID);
 
-	public static final RegistryObject<EntityType<Fallen>> FALLEN = ENTITIES.register("fallen",  () ->
+	public static final RegistryObject<EntityType<Fallen>> FALLEN_ADVENTURER = ENTITIES.register("fallen",  () ->
 	EntityType.Builder.<Fallen>of(Fallen::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("fallen"));
 
 	public static final RegistryObject<EntityType<QuestPlayer>> QUEST_PLAYER = ENTITIES.register("quest_player",  () ->
