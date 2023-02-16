@@ -92,6 +92,7 @@
 	"item.dawncraft.dungeon_configurator": "Dungeon Configurator",
 	"item.dawncraft.skeleton_key": "Skeleton Key",
 	"item.dawncraft.cursed_mask": "Cursed Mask",
+	"item.dawncraft.rebirth_staff": "Staff of Rebirth",
 	
 	"map.dawncraft.cultist": "Cultist Hideout Map",
 	"map.dawncraft.cultist_2": "Cultist's Map",
@@ -137,6 +138,11 @@
 	"tooltip.dawncraft.cursed_mask_0": "This powerful mask used to contain a demon",
 	"tooltip.dawncraft.cursed_mask_1": "Wearing it will make some monsters ignore you unless provoked",
 	
+	"tooltip.dawncraft.rebirth_staff.inert_0": "Inert",
+	"tooltip.dawncraft.rebirth_staff.inert_1": "This staff has no power, it's useless",
+	"tooltip.dawncraft.rebirth_staff.powered_0": "Powered",
+	"tooltip.dawncraft.rebirth_staff.powered_1": "This magical staff has the power to restore kingdoms",
+	
 	"tile.dawncraft.chest_spawner": "Chest Spawner",
 	
 	"effect.dawncraft.immobilized": "Immobilized",
@@ -181,6 +187,10 @@
 	"text.dawncraft.quest.witch1":"You over there could you lend me a hand?¬If you can manage to help me your prize will be grand.¶Without completing my ritual the world may be at stake¬To complete this for me you will need to make haste.¶There's only a few ingredients I'll need:¬Wing of Bat, Skin of Tree,¬Eye of Bug, Wax of Bee,¬A leg from a hare,¬Tufts of pelt from a bear,¬And finally gem wholey green.",
 	"text.dawncraft.quest.witch2":"Have you brought my list to me?¬Wing of Bat, Skin of Tree¬Eye of Bug, Wax of Bee,¬A leg from a hare,¬Tufts of pelt from a bear,¬And finally a gem wholey green.",
 	"text.dawncraft.quest.witch3":"Now to banish the litch¬Just a drop of my blood from as a witch¶So I must bid you goodbye¬These will be more of use to you than I.",
+	
+	"text.dawncraft.quest.king1":"Oh woe be me, I have nothing to my name, my kingdom has fallen and my family is no more.¶But you, you're an adventurer, yes?¬You may be able to help me...¶There is only one thing that can restore my kingdom to it's former glory... a Staff of Rebirth!¶If you venture into the depths of the nether and get the heart of a soul vulture I should be able to make one.¬I Hear Soul Vultures can be found in Soul Sand Valleys.",
+	"text.dawncraft.quest.king2":"Have you found the Soul Heart yet?¬I hear Soul Vultures can be found in Soul Sand Valleys.",
+	"text.dawncraft.quest.king3":"Oh thank you, you've brought it, unfortunately I have no magical qualities, so I can't quite finish making the staff.¶But I sense great power within you, you should be able to give power to this staff, if you follow my instructions.¶First of all, you need an enchanting table.¬Then place a Pedestal 2 blocks away from it in all 4 directions.¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
 	
 	"text.dawncraft.next": ">>",
 	"text.dawncraft.back": "Back",

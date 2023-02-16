@@ -125,8 +125,11 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 		loadQuestData(compound);
 	}
 
-	public static AttributeSupplier createAttributes() {
-		Builder builder = Mob.createMobAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, 0.23D).add(Attributes.ATTACK_DAMAGE, 3.0D);
+	public static AttributeSupplier createDefaultAttributes() {
+		Builder builder = Mob.createMobAttributes().add(Attributes.FOLLOW_RANGE, 35.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.23D)
+				.add(Attributes.ATTACK_DAMAGE, 3.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 100);
 		return builder.build();
 	}
 

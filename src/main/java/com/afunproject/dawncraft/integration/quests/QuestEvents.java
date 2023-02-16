@@ -39,8 +39,8 @@ public class QuestEvents {
 	}
 
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(QuestEntities.FALLEN_ADVENTURER.get(), QuestEntityBase.createAttributes());
-		event.put(QuestEntities.QUEST_PLAYER.get(), QuestEntityBase.createAttributes());
+		event.put(QuestEntities.FALLEN_ADVENTURER.get(), QuestEntityBase.createDefaultAttributes());
+		event.put(QuestEntities.QUEST_PLAYER.get(), QuestEntityBase.createDefaultAttributes());
 	}
 
 	@SubscribeEvent

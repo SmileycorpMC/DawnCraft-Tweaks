@@ -174,22 +174,28 @@ public class QuestScreen extends Screen {
 			};
 		}
 		else if (questType == QuestType.ACKNOWLEDGE) {
-			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomAcknowledgmentMessage(), button1 -> {
+			TranslatableComponent msg1 = getRandomAcknowledgmentMessage();
+			TranslatableComponent msg2 = getRandomAcknowledgmentMessage();
+			while (msg1.equals(msg2)) msg2 = getRandomAcknowledgmentMessage();
+			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), msg1, button1 -> {
 				completeQuest(true);
 				onClose();
 				return;
-			}), new QuestButton(380, 218, false, entity.blockPosition(), getRandomAcknowledgmentMessage(), button1 -> {
+			}), new QuestButton(380, 218, false, entity.blockPosition(), msg2, button1 -> {
 				completeQuest(true);
 				onClose();
 				return;
 			})};
 		}
 		else if (questType == QuestType.DENY) {
-			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomDenyMessage(), button1 -> {
+			TranslatableComponent msg1 = getRandomDenyMessage();
+			TranslatableComponent msg2 = getRandomDenyMessage();
+			while (msg1.equals(msg2)) msg2 = getRandomDenyMessage();
+			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), msg1, button1 -> {
 				completeQuest(false);
 				onClose();
 				return;
-			}), new QuestButton(380, 218, false, entity.blockPosition(), getRandomDenyMessage(), button1 -> {
+			}), new QuestButton(380, 218, false, entity.blockPosition(), msg2, button1 -> {
 				completeQuest(false);
 				onClose();
 				return;
