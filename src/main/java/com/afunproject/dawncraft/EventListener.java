@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.RestrictBlock;
 import com.google.common.collect.Lists;
 
@@ -18,7 +19,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
@@ -48,6 +52,18 @@ public class EventListener {
 			"entity.goblinsanddungeons.goblin_king","entity.illageandspillage.magispeller",
 			"entity.illageandspillage.illashooter","entity.illageandspillage.twittollager","entity.illageandspillage.spiritcaller"
 			);
+
+	@SubscribeEvent
+	public void playerTick(PlayerTickEvent event) {
+		Player player = event.player;
+		if (event.phase == Phase.END && player != null && !(player instanceof FakePlayer)) {
+			if (!player.level.isClientSide) {
+				LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
+				if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion(player);
+			}
+		}
+	}
+
 
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
@@ -89,6 +105,25 @@ public class EventListener {
 			}
 		}
 	}
+
+	/*@SubscribeEvent
+	public void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		Level level = event.getWorld();
+		if (!level.isClientSide) {
+			ItemStack stack = event.getItemStack();
+			BlockPos pos = event.getPos();
+			BlockState state = level.getBlockState(pos);
+			if (stack != null && state != null) {
+				if (state.is(Blocks.ENCHANTING_TABLE) && stack.is(DungeonItems.REBIRTH_STAFF.get())) {
+					if (!RebirthStaffItem.isPowered(stack)) {
+						if (ModList.get().isLoaded("supplementaries")) {
+							RitualChecker.isValid(level, pos);
+						}
+					}
+				}
+			}
+		}
+	}*/
 
 	//major jank because forge and eclipse both suck
 	@SubscribeEvent

@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.integration.simplemobs.invasion;
+package com.afunproject.dawncraft.invasion;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.common.IExtensibleEnum;

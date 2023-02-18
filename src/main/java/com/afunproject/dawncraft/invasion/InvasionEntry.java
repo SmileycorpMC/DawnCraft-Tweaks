@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.integration.simplemobs.invasion;
+package com.afunproject.dawncraft.invasion;
 
 import java.util.List;
 

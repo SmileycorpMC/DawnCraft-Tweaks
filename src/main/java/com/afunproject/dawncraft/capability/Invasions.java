@@ -3,8 +3,8 @@ package com.afunproject.dawncraft.capability;
 import java.util.List;
 import java.util.Random;
 
-import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionEntry;
-import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionRegistry;
+import com.afunproject.dawncraft.invasion.InvasionEntry;
+import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.google.common.collect.Lists;
 
 import net.minecraft.core.Direction;
@@ -32,16 +32,18 @@ public interface Invasions {
 
 		public Implementation() {
 			invasions.addAll(InvasionRegistry.getInvasions());
-			nextSpawn = rand.nextInt(120000, 240000);
+			nextSpawn = rand.nextInt(72000, 96000);
 		}
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
 			if (!player.level.isClientSide && player.tickCount >= nextSpawn && player.tickCount > 0 &! invasions.isEmpty()) {
-				InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
-				invasion.spawnEntities(player);
-				invasions.remove(invasion);
-				nextSpawn = player.tickCount + rand.nextInt(120000, 240000);
+				if (rand.nextInt(3)>0) {
+					InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
+					invasion.spawnEntities(player);
+					invasions.remove(invasion);
+				}
+				nextSpawn = player.tickCount + rand.nextInt(72000, 96000);
 			}
 		}
 

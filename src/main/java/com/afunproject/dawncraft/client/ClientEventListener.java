@@ -57,10 +57,7 @@ public class ClientEventListener {
 	public void renderOverlay(RenderGameOverlayEvent.Pre event) {
 		Minecraft mc = Minecraft.getInstance();
 		//hide during quest screen
-		if (mc.screen != null) {
-			event.setCanceled(true);
-			return;
-		}
+		if (mc.screen != null) return;
 		//render minimap
 		if (event.getType() == ElementType.LAYER)  {
 			PoseStack poseStack = event.getMatrixStack();

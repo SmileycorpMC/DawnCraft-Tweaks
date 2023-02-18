@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.integration.quests.custom.quests;
+package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
@@ -7,6 +7,7 @@ import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.AndCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.TagCondition;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
+import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;

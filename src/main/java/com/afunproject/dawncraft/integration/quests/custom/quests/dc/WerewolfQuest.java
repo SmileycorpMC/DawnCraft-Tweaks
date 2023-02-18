@@ -1,4 +1,6 @@
-package com.afunproject.dawncraft.integration.quests.custom.quests;
+package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
+
+import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
 
 import net.mcreator.simplemobs.entity.PatronwerewolfEntity;
 import net.mcreator.simplemobs.init.SimpleMobsModEntities;

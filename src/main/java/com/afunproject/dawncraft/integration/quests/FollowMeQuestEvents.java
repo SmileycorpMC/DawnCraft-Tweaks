@@ -31,6 +31,7 @@ import net.smileycorp.followme.common.FollowHandler;
 import net.smileycorp.followme.common.FollowMe;
 import net.smileycorp.followme.common.ai.FollowUserGoal;
 import net.smileycorp.followme.common.capability.IFollower;
+import tallestegg.guardvillagers.entities.Guard;
 
 public class FollowMeQuestEvents {
 
@@ -41,7 +42,7 @@ public class FollowMeQuestEvents {
 	@SubscribeEvent
 	public void entityTick(LivingUpdateEvent event) {
 		if (event.getEntity() instanceof Mob) {
-			Mob entity  = (Mob) event.getEntity();
+			Mob entity = (Mob) event.getEntity();
 			if (entity.level instanceof ServerLevel) {
 				LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST);
 				if (questOptional.isPresent()) {
@@ -53,6 +54,24 @@ public class FollowMeQuestEvents {
 							LivingEntity followedEntity = followCap.getFollowedEntity();
 							if (followedEntity instanceof ServerPlayer) {
 								if (isInStructure(entity.blockPosition(), (ServerLevel)entity.level, questCap.getStructure())) {
+									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
+									if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
+										//remove follow ai
+										for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
+											if (entry.getGoal() instanceof FollowUserGoal) {
+												FollowUserGoal task = (FollowUserGoal) entry.getGoal();
+												if (task.getUser() == followedEntity) {
+													FollowHandler.removeAI(task);
+												}
+												break;
+											}
+										};
+
+										//remove capabilities
+										followCap.setForcedToFollow(false);
+										questCap.setStructure(null);
+									}
+								} else if (!entity.level.getEntitiesOfClass(Guard.class, entity.getBoundingBox().inflate(5)).isEmpty()) {
 									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
 									if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
 										//remove follow ai

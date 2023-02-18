@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.integration.simplemobs.invasion;
+package com.afunproject.dawncraft.invasion;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;

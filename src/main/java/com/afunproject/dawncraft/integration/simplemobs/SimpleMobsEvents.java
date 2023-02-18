@@ -1,40 +1,45 @@
 package com.afunproject.dawncraft.integration.simplemobs;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
-import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
-import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionEntry;
-import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionKey;
-import com.afunproject.dawncraft.integration.simplemobs.invasion.InvasionRegistry;
+import com.afunproject.dawncraft.invasion.InvasionEntry;
+import com.afunproject.dawncraft.invasion.InvasionKey;
+import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.mcreator.simplemobs.entity.Getsuga65Entity;
+import net.mcreator.simplemobs.entity.JungharamEntity;
 import net.mcreator.simplemobs.entity.LiverCirrhosisEntity;
+import net.mcreator.simplemobs.entity.ManuelPokyEntity;
 import net.mcreator.simplemobs.entity.Merlin1306Entity;
 import net.mcreator.simplemobs.entity.MonikaSunriseEntity;
+import net.mcreator.simplemobs.entity.PPXEntity;
 import net.mcreator.simplemobs.entity.ShadowMewYTEntity;
 import net.mcreator.simplemobs.entity.SolarPixelEntity;
 import net.mcreator.simplemobs.entity.UGoneEntity;
 import net.mcreator.simplemobs.entity.WoodendayEntity;
 import net.mcreator.simplemobs.entity.YesImDavidEntity;
+import net.mcreator.simplemobs.init.SimpleMobsModEntities;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.command.EnumArgument;
+import net.smileycorp.atlas.api.util.DirectionUtils;
 import yesman.epicfight.world.item.EpicFightItems;
 
 public class SimpleMobsEvents {
@@ -43,15 +48,32 @@ public class SimpleMobsEvents {
 		MinecraftForge.EVENT_BUS.register(new SimpleMobsEvents());
 	}
 
+	public static void registerInvasions() {
+		InvasionRegistry.register(new InvasionEntry("Getsuga65", SimpleMobsModEntities.GETSUGA_65.get()));
+		InvasionRegistry.register(new InvasionEntry("Wooden_Day", SimpleMobsModEntities.WOODENDAY.get()));
+		InvasionRegistry.register(new InvasionEntry("ShadowMewYT", SimpleMobsModEntities.SHADOW_MEW_YT.get()));
+		InvasionRegistry.register(new InvasionEntry("SolarPixel", SimpleMobsModEntities.SOLAR_PIXEL.get()));
+		InvasionRegistry.register(new InvasionEntry("merlin1306", SimpleMobsModEntities.MERLIN_1306.get()));
+		InvasionRegistry.register(new InvasionEntry("uGone", SimpleMobsModEntities.U_GONE.get()));
+		InvasionRegistry.register(new InvasionEntry("MonikaSunrise", SimpleMobsModEntities.MONIKA_SUNRISE.get()));
+		InvasionRegistry.register(new InvasionEntry("YesImDavid", SimpleMobsModEntities.YES_IM_DAVID.get()));
+		InvasionRegistry.register(new InvasionEntry("LiverCirrhosi", SimpleMobsModEntities.LIVER_CIRRHOSIS.get()));
+		InvasionRegistry.register(new InvasionEntry("Jungharam", SimpleMobsModEntities.JUNGHARAM.get()));
+		InvasionRegistry.register(new InvasionEntry("ManuelPoky", SimpleMobsModEntities.MANUEL_POKY.get()));
+		InvasionRegistry.register(new InvasionEntry("PPX", SimpleMobsModEntities.PPX.get()));
+	}
+
 	@SubscribeEvent
-	public void playerTick(PlayerTickEvent event) {
-		Player player = event.player;
-		if (event.phase == Phase.END && player != null && !(player instanceof FakePlayer)) {
-			if (!player.level.isClientSide) {
-				LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
-				if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion(player);
+	public void playerJoinWorld(PlayerEvent.PlayerLoggedInEvent event) {
+		if (event.getPlayer() instanceof ServerPlayer) {
+			Player player = event.getPlayer();
+			if (!player.getPersistentData().contains("spawned")) {
+				BlockPos pos = DirectionUtils.getClosestLoadedPos(player.level, player.blockPosition(), player.getLookAngle(), 5);
+				SimpleMobsModEntities.KOROK_INTRO.get().spawn((ServerLevel)player.getLevel(), null, player, pos, MobSpawnType.MOB_SUMMONED, false, false);
+				player.getPersistentData().putBoolean("spawned", true);
 			}
 		}
+
 	}
 
 	@SubscribeEvent
@@ -112,6 +134,23 @@ public class SimpleMobsEvents {
 			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("nourished_end", "voidsteel_armor_chestplate"))));
 			entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("nourished_end", "voidsteel_armor_leggings"))));
 			entity.setCustomName(new TextComponent("LiverCirrhosis"));
+		}
+		if (event.getEntity() instanceof ManuelPokyEntity) {
+			ManuelPokyEntity entity = (ManuelPokyEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+			entity.setCustomName(new TextComponent("ManuelPoky"));
+		}
+		if (event.getEntity() instanceof JungharamEntity) {
+			JungharamEntity entity = (JungharamEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+			entity.setCustomName(new TextComponent("Jungharam"));
+		}
+		if (event.getEntity() instanceof PPXEntity) {
+			PPXEntity entity = (PPXEntity) event.getEntity();
+			entity.setCustomNameVisible(true);
+			entity.setCustomName(new TextComponent("PPX"));
 		}
 	}
 

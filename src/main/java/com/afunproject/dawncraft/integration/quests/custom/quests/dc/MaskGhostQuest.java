@@ -1,8 +1,9 @@
-package com.afunproject.dawncraft.integration.quests.custom.quests;
+package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.ModDefinitions;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.integration.quests.custom.entity.Fallen;
+import com.afunproject.dawncraft.integration.quests.custom.quests.ItemTagQuest;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;

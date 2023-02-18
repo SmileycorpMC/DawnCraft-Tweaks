@@ -190,7 +190,9 @@
 	
 	"text.dawncraft.quest.king1":"Oh woe be me, I have nothing to my name, my kingdom has fallen and my family is no more.¶But you, you're an adventurer, yes?¬You may be able to help me...¶There is only one thing that can restore my kingdom to it's former glory... a Staff of Rebirth!¶If you venture into the depths of the nether and get the heart of a soul vulture I should be able to make one.¬I Hear Soul Vultures can be found in Soul Sand Valleys.",
 	"text.dawncraft.quest.king2":"Have you found the Soul Heart yet?¬I hear Soul Vultures can be found in Soul Sand Valleys.",
-	"text.dawncraft.quest.king3":"Oh thank you, you've brought it, unfortunately I have no magical qualities, so I can't quite finish making the staff.¶But I sense great power within you, you should be able to give power to this staff, if you follow my instructions.¶First of all, you need an enchanting table.¬Then place a Pedestal 2 blocks away from it in all 4 directions.¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
+	"text.dawncraft.quest.king3":"Oh thank you, you've brought it, unfortunately I have no magical qualities, so I can't quite finish making the staff.¶But I sense great power within you, you should be able to give power to this staff...¶If you follow my instructions, you should be able to give this staff power.¶First of all, you need an enchanting table.¬Then place a Pedestal in each of the 4 directions from it, with a  2 block gap.¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
+	"text.dawncraft.quest.king4":"First of all, you need an enchanting table.¬Then place a Pedestal in each of the 4 directions from it, with a  2 block gap¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
+	"text.dawncraft.quest.king5":"You've actually done it!¶With this I shall be able to restore my kingdom without a doubt!",
 	
 	"text.dawncraft.next": ">>",
 	"text.dawncraft.back": "Back",

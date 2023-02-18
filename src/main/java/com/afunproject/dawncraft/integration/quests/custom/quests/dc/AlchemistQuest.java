@@ -1,9 +1,10 @@
-package com.afunproject.dawncraft.integration.quests.custom.quests;
+package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.AndCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.ItemCondition;
+import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 
