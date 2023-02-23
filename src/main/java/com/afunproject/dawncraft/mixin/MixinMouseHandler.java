@@ -22,10 +22,7 @@ public class MixinMouseHandler {
 			LocalPlayer player = mc.player;
 			if (player != null) {
 				if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-					if (ClientHandler.shouldImmobilize(button, true)) {
-						callback.cancel();
-						return;
-					}
+					callback.cancel();
 				}
 				if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 					if (ClientHandler.isUnusableByFrog(button, true)) {
@@ -35,6 +32,19 @@ public class MixinMouseHandler {
 				}
 			}
 		}
+	}
+
+	@Inject(at=@At("HEAD"), method = "onMove(JDD)V", cancellable = true)
+	public void onMove(long p_91562_, double p_91563_, double p_91564_, CallbackInfo callback) {
+		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer player = mc.player;
+		if (player != null && mc.screen == null) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
+				callback.cancel();
+				return;
+			}
+		}
+
 	}
 
 }

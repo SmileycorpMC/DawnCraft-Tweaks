@@ -91,8 +91,9 @@
 	
 	"item.dawncraft.dungeon_configurator": "Dungeon Configurator",
 	"item.dawncraft.skeleton_key": "Skeleton Key",
-	"item.dawncraft.cursed_mask": "Cursed Mask",
+	"item.dawncraft.cursed_mask": "Mask of Athora",
 	"item.dawncraft.rebirth_staff": "Staff of Rebirth",
+	"item.dawncraft.slayers_blade": "Slayer's Blade",
 	
 	"map.dawncraft.cultist": "Cultist Hideout Map",
 	"map.dawncraft.cultist_2": "Cultist's Map",
@@ -135,13 +136,16 @@
 	"tooltip.dawncraft.skeleton_key_0": "Right-click to open any locked door.",
 	"tooltip.dawncraft.skeleton_key_1": "Is not consumed on use",
 	
-	"tooltip.dawncraft.cursed_mask_0": "This powerful mask used to contain a demon",
+	"tooltip.dawncraft.cursed_mask_0": "A mask once believed to have been a gift from the Legendary beast of Athora",
 	"tooltip.dawncraft.cursed_mask_1": "Wearing it will make some monsters ignore you unless provoked",
 	
 	"tooltip.dawncraft.rebirth_staff.inert_0": "Inert",
 	"tooltip.dawncraft.rebirth_staff.inert_1": "This staff has no power, it's useless",
 	"tooltip.dawncraft.rebirth_staff.powered_0": "Powered",
 	"tooltip.dawncraft.rebirth_staff.powered_1": "This magical staff has the power to restore kingdoms",
+	
+	"tooltip.dawncraft.slayers_blade_0": "The chosen weapon of the monster slayer's guild",
+	"tooltip.dawncraft.slayers_blade_1": "Deals 5% damage of a total mob's health",
 	
 	"tile.dawncraft.chest_spawner": "Chest Spawner",
 	
@@ -180,7 +184,7 @@
 	"text.dawncraft.quest.alchemist.endurance.title": "Endurance",
 	"text.dawncraft.quest.alchemist.endurance.text": "Ah-ha! The MOST useful potion for an adventurer I would say. Drinking this gives you a temporary boost in combat stamina, allowing you to perform more dodges/blocks before running out of stamina! As for the brewing recipe, you'll need Cave Fragments. You can get them by slaying Cave Blockheads and Cave Golems.",
 	
-	"text.dawncraft.quest.mask_ghost1":"Could you help me with something, you are an adventurer aren't you?¶As you can see I am but a specter in this world, cursed by this blasted mask, unable to remove it even in death. It's terrible curse keeps me bound to this mortal plane long past my own demise.¶There is a demon inhabiting this mask, if you can bring me 4 unique masks we may be able to appease it and I'll be free to pass on.¶If we banish the demon you can have this mask, it's other abilities should still after the curse is lifted.",
+	"text.dawncraft.quest.mask_ghost1":"Could you help me with something, you are an adventurer aren't you?¶As you can see I am but a specter in this world, bound to this legendary mask of my home.¶It grants it's wearer protection, which would usually be good, alas a demon has made the mask it's home, and it's corrupted magic now keeps me bound to this mortal plane, long past my demise...If you can bring me 4 unique masks we may be able to appease it and I'll be free to pass on, do this and you can have this mask, it's original protection spell should still be intact after the demon is banished.",
 	"text.dawncraft.quest.mask_ghost2":"Have you managed to bring the masks?",
 	"text.dawncraft.quest.mask_ghost3":"Oh, you actually did it!¶I must bid you my greatest thanks, with this the demon should be sated and I may be able to pass on!¶Farewell, adventurer...",
 	
@@ -192,7 +196,16 @@
 	"text.dawncraft.quest.king2":"Have you found the Soul Heart yet?¬I hear Soul Vultures can be found in Soul Sand Valleys.",
 	"text.dawncraft.quest.king3":"Oh thank you, you've brought it, unfortunately I have no magical qualities, so I can't quite finish making the staff.¶But I sense great power within you, you should be able to give power to this staff...¶If you follow my instructions, you should be able to give this staff power.¶First of all, you need an enchanting table.¬Then place a Pedestal in each of the 4 directions from it, with a  2 block gap.¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
 	"text.dawncraft.quest.king4":"First of all, you need an enchanting table.¬Then place a Pedestal in each of the 4 directions from it, with a  2 block gap¬Finally place a piece of blaze powder upon each of the pedestals and use the inert staff on the Enchanting Table.",
-	"text.dawncraft.quest.king5":"You've actually done it!¶With this I shall be able to restore my kingdom without a doubt!",
+	"text.dawncraft.quest.king5":"You've actually done it!¶With this I shall be able to restore my kingdom without a doubt!¶Here, take my Royal Blade, it should be of some use to you.¬I doubt I should need it, now I have the staff's power!",
+	
+	"text.dawncraft.quest.monster_slayer1":"Hey you, adventurer!¶I'm a high ranking member of the monster slayers guild, we're looking for new members, and you look strong and capable.¶Would you be interested in joining us?",
+	"text.dawncraft.quest.monster_slayer1b":"That's fantastic news, we will of course give you our official equipment...¶But first you must complete some tasks for us, you will of course be paid for each task you complete, and you need not worry, I shan't take your items, I need only see them to prove the task complete ¶Your first task should be simple for someone like you, bring me one of the following: A shard of a Guardian, The Rod of a Blaze, or the Skull of a Kobold.",
+	"text.dawncraft.quest.monster_slayer2": "For your first task can you show me: A shard of a Guardian, The Rod of a Blaze, or the Skull of a Kobold.",
+	"text.dawncraft.quest.monster_slayer3":"Well done, now for the next task would you show me either a Heart of a Vampire, A Fragment from a Cave Blockhead, the Totem of an Evoker, or the Skull of a Wither Skeleton.",
+	"text.dawncraft.quest.monster_slayer4":"For your next task would you show me either a Heart of a Vampire, A Fragment from a Cave Blockhead, the Totem of an Evoker, or the Skull of a Wither Skeleton.",
+	"text.dawncraft.quest.monster_slayer5":"My greatest congratulations to you, not many make it this far¶Your final test may prove the most difficult, but will cement yourself as a true monster slayer, worthy of the guild!¶To finish your final test, show me one of the following: the star of a Wither, heart of a Dragon, a fragment from a Cave Golem, The Mask of Barakoa, Axe of a Ferrous Wroughtnaught, or Gem of a Martian",
+	"text.dawncraft.quest.monster_slayer6":"To finish your final test, show me one of the following: the star of a Wither, heart of a Dragon, a fragment from a Cave Golem, The Mask of Barakoa, Axe of a Ferrous Wroughtnaught, or Gem of a Martian",
+	"text.dawncraft.quest.monster_slayer7":"That's fantastic to see, I knew I was right to put my trust in you.¶Go on take these rewards, you deserve them!",
 	
 	"text.dawncraft.next": ">>",
 	"text.dawncraft.back": "Back",

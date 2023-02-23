@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:nether_star",
+	"simple_mobs:firedragon_heart",
+	"simple_mobs:icedragon_heart",
+	"simple_mobs:largecavefragment",
+	"mowziesmobs:barako_mask",
+	"mowziesmobs:wrought_axe",
+	"simple_mobs:gem_item"
+  ]
+}

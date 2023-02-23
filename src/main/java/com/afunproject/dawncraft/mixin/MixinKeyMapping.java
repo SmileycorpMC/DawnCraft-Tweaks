@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,24 +16,26 @@ import net.minecraft.client.player.LocalPlayer;
 @Mixin(KeyMapping.class)
 public class MixinKeyMapping {
 
+	@Shadow
+	boolean isDown;
+
 	@Inject(at=@At("HEAD"), method = "isDown()Z", cancellable = true)
 	public void isDown(CallbackInfoReturnable<Boolean> callback) {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				callback.setReturnValue(false);
+				callback.cancel();
+				if (isDown) isDown = false;
+				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.FROG_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
 					callback.cancel();
+					if (isDown) isDown = false;
 					return;
 				}
 			}
@@ -45,12 +48,9 @@ public class MixinKeyMapping {
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				callback.setReturnValue(false);
+				callback.cancel();
+				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
@@ -69,12 +69,9 @@ public class MixinKeyMapping {
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				callback.setReturnValue(false);
+				callback.cancel();
+				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
@@ -93,12 +90,9 @@ public class MixinKeyMapping {
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.IMMOBILIZED_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				callback.setReturnValue(false);
+				callback.cancel();
+				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;

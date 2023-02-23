@@ -8,7 +8,9 @@ import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BarrelQuest
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BellGhostQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.CultQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.IntroQuest;
+import com.afunproject.dawncraft.integration.quests.custom.quests.dc.KingQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MaskGhostQuest;
+import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MonsterSlayerQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WerewolfQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WitchQuest;
 import com.google.common.collect.Maps;
@@ -34,8 +36,9 @@ public class QuestsRegistry {
 	}
 
 	public static void registerDCQuests() {
+		//intro
 		registerQuest(ModDefinitions.getResource("intro"), new IntroQuest());
-
+		//patreon quests
 		registerQuest(ModDefinitions.getResource("werewolf"), new WerewolfQuest());
 		registerQuest(ModDefinitions.getResource("ghost"), new BellGhostQuest());
 		registerQuest(ModDefinitions.getResource("cult"), new CultQuest());
@@ -43,6 +46,10 @@ public class QuestsRegistry {
 		registerQuest(ModDefinitions.getResource("alchemist"), new AlchemistQuest());
 		registerQuest(ModDefinitions.getResource("mask_ghost"), new MaskGhostQuest());
 		registerQuest(ModDefinitions.getResource("witch"), new WitchQuest());
+		registerQuest(ModDefinitions.getResource("king"), new KingQuest());
+
+
+		registerQuest(ModDefinitions.getResource("monster_slayer"), new MonsterSlayerQuest());
 	}
 
 }

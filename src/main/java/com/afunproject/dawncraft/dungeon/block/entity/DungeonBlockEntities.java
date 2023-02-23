@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DungeonBlockEntities {
 
-	public static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ModDefinitions.MODID);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ModDefinitions.MODID);
 
 	public static final RegistryObject<BlockEntityType<DungeonDoorBlockEntity>> DUNGEON_DOOR = register("dungeon_door", DungeonDoorBlockEntity :: new,
 			DungeonBlocks.FIRE_DOOR, DungeonBlocks.RUST_DOOR, DungeonBlocks.SAND_DOOR, DungeonBlocks.STONE_DOOR, DungeonBlocks.WOOD_DOOR);

@@ -6,15 +6,17 @@ import com.afunproject.dawncraft.dungeon.item.DungeonConfiguratorItem;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.KeyItem;
 import com.afunproject.dawncraft.dungeon.item.LockItem;
+import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.dungeon.item.SkeletonKeyItem;
 
+import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.RegistryObject;
 
 public class CreativeTabs {
 
@@ -43,13 +45,16 @@ public class CreativeTabs {
 		public void fillItemList(NonNullList<ItemStack> items) {
 			DungeonItems.DUNGEON_CONFIGURATOR.get().fillItemCategory(this, items);
 			for(KeyColour colour : KeyColour.values()) items.add(new ItemStack(DungeonItems.getLock(colour)));
-			items.add(new ItemStack(Items.AIR));
+			items.add(new ItemStack(DungeonItems.REBIRTH_STAFF.get()));
 			items.add(new ItemStack(DungeonItems.SKELETON_KEY.get()));
 			for(KeyColour colour : KeyColour.values()) items.add(new ItemStack(DungeonItems.getKey(colour)));
-			items.add(new ItemStack(Items.AIR));
+			items.add(RebirthStaffItem.createPowered());
 			for(Item item : Registry.ITEM) {
-				if(!(item instanceof KeyItem || item instanceof SkeletonKeyItem ||
-						item instanceof DungeonConfiguratorItem || item instanceof LockItem)) item.fillItemCategory(this, items);
+				if(!(item instanceof KeyItem || item instanceof SkeletonKeyItem || item instanceof DungeonConfiguratorItem
+						|| item instanceof LockItem || item instanceof RebirthStaffItem)) item.fillItemCategory(this, items);
+			}
+			for (RegistryObject<Item> reg : SimpleMobsModItems.REGISTRY.getEntries()) {
+				Item item = reg.get();
 				if (!(item instanceof BlockItem) && item.getRegistryName().getNamespace().equals("simple_mobs") &!
 						item.getRegistryName().getPath().contains("spawn_egg")) items.add(new ItemStack(item));
 			}

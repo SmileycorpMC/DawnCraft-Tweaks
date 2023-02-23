@@ -21,11 +21,11 @@ public enum QuestNPC implements StringRepresentable {
 	BARREL(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"JosslynMC\", \"quest\":\"dawncraft:barrel\"}"),
 	ALCHEMIST(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"EmpyreanAsura\", \"quest\":\"dawncraft:alchemist\"}\"}"),
 	MASK_GHOST(QuestEntities.FALLEN_ADVENTURER.get(), "{\"username\":\"Sir_Sense\", \"quest\":\"dawncraft:mask_ghost\"}"),
-	WITCH(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"zherterry\", \"quest\":\"dawncraft:witch\", \"damageable\":1b}");
-	//T1(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Dark_King_0507\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
-	//T2(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"ReaperDoge\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
+	WITCH(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"zherterry\", \"quest\":\"dawncraft:witch\", \"damageable\":1b}"),
+	KING(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Dark_King_0507\", \"quest\":\"dawncraft:king\"}"),
+	//T1(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Arche_Princess\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
 	//T3(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Shinykey\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}"),
-	//T4(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Arche_Princess\", \"text\":\"text.dawncraft.quest.lorem_ipsum\"}\"}");
+	MONSTER_SLAYER(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"ReaperDoge\", \"quest\":\"dawncraft:monster_slayer\"}\"}");
 
 
 	private final EntityType<?> type;

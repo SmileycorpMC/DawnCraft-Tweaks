@@ -7,9 +7,16 @@ import java.util.function.Consumer;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.RestrictBlock;
+import com.afunproject.dawncraft.dungeon.item.DungeonItems;
+import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
+import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
 import com.google.common.collect.Lists;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -18,15 +25,23 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
@@ -41,6 +56,7 @@ public class EventListener {
 			"entity.minecraft.ender_dragon","entity.minecraft.wither","entity.simple_mobs.ogre",
 			"entity.simple_mobs.martian","entity.simple_mobs.sentinel_knight","entity.simple_mobs.fire_giant",
 			"entity.simple_mobs.nine_tails","entity.simple_mobs.skeletonlord","entity.simple_mobs.knight_4",
+			"entity.simple_mobs.fire_dragon", "entity.simple_mobs.ice_dragon",
 			"entity.bloodandmadness.father_gascoigne","entity.bloodandmadness.gascoigne_beast",
 			"entity.bloodandmadness.micolash","entity.ob_aquamirae.captain_cornelia","entity.conjurer_illager.conjurer",
 			"entity.mowziesmobs.ferrous_wroughtnaut","entity.mowziesmobs.barako","entity.mowziesmobs.frostmaw",
@@ -106,7 +122,7 @@ public class EventListener {
 		}
 	}
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getWorld();
 		if (!level.isClientSide) {
@@ -117,13 +133,30 @@ public class EventListener {
 				if (state.is(Blocks.ENCHANTING_TABLE) && stack.is(DungeonItems.REBIRTH_STAFF.get())) {
 					if (!RebirthStaffItem.isPowered(stack)) {
 						if (ModList.get().isLoaded("supplementaries")) {
-							RitualChecker.isValid(level, pos);
+							if (RitualChecker.isValid(level, pos)) {
+								RitualChecker.startRitual(stack, level, pos);
+								event.setCanceled(true);
+							}
 						}
 					}
 				}
 			}
 		}
-	}*/
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void livingHurtEvent(LivingHurtEvent event) {
+		LivingEntity entity = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		if (!entity.level.isClientSide) {
+			if (source.getEntity() instanceof LivingEntity) {
+				LivingEntity attacker = (LivingEntity) source.getEntity();
+				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
+					event.setAmount(entity.getMaxHealth()*0.05f);
+				}
+			}
+		}
+	}
 
 	//major jank because forge and eclipse both suck
 	@SubscribeEvent

@@ -18,15 +18,20 @@ public class TagCondition implements QuestCondition {
 
 	protected TagKey<Item> tag;
 	protected int count;
+	protected boolean consume;
 
 	public TagCondition(ResourceLocation loc) {
-		tag = TagKey.m_203882_(Registry.ITEM_REGISTRY, loc);
-		count = 1;
+		this(loc, 1, true);
 	}
 
-	public TagCondition(TagKey<Item> tag, int count) {
-		this.tag = tag;
+	public TagCondition(ResourceLocation loc, int count) {
+		this(loc, count, true);
+	}
+
+	public TagCondition(ResourceLocation loc, int count, boolean consume) {
+		tag = TagKey.m_203882_(Registry.ITEM_REGISTRY, loc);
 		this.count = count;
+		this.consume = consume;
 	}
 
 	@Override
@@ -39,7 +44,7 @@ public class TagCondition implements QuestCondition {
 			}
 		}
 		if (stacks.size() >= count) {
-			if (!isTest) {
+			if (!isTest && consume) {
 				for (ItemStack stack : stacks) stack.shrink(1);
 				player.playSound(SoundEvents.PLAYER_LEVELUP, 0.5f,  0.5f);
 			}

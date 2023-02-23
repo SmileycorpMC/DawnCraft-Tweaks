@@ -16,8 +16,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DungeonBlocks {
 
-	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModDefinitions.MODID);
-	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
+	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModDefinitions.MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
 
 	private static Properties DUNGEON_PROPS = Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).strength(-1, 18000000);
 

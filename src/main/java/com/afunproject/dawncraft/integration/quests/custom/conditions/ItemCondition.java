@@ -22,10 +22,34 @@ public class ItemCondition implements QuestCondition {
 	@Override
 	public boolean apply(Player player, Mob entity, int phase, boolean isTest) {
 		if (player.getInventory().contains(stack) && player.getInventory().countItem(stack.getItem())>=stack.getCount()) {
+			if (stack.hasTag()) {
+				boolean tagsMatch = false;
+				for (ItemStack stack : player.getInventory().items) {
+					if (stack.getItem() == this.stack.getItem()) {
+						if (stack.hasTag()) {
+							if (this.stack.getTag().equals(stack.getTag())) {
+								tagsMatch = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!tagsMatch) return false;
+			}
 			if (consume &! isTest) {
 				for (ItemStack stack : player.getInventory().items) {
 					int count = this.stack.getCount();
 					if (stack.getItem() == this.stack.getItem()) {
+						if (this.stack.hasTag()) {
+							if (stack.hasTag()) {
+								if (this.stack.getTag().equals(stack.getTag())) {
+									int size = stack.getCount();
+									stack.shrink(count);
+									count = count - size;
+									if (count <= 0) break;
+								}
+							} else continue;
+						}
 						int size = stack.getCount();
 						stack.shrink(count);
 						count = count - size;

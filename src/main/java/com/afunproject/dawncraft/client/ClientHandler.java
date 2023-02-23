@@ -21,6 +21,10 @@ public class ClientHandler {
 			options.keyUp, options.keyLeft, options.keyDown, options.keyRight);
 	public static List<KeyMapping> FROG_KEYS = Lists.newArrayList(options.keyAttack, options.keyUse);
 
+	static {
+		for (KeyMapping mapping : options.keyHotbarSlots) IMMOBILIZED_KEYS.add(mapping);
+	}
+
 	public static void displayMessage(String message) {
 		Minecraft mc = Minecraft.getInstance();
 		MutableComponent component = new TranslatableComponent(message).withStyle(ChatFormatting.AQUA);

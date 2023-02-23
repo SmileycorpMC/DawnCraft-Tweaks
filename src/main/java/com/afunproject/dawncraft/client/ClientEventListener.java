@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
+import net.minecraftforge.client.event.InputEvent.MouseScrollEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -106,6 +107,15 @@ public class ClientEventListener {
 			event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
 			event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
 			event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void mouseScrollInput(MouseScrollEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer player = mc.player;
+		if (player != null) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) event.setCanceled(true);
 		}
 	}
 

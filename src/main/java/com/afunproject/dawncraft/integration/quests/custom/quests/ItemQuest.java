@@ -29,7 +29,7 @@ public abstract class ItemQuest extends Quest {
 			setPhase(entity, phase + 1);
 			completeItemQuest(quest_completer, entity, phase, accepted);
 		}
-		if (entity instanceof QuestEntity) ((QuestEntity) entity).setQuestText(getText(((QuestEntity) entity).getQuestPhase(), accepted));
+		QuestEntity.safeCast(entity).setQuestText(getText(QuestEntity.safeCast(entity).getQuestPhase(), accepted));
 	}
 
 	@Override
