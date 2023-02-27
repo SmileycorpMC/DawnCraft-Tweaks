@@ -23,16 +23,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(ModDefinitions.MODID)
+@Mod(Constants.MODID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DawnCraft {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	public DawnCraft() {
-		ModList.get().getModContainerById(ModDefinitions.MODID)
-		.ifPresent(container -> ModDefinitions.VERSION = container.getModInfo().getVersion().toString());
-		LOGGER.info("DawnCraft Tweaks " + ModDefinitions.VERSION + " initialized");
+		ModList.get().getModContainerById(Constants.MODID)
+		.ifPresent(container -> Constants.VERSION = container.getModInfo().getVersion().toString());
+		LOGGER.info("DawnCraft Tweaks " + Constants.VERSION + " initialized");
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
 		DCNetworkHandler.initPackets();

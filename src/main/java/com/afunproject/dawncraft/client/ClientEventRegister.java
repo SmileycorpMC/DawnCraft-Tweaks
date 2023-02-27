@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.client;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.client.entity.FrogModel;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT, bus = Bus.MOD)
+@Mod.EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ClientEventRegister {
 
 	public static final List<Consumer<RegisterRenderers>> RENDERER_REGISTERS = Lists.newArrayList();
@@ -39,7 +39,7 @@ public class ClientEventRegister {
 			ItemBlockRenderTypes.setRenderLayer(DungeonBlocks.CHEST_SPAWNER.get(), RenderType.cutoutMipped());
 			ItemBlockRenderTypes.setRenderLayer(DungeonBlocks.REDSTONE_ACTIVATOR.get(), RenderType.cutoutMipped());
 			ItemBlockRenderTypes.setRenderLayer(DungeonBlocks.REDSTONE_TRIGGER.get(), RenderType.cutoutMipped());
-			ItemProperties.register(DungeonItems.REBIRTH_STAFF.get(), ModDefinitions.getResource("inert"),
+			ItemProperties.register(DungeonItems.REBIRTH_STAFF.get(), Constants.loc("inert"),
 					(stack, level, entity, i) -> RebirthStaffItem.isPowered(stack) ? 0f : 1f);
 		});
 	}

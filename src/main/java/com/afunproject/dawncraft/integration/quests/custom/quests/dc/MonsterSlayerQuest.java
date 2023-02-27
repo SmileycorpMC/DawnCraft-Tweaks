@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
@@ -27,7 +27,7 @@ public class MonsterSlayerQuest extends Quest {
 	}
 
 	private static QuestCondition getCondition(String name, int i) {
-		return new AndCondition((player, entity, phase, isTest)->phase==i, new TagCondition(ModDefinitions.getResource(name), 1, false));
+		return new AndCondition((player, entity, phase, isTest)->phase==i, new TagCondition(Constants.loc(name), 1, false));
 	}
 
 	@Override

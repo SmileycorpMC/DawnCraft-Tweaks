@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.integration.quests.custom.quests;
 
 import java.util.Map;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.AlchemistQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BarrelQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BellGhostQuest;
@@ -37,19 +37,19 @@ public class QuestsRegistry {
 
 	public static void registerDCQuests() {
 		//intro
-		registerQuest(ModDefinitions.getResource("intro"), new IntroQuest());
+		registerQuest(Constants.loc("intro"), new IntroQuest());
 		//patreon quests
-		registerQuest(ModDefinitions.getResource("werewolf"), new WerewolfQuest());
-		registerQuest(ModDefinitions.getResource("ghost"), new BellGhostQuest());
-		registerQuest(ModDefinitions.getResource("cult"), new CultQuest());
-		registerQuest(ModDefinitions.getResource("barrel"), new BarrelQuest());
-		registerQuest(ModDefinitions.getResource("alchemist"), new AlchemistQuest());
-		registerQuest(ModDefinitions.getResource("mask_ghost"), new MaskGhostQuest());
-		registerQuest(ModDefinitions.getResource("witch"), new WitchQuest());
-		registerQuest(ModDefinitions.getResource("king"), new KingQuest());
+		registerQuest(Constants.loc("werewolf"), new WerewolfQuest());
+		registerQuest(Constants.loc("ghost"), new BellGhostQuest());
+		registerQuest(Constants.loc("cult"), new CultQuest());
+		registerQuest(Constants.loc("barrel"), new BarrelQuest());
+		registerQuest(Constants.loc("alchemist"), new AlchemistQuest());
+		registerQuest(Constants.loc("mask_ghost"), new MaskGhostQuest());
+		registerQuest(Constants.loc("witch"), new WitchQuest());
+		registerQuest(Constants.loc("king"), new KingQuest());
 
 
-		registerQuest(ModDefinitions.getResource("monster_slayer"), new MonsterSlayerQuest());
+		registerQuest(Constants.loc("monster_slayer"), new MonsterSlayerQuest());
 	}
 
 }

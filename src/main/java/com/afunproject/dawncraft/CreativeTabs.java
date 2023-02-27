@@ -20,21 +20,21 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class CreativeTabs {
 
-	public static CreativeModeTab DUNGEON_BLOCKS = new CreativeModeTab(ModDefinitions.MODID + ".DungeonBlocks"){
+	public static CreativeModeTab DUNGEON_BLOCKS = new CreativeModeTab(Constants.MODID + ".DungeonBlocks"){
 		@Override
 		public ItemStack makeIcon(){
 			return new ItemStack(DungeonBlocks.FOREST_BRICK.getBase());
 		}
 	};
 
-	public static CreativeModeTab DUNGEON_FUNCTIONAL_BLOCKS = new CreativeModeTab(ModDefinitions.MODID + ".DungeonFunctionalBlocks"){
+	public static CreativeModeTab DUNGEON_FUNCTIONAL_BLOCKS = new CreativeModeTab(Constants.MODID + ".DungeonFunctionalBlocks"){
 		@Override
 		public ItemStack makeIcon(){
 			return new ItemStack(DungeonBlocks.WOOD_DOOR.get());
 		}
 	};
 
-	public static CreativeModeTab DUNGEON_ITEMS = new CreativeModeTab(ModDefinitions.MODID + ".DungeonItems"){
+	public static CreativeModeTab DUNGEON_ITEMS = new CreativeModeTab(Constants.MODID + ".DungeonItems"){
 		@Override
 		public ItemStack makeIcon(){
 			return new ItemStack(DungeonItems.SKELETON_KEY.get());

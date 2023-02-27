@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.client;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber(modid = ModDefinitions.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

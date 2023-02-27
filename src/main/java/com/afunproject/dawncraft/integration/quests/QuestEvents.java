@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.integration.quests;
 
 import com.afunproject.dawncraft.EventListener;
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntities;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
@@ -30,7 +30,7 @@ import net.minecraftforge.server.command.EnumArgument;
 public class QuestEvents {
 
 	public static void init() {
-		TaskTypes.register(ModDefinitions.getResource("advancement"), AdvancementTask.INSTANCE);
+		TaskTypes.register(Constants.loc("advancement"), AdvancementTask.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(new QuestEvents());
 		QuestEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		EventListener.ATTRIBUTE_SUPPLIERS.add(QuestEvents::registerAttributes);

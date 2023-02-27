@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.network;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.client.ClientHandler;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,7 +17,7 @@ public class DCNetworkHandler {
 	public static SimpleChannel NETWORK_INSTANCE;
 
 	public static void initPackets() {
-		NETWORK_INSTANCE = NetworkRegistry.newSimpleChannel(ModDefinitions.getResource("main"), ()-> "1", "1"::equals, "1"::equals);
+		NETWORK_INSTANCE = NetworkRegistry.newSimpleChannel(Constants.loc("main"), ()-> "1", "1"::equals, "1"::equals);
 		NETWORK_INSTANCE.registerMessage(0, SimpleStringMessage.class, new SimpleMessageEncoder<SimpleStringMessage>(),
 				new SimpleMessageDecoder<SimpleStringMessage>(SimpleStringMessage.class), (T, K)-> processNotificationMessage(T, K.get()));
 

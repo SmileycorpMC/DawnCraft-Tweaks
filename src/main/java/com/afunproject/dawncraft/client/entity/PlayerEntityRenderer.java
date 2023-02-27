@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.client.entity;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.entities.PlayerEntity;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,8 +26,8 @@ import net.smileycorp.atlas.api.client.PlayerTextureRenderer;
 
 public class PlayerEntityRenderer<T extends Mob & PlayerEntity> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
 
-	public static ModelLayerLocation DEFAULT = new ModelLayerLocation(new ResourceLocation(ModDefinitions.MODID, "player_entity"), "default");
-	public static ModelLayerLocation SLIM = new ModelLayerLocation(new ResourceLocation(ModDefinitions.MODID, "player_entity"), "slim");
+	public static ModelLayerLocation DEFAULT = new ModelLayerLocation(new ResourceLocation(Constants.MODID, "player_entity"), "default");
+	public static ModelLayerLocation SLIM = new ModelLayerLocation(new ResourceLocation(Constants.MODID, "player_entity"), "slim");
 
 	protected final HumanoidModel<T> defaultModel;
 	protected final HumanoidModel<T> slimModel;

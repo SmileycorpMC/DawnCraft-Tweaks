@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.client;
 
 import java.util.function.Function;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
@@ -29,7 +29,7 @@ public abstract class DawnCraftRenderTypes extends RenderType {
 				.setLightmapState(NO_LIGHTMAP)
 				.setOverlayState(NO_OVERLAY)
 				.createCompositeState(true);
-		return create(ModDefinitions.MODID + ":ghost", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 16, true, false, state);
+		return create(Constants.MODID + ":ghost", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 16, true, false, state);
 	});
 
 	/*protected static final RenderStateShard.TransparencyStateShard GHOST_TRANSPARENCY = new RenderStateShard.TransparencyStateShard("ghost_transparency", () -> {

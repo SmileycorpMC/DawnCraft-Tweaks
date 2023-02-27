@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.dungeon.item;
 
 import java.util.Map;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.google.common.collect.Maps;
 
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DungeonItems {
 
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
 
 	private static final Map<KeyColour, RegistryObject<Item>> KEY_MAP = Maps.newHashMap();
 	private static final Map<KeyColour, RegistryObject<Item>> LOCK_MAP = Maps.newHashMap();
@@ -23,6 +23,7 @@ public class DungeonItems {
 	public static final RegistryObject<Item> CURSED_MASK = ITEMS.register("cursed_mask", CursedMaskItem :: new);
 	public static final RegistryObject<Item> REBIRTH_STAFF = ITEMS.register("rebirth_staff", RebirthStaffItem :: new);
 	public static final RegistryObject<Item> SLAYERS_BLADE = ITEMS.register("slayers_blade", SlayersBladeItem :: new);
+	public static final RegistryObject<Item> EXECUTIONER = ITEMS.register("exeecutioner", ExecutionerItem :: new);
 
 	static {
 		for (KeyColour colour : KeyColour.values()) {

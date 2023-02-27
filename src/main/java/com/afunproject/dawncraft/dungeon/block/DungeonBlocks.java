@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.dungeon.block;
 import java.util.function.Supplier;
 
 import com.afunproject.dawncraft.CreativeTabs;
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -16,8 +16,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DungeonBlocks {
 
-	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModDefinitions.MODID);
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModDefinitions.MODID);
+	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
 
 	private static Properties DUNGEON_PROPS = Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).strength(-1, 18000000);
 

@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.integration.quests;
 
 import java.util.Optional;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.FollowQuest;
@@ -36,7 +36,7 @@ import tallestegg.guardvillagers.entities.Guard;
 public class FollowMeQuestEvents {
 
 	public FollowMeQuestEvents() {
-		TaskTypes.register(ModDefinitions.getResource("follow_quest"), FollowTask.INSTANCE);
+		TaskTypes.register(Constants.loc("follow_quest"), FollowTask.INSTANCE);
 	}
 
 	@SubscribeEvent

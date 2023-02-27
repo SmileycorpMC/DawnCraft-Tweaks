@@ -26,7 +26,7 @@ public class KingQuest extends ItemQuest {
 			if (entity instanceof QuestEntityBase) {
 				((QuestEntityBase) entity).setDespawnable(true);
 			}
-			giveItem(quest_completer, new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ob_core:dawnbreaker"))));
+			giveItem(quest_completer, new ItemStack(DungeonItems.EXECUTIONER.get()));
 		}
 	}
 

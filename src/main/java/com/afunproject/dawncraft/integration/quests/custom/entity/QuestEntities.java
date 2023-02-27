@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.entity;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class QuestEntities {
 
-	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, ModDefinitions.MODID);
+	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Constants.MODID);
 
 	public static final RegistryObject<EntityType<Fallen>> FALLEN_ADVENTURER = ENTITIES.register("fallen",  () ->
 	EntityType.Builder.<Fallen>of(Fallen::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(16).build("fallen"));

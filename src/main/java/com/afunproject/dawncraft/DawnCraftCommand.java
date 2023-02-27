@@ -15,7 +15,7 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber(modid=ModDefinitions.MODID)
+@EventBusSubscriber(modid=Constants.MODID)
 public class DawnCraftCommand {
 
 	public static List<Function<LiteralArgumentBuilder<CommandSourceStack>, LiteralArgumentBuilder<CommandSourceStack>>> subcommands = Lists.newArrayList();

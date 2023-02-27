@@ -93,6 +93,7 @@
 	"item.dawncraft.skeleton_key": "Skeleton Key",
 	"item.dawncraft.cursed_mask": "Mask of Athora",
 	"item.dawncraft.rebirth_staff": "Staff of Rebirth",
+	"item.dawncraft.executioner": "The Executioner",
 	"item.dawncraft.slayers_blade": "Slayer's Blade",
 	
 	"map.dawncraft.cultist": "Cultist Hideout Map",
@@ -146,6 +147,9 @@
 	
 	"tooltip.dawncraft.slayers_blade_0": "The chosen weapon of the monster slayer's guild",
 	"tooltip.dawncraft.slayers_blade_1": "Deals 5% damage of a total mob's health",
+	
+	"tooltip.dawncraft.executioner_0": "the mighty blade of a legendary king",
+	"tooltip.dawncraft.executioner_1": "Instantly kills mobs with less than 15% health",
 	
 	"tile.dawncraft.chest_spawner": "Chest Spawner",
 	

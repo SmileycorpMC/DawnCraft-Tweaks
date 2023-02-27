@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.dungeon.block.entity;
 
 import java.util.Optional;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.dungeon.block.ChestSpawnerBlock;
 import com.afunproject.dawncraft.dungeon.block.entity.base.CamouflagedFunctionalBlockEntity;
@@ -84,7 +84,7 @@ public class ChestSpawnerBlockEntity extends CamouflagedFunctionalBlockEntity im
 
 	@Override
 	public Component getDisplayName() {
-		return new TranslatableComponent("tile." + ModDefinitions.MODID + ".chest_spawner");
+		return new TranslatableComponent("tile." + Constants.MODID + ".chest_spawner");
 	}
 
 	@Override

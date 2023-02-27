@@ -45,7 +45,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@EventBusSubscriber(modid = ModDefinitions.MODID, bus = Bus.MOD)
+@EventBusSubscriber(modid = Constants.MODID, bus = Bus.MOD)
 public class EventListener {
 
 	private static final UUID BOSS_MODIFIER = UUID.fromString("dd686c7a-e2c7-479c-96d5-3e193b35c7b8");
@@ -79,7 +79,6 @@ public class EventListener {
 			}
 		}
 	}
-
 
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
@@ -153,6 +152,9 @@ public class EventListener {
 				LivingEntity attacker = (LivingEntity) source.getEntity();
 				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
 					event.setAmount(entity.getMaxHealth()*0.05f);
+				}
+				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
+					event.setAmount(entity.getHealth());
 				}
 			}
 		}

@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.capability;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.afunproject.dawncraft.ModDefinitions;
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 
 import net.minecraft.world.entity.Entity;
@@ -39,19 +39,19 @@ public class CapabilitiesRegister {
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		if (entity instanceof Mob) {
-			event.addCapability(ModDefinitions.getResource("follow_quest"), new FollowQuest.Provider());
+			event.addCapability(Constants.loc("follow_quest"), new FollowQuest.Provider());
 		}
 		if (entity instanceof PathfinderMob) {
-			event.addCapability(ModDefinitions.getResource("restrict_block"), new RestrictBlock.Provider());
+			event.addCapability(Constants.loc("restrict_block"), new RestrictBlock.Provider());
 		}
 		if (entity instanceof Player) {
-			event.addCapability(ModDefinitions.getResource("invasions"), new Invasions.Provider());
+			event.addCapability(Constants.loc("invasions"), new Invasions.Provider());
 		}
 		if (ArrayUtils.contains(QUEST_ENTITIES, entity.getType())) {
-			event.addCapability(ModDefinitions.getResource("quest"), new QuestProvider());
+			event.addCapability(Constants.loc("quest"), new QuestProvider());
 		}
 		if (entity instanceof Mob) {
-			event.addCapability(ModDefinitions.getResource("spawn_tracker"), new SpawnTracker.Provider());
+			event.addCapability(Constants.loc("spawn_tracker"), new SpawnTracker.Provider());
 		}
 	}
 
