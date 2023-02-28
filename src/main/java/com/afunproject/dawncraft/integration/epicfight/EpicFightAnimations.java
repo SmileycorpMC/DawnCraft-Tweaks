@@ -28,6 +28,8 @@ public class EpicFightAnimations {
 
 	public static StaticAnimation EAT_LEFT;
 	public static StaticAnimation EAT_RIGHT;
+	public static StaticAnimation DRINK_LEFT;
+	public static StaticAnimation DRINK_RIGHT;
 
 	public static void init() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(EpicFightAnimations::registerAnimations);
@@ -43,6 +45,8 @@ public class EpicFightAnimations {
 		Model biped = models.biped;
 		EAT_LEFT = new MainFrameAnimation(0.15F, "biped/living/eat_left", biped);
 		EAT_RIGHT = new MainFrameAnimation(0.15F, "biped/living/eat_right", biped);
+		DRINK_LEFT = new MainFrameAnimation(0.15F, "biped/living/drink_left", biped);
+		DRINK_RIGHT = new MainFrameAnimation(0.15F, "biped/living/drink_right", biped);
 	}
 
 	@SubscribeEvent
@@ -57,6 +61,13 @@ public class EpicFightAnimations {
 					((LivingEntityPatch<?>)optional.resolve().get()).playAnimationSynchronized(
 							(player.getMainArm() == HumanoidArm.LEFT && player.getUsedItemHand() == InteractionHand.MAIN_HAND)
 							|| player.getUsedItemHand() == InteractionHand.OFF_HAND ? EpicFightAnimations.EAT_LEFT : EpicFightAnimations.EAT_RIGHT, 0.0F);
+				}
+			} else if (stack.getUseAnimation() == UseAnim.DRINK) {
+				LazyOptional<EntityPatch> optional = player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY);
+				if (optional.isPresent()) {
+					((LivingEntityPatch<?>)optional.resolve().get()).playAnimationSynchronized(
+							(player.getMainArm() == HumanoidArm.LEFT && player.getUsedItemHand() == InteractionHand.MAIN_HAND)
+							|| player.getUsedItemHand() == InteractionHand.OFF_HAND ? EpicFightAnimations.DRINK_LEFT : EpicFightAnimations.DRINK_RIGHT, 0.0F);
 				}
 			}
 		}
