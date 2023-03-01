@@ -12,6 +12,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
@@ -48,7 +51,8 @@ public class InvasionEntry {
 	public void spawnEntities(Player player) {
 		Level level = player.level;
 		for (EntityType<?> type : entities) {
-			BlockPos pos = DirectionUtils.getClosestLoadedPos(level, player.blockPosition(), DirectionUtils.getRandomDirectionVecXZ(player.getRandom()), 50);
+			Vec3 dir = DirectionUtils.getRandomDirectionVecXZ(player.getRandom());
+			BlockPos pos = DirectionUtils.getClosestLoadedPos(level, player.blockPosition(), dir, 50);
 			Mob entity = (Mob) type.create(level);
 			entity.setPos(pos.getX(), pos.getY(), pos.getZ());
 			DifficultyInstance difficulty = level.getCurrentDifficultyAt(pos);
@@ -61,6 +65,7 @@ public class InvasionEntry {
 			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
+			level.playSound(player, new BlockPos(player.position().add(dir)), SoundEvents.PORTAL_TRAVEL, SoundSource.HOSTILE, 0.75f, level.random.nextFloat());
 			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0x8E0009).withBold(true)), true);
 		}
 	}

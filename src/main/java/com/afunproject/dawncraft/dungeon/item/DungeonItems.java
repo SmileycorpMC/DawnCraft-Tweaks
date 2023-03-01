@@ -23,7 +23,7 @@ public class DungeonItems {
 	public static final RegistryObject<Item> CURSED_MASK = ITEMS.register("cursed_mask", CursedMaskItem :: new);
 	public static final RegistryObject<Item> REBIRTH_STAFF = ITEMS.register("rebirth_staff", RebirthStaffItem :: new);
 	public static final RegistryObject<Item> SLAYERS_BLADE = ITEMS.register("slayers_blade", SlayersBladeItem :: new);
-	public static final RegistryObject<Item> EXECUTIONER = ITEMS.register("exeecutioner", ExecutionerItem :: new);
+	public static final RegistryObject<Item> EXECUTIONER = ITEMS.register("executioner", ExecutionerItem :: new);
 
 	static {
 		for (KeyColour colour : KeyColour.values()) {
