@@ -22,7 +22,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -63,9 +62,17 @@ public class ClientEventRegister {
 		event.registerLayerDefinition(FrogRenderer.DEFAULT, FrogModel::createBodyLayer);
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
+	@SuppressWarnings("deprecation")
 	public static void onModelBake(ModelBakeEvent event) {
-
-	}
+		Minecraft mc = Minecraft.getInstance();
+		ResourceLocation loc = Constants.loc("cursed_mask_gui");
+		TextureAtlasSprite sprite = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+				.apply(Constants.loc("item/cursed_mask"));
+		System.out.println(sprite + " " + mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(MissingTextureAtlasSprite.getLocation()));
+		BakedQuad quads = ItemTextureQuadConverter.genQuad(Transformation.identity(), 0, 0, 16, 16, 0, sprite, Direction.NORTH, 0xFFFFFFFF, 2);
+		ImmutableMap<TransformType, Transformation> map = ImmutableMap.of(TransformType.GUI, Transformation.identity());
+		event.getModelRegistry().put(loc, new BakedItemModel(ImmutableList.of(quads), sprite, map, ItemOverrides.EMPTY, false, true));
+	}*/
 
 }

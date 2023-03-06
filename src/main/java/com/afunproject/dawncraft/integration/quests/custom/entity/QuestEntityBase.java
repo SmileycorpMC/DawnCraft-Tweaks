@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.entity;
 
+import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.QuestsRegistry;
@@ -24,11 +25,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.EntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
 public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
@@ -56,11 +54,9 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		if (player.isSecondaryUseActive()) return super.mobInteract(player, hand);
-		LazyOptional<EntityPatch> optional = player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY);
-		if (optional.isPresent()) if (((PlayerPatch<?>)optional.resolve().get()).isBattleMode()) return InteractionResult.PASS;
+		if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode(player)) return InteractionResult.PASS;
 		if (player instanceof ServerPlayer && canSeeQuest()) {
 			if (quest != null) if (quest.isQuestComplete(player, this, entityData.get(QUEST_PHASE))) {
 				entityData.set(QUEST_PHASE, entityData.get(QUEST_PHASE)+1);
@@ -77,10 +73,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	}
 
 	@Override
-	protected void doPush(Entity entity) {}
-
-	@Override
-	protected void pushEntities() {}
+	public void doPush(Entity entity) {}
 
 	@Override
 	public boolean isPersistenceRequired() {

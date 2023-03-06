@@ -1,5 +1,7 @@
 package com.afunproject.dawncraft.integration.simplemobs;
 
+import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.invasion.InvasionEntry;
 import com.afunproject.dawncraft.invasion.InvasionKey;
@@ -34,8 +36,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.command.EnumArgument;
@@ -64,16 +68,30 @@ public class SimpleMobsEvents {
 	}
 
 	@SubscribeEvent
-	public void playerJoinWorld(PlayerEvent.PlayerLoggedInEvent event) {
+	public void playerJoinWorld(PlayerLoggedInEvent event) {
 		if (event.getPlayer() instanceof ServerPlayer) {
 			Player player = event.getPlayer();
-			if (!player.getPersistentData().contains("spawned")) {
-				BlockPos pos = DirectionUtils.getClosestLoadedPos(player.level, player.blockPosition(), player.getLookAngle(), 5);
-				SimpleMobsModEntities.KOROK_INTRO.get().spawn((ServerLevel)player.getLevel(), null, player, pos, MobSpawnType.MOB_SUMMONED, false, false);
-				player.getPersistentData().putBoolean("spawned", true);
+			LazyOptional<SpawnTracker> optional = player.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+			if (optional.isPresent()) {
+				SpawnTracker spawnTracker = optional.resolve().get();
+				if (!spawnTracker.hasSpawned()) {
+					BlockPos pos = DirectionUtils.getClosestLoadedPos(player.level, player.blockPosition(), player.getLookAngle(), 5);
+					SimpleMobsModEntities.KOROK_INTRO.get().spawn((ServerLevel)player.getLevel(), null, player, pos, MobSpawnType.MOB_SUMMONED, false, false);
+					spawnTracker.setSpawned();
+				}
 			}
 		}
 
+	}
+
+	@SubscribeEvent
+	public void playerClone(PlayerEvent.Clone event) {
+		Player original = event.getOriginal();
+		Player player = event.getPlayer();
+		original.reviveCaps();
+		LazyOptional<SpawnTracker> optionalOld = original.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+		LazyOptional<SpawnTracker> optional = player.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+		if (optionalOld.isPresent() && optional.isPresent()) if (optionalOld.resolve().get().hasSpawned()) optional.resolve().get().setSpawned();
 	}
 
 	@SubscribeEvent

@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.RestrictBlock;
+import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
@@ -14,6 +15,8 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,7 +39,8 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -122,6 +126,16 @@ public class EventListener {
 	}
 
 	@SubscribeEvent
+	public void playerClone(PlayerEvent.Clone event) {
+		Player original = event.getOriginal();
+		Player player = event.getPlayer();
+		original.reviveCaps();
+		LazyOptional<SageQuestTracker> optionalOld = original.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+		LazyOptional<SageQuestTracker> optional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+		if (optionalOld.isPresent() && optional.isPresent()) optional.resolve().get().readNBT(optionalOld.resolve().get().writeNBT());
+	}
+
+	@SubscribeEvent
 	public void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getWorld();
 		if (!level.isClientSide) {
@@ -144,7 +158,7 @@ public class EventListener {
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void livingHurtEvent(LivingHurtEvent event) {
+	public void livingHurtEvent(LivingDamageEvent event) {
 		LivingEntity entity = event.getEntityLiving();
 		DamageSource source = event.getSource();
 		if (!entity.level.isClientSide) {
@@ -154,6 +168,7 @@ public class EventListener {
 					event.setAmount(entity.getMaxHealth()*0.05f);
 				}
 				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
+					attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, attacker.getRandom().nextFloat());
 					event.setAmount(entity.getHealth());
 				}
 			}

@@ -26,6 +26,7 @@ public class CapabilitiesRegister {
 	public static Capability<Invasions> INVASIONS = CapabilityManager.get(new CapabilityToken<Invasions>(){});
 	public static Capability<QuestEntity> QUEST_ENTITY = CapabilityManager.get(new CapabilityToken<QuestEntity>(){});
 	public static Capability<SpawnTracker> SPAWN_TRACKER = CapabilityManager.get(new CapabilityToken<SpawnTracker>(){});
+	public static Capability<SageQuestTracker> SAGE_QUEST_TRACKER = CapabilityManager.get(new CapabilityToken<SageQuestTracker>(){});
 
 	@SubscribeEvent
 	public void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -50,8 +51,11 @@ public class CapabilitiesRegister {
 		if (ArrayUtils.contains(QUEST_ENTITIES, entity.getType())) {
 			event.addCapability(Constants.loc("quest"), new QuestProvider());
 		}
-		if (entity instanceof Mob) {
+		if (entity instanceof Mob || entity instanceof Player) {
 			event.addCapability(Constants.loc("spawn_tracker"), new SpawnTracker.Provider());
+		}
+		if (entity instanceof Player) {
+			event.addCapability(Constants.loc("sage_quest"), new SageQuestTracker.Provider());
 		}
 	}
 

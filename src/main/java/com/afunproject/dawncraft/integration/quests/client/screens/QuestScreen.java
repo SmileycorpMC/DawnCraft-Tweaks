@@ -82,7 +82,7 @@ public class QuestScreen extends Screen {
 					int i = str.substring(position, newPos).indexOf("¬");
 					lines.add(str.substring(position, position + i));
 					position = position + i + 1;
-					if (lines.size() >= 10) {
+					if (lines.size() >= 9) {
 						pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 						lines = Lists.newArrayList();
 					}
@@ -96,7 +96,7 @@ public class QuestScreen extends Screen {
 					if (i == size) {
 						lines.add(str.substring(position, newPos+1));
 						position = newPos;
-						if (lines.size() >= 10) {
+						if (lines.size() >= 9) {
 							pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 							lines = Lists.newArrayList();
 						}
@@ -105,7 +105,7 @@ public class QuestScreen extends Screen {
 					else if (str.charAt(newPos-i) == ' ') {
 						lines.add(str.substring(position, newPos-i+1));
 						position = newPos-i+1;
-						if (lines.size() >= 10) {
+						if (lines.size() >= 9) {
 							pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 							lines = Lists.newArrayList();
 						}

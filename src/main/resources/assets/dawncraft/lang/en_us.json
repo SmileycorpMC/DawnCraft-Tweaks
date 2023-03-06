@@ -103,6 +103,7 @@
 	
 	"message.dawncraft.invasion": "You are being invaded by %1$s",
 	"message.dawncraft.spawn_npc": "Succesfully spawned NPC %1$s at %2$s",
+	"message.dawncraft.animal": "Animals interacted with: %1$s/10",
 	
 	"message.dawncraft.singlepulse": "Changed to single tick mode",
 	"message.dawncraft.toggle": "Changed to toggle mode",
@@ -210,6 +211,14 @@
 	"text.dawncraft.quest.monster_slayer5":"My greatest congratulations to you, not many make it this far¶Your final test may prove the most difficult, but will cement yourself as a true monster slayer, worthy of the guild!¶To finish your final test, show me one of the following: the star of a Wither, heart of a Dragon, a fragment from a Cave Golem, The Mask of Barakoa, Axe of a Ferrous Wroughtnaught, or Gem of a Martian",
 	"text.dawncraft.quest.monster_slayer6":"To finish your final test, show me one of the following: the star of a Wither, heart of a Dragon, a fragment from a Cave Golem, The Mask of Barakoa, Axe of a Ferrous Wroughtnaught, or Gem of a Martian",
 	"text.dawncraft.quest.monster_slayer7":"That's fantastic to see, I knew I was right to put my trust in you.¶Go on take these rewards, you deserve them!",
+	
+	"text.dawncraft.quest.sage1":"Hello there, adventurer, I was wondering if you could help me?¶I'm writing a paper about the wildlife of this fair world, alas I'm quite frightened of a few of them.¶Could you interact with 10 different animals and tell me your observations? I'll give you my magic key as a reward.",
+	"text.dawncraft.quest.sage2":"Back so soon? Have you truly interacted with 10 animals yet?",
+	"text.dawncraft.quest.sage3":"Hmm, curious, I never would have thought that they'd behave that way...¶My greatest thanks for this information, this will be very useful for my work...¶Oh and I forgot, take this, it may help in... whaterver it is you do...",
+	
+	"text.dawncraft.quest.sorcerer1":"Umm, hi, you're an adventurer right?¬Would you be able to help me with something?¶Well you see I'm training to be a sorcerer's apprentice and I accidentally broke my staff...¶I know how to repair it, but I can't quite find the material I need...¶If you can bring me a prismarine shard, I can give you a spirit orb in return.",
+	"text.dawncraft.quest.sorcerer2":"Have you managed to find a prismarine shard yet?",
+	"text.dawncraft.quest.sorcerer3":"Oh thank you ever so much...¶With this I should be able to make my staff as good as new!¶Here as promised take this spirit orb, it won't really be as useful for me but it might help you with your quest!",
 	
 	"text.dawncraft.next": ">>",
 	"text.dawncraft.back": "Back",

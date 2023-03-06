@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration;
 
-import com.afunproject.dawncraft.integration.epicfight.EpicFightAnimations;
+import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.epicfight.client.EpicFightClientEvents;
 import com.afunproject.dawncraft.integration.humancompanions.HCEvents;
 import com.afunproject.dawncraft.integration.humancompanions.client.HCClientEvents;
@@ -17,7 +17,7 @@ public class IntegrationHandler {
 		if (modlist.isLoaded("humancompanions")) HCEvents.init();
 		if (modlist.isLoaded("quest_giver")) QuestEvents.init();
 		if (modlist.isLoaded("simple_mobs")) SimpleMobsEvents.init();
-		if (modlist.isLoaded("epicfight")) EpicFightAnimations.init();
+		if (modlist.isLoaded("epicfight")) EpicFightCompat.init();
 	}
 
 	public static void setup() {

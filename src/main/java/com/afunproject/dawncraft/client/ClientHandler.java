@@ -11,6 +11,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ClientHandler {
@@ -28,6 +29,12 @@ public class ClientHandler {
 	public static void displayMessage(String message) {
 		Minecraft mc = Minecraft.getInstance();
 		MutableComponent component = new TranslatableComponent(message).withStyle(ChatFormatting.AQUA);
+		mc.gui.setOverlayMessage(component, false);
+	}
+
+	public static void displayAnimalMessage(int count) {
+		Minecraft mc = Minecraft.getInstance();
+		MutableComponent component = new TranslatableComponent("message.dawncraft.animal", count).withStyle(Style.EMPTY.applyFormat(ChatFormatting.DARK_GREEN).withBold(true));
 		mc.gui.setOverlayMessage(component, false);
 	}
 

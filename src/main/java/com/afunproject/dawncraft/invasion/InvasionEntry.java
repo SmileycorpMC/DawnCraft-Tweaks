@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -15,6 +16,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -65,8 +68,10 @@ public class InvasionEntry {
 			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
-			level.playSound(player, new BlockPos(player.position().add(dir)), SoundEvents.PORTAL_TRAVEL, SoundSource.HOSTILE, 0.75f, level.random.nextFloat());
-			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(0x8E0009).withBold(true)), true);
+			entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
+			Vec3 sound = player.position().add(dir);
+			level.playSound(null, sound.x, sound.y, sound.z, SoundEvents.PORTAL_TRAVEL, SoundSource.HOSTILE, 1f, level.random.nextFloat());
+			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withBold(true)), true);
 		}
 	}
 

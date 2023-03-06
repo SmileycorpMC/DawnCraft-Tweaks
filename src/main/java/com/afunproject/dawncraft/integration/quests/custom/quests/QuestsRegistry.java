@@ -11,6 +11,8 @@ import com.afunproject.dawncraft.integration.quests.custom.quests.dc.IntroQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.KingQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MaskGhostQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MonsterSlayerQuest;
+import com.afunproject.dawncraft.integration.quests.custom.quests.dc.SageQuest;
+import com.afunproject.dawncraft.integration.quests.custom.quests.dc.SorcererQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WerewolfQuest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WitchQuest;
 import com.google.common.collect.Maps;
@@ -47,9 +49,9 @@ public class QuestsRegistry {
 		registerQuest(Constants.loc("mask_ghost"), new MaskGhostQuest());
 		registerQuest(Constants.loc("witch"), new WitchQuest());
 		registerQuest(Constants.loc("king"), new KingQuest());
-
-
 		registerQuest(Constants.loc("monster_slayer"), new MonsterSlayerQuest());
+		registerQuest(Constants.loc("sage"), new SageQuest());
+		registerQuest(Constants.loc("sorcerer"), new SorcererQuest());
 	}
 
 }
