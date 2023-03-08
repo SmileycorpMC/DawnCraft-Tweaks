@@ -16,7 +16,8 @@
 		"MixinKeyMapping",
 		"MixinKeyboardHandler",
 		"MixinMouseHandler",
-		"MixinEntityRenderer"
+		"MixinEntityRenderer",
+		"MixinItemRenderer"
 	],
 	"minVersion": "0.8"
 }

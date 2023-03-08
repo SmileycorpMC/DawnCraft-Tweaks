@@ -1,5 +1,7 @@
 package com.afunproject.dawncraft.integration.quests.custom.entity;
 
+import java.util.List;
+
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
@@ -73,7 +75,13 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	}
 
 	@Override
-	public void doPush(Entity entity) {}
+	protected void pushEntities() {
+		List<Entity> entities = level.getEntities(this, this.getBoundingBox(), (entity)-> !(isPassengerOfSameVehicle(entity) || entity.isSpectator()) && entity.isPushable());
+		for (Entity entity : entities) doPush(entity);
+	}
+
+	@Override
+	public void push(double x, double y, double z) {}
 
 	@Override
 	public boolean isPersistenceRequired() {
