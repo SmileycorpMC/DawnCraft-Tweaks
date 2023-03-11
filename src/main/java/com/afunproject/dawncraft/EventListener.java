@@ -106,11 +106,13 @@ public class EventListener {
 		}
 		if (event.getEntity() instanceof PathfinderMob) {
 			PathfinderMob entity = (PathfinderMob) event.getEntity();
-			entity.goalSelector.addGoal(5, new DCMoveTowardsRestrictionGoal(entity, 1.0D));
 			LazyOptional<RestrictBlock> optional = entity.getCapability(CapabilitiesRegister.RESTRICT_BLOCK);
 			if (optional.isPresent()) {
 				RestrictBlock cap = optional.resolve().get();
-				if (cap.canRestrict(entity)) cap.applyRestriction(entity);
+				if (cap.canRestrict(entity)) {
+					entity.goalSelector.addGoal(5, new DCMoveTowardsRestrictionGoal(entity, 1.0D));
+					cap.applyRestriction(entity);
+				}
 			}
 		}
 	}
