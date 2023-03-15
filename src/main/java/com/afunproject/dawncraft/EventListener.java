@@ -11,6 +11,7 @@ import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.entities.ai.DCMoveTowardsRestrictionGoal;
+import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
 import com.google.common.collect.Lists;
 
@@ -167,9 +168,17 @@ public class EventListener {
 			if (source.getEntity() instanceof LivingEntity) {
 				LivingEntity attacker = (LivingEntity) source.getEntity();
 				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
-					event.setAmount(entity.getMaxHealth()*0.05f);
+					if (attacker instanceof Player) {
+						if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode((Player) attacker)) {
+							event.setAmount(entity.getMaxHealth()*0.05f);
+							return;
+						}
+					} else {
+						event.setAmount(entity.getMaxHealth()*0.05f);
+						return;
+					}
 				}
-				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
+				else if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
 					attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, attacker.getRandom().nextFloat());
 					event.setAmount(entity.getHealth());
 				}

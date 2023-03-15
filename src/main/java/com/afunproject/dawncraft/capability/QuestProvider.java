@@ -37,13 +37,11 @@ public class QuestProvider implements ICapabilitySerializable<CompoundTag> {
 
 		@Override
 		public int getQuestPhase() {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
 		public Quest getCurrentQuest() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 

@@ -7,6 +7,7 @@ import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.FollowQuest;
 import com.afunproject.dawncraft.integration.quests.task.FollowTask;
+import com.feywild.quest_giver.entity.QuestGuardVillager;
 import com.feywild.quest_giver.quest.player.QuestData;
 import com.feywild.quest_giver.quest.task.TaskTypes;
 import com.mojang.datafixers.util.Pair;
@@ -31,7 +32,6 @@ import net.smileycorp.followme.common.FollowHandler;
 import net.smileycorp.followme.common.FollowMe;
 import net.smileycorp.followme.common.ai.FollowUserGoal;
 import net.smileycorp.followme.common.capability.IFollower;
-import tallestegg.guardvillagers.entities.Guard;
 
 public class FollowMeQuestEvents {
 
@@ -41,60 +41,60 @@ public class FollowMeQuestEvents {
 
 	@SubscribeEvent
 	public void entityTick(LivingUpdateEvent event) {
-		if (event.getEntity() instanceof Mob) {
-			Mob entity = (Mob) event.getEntity();
-			if (entity.level instanceof ServerLevel) {
-				LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST);
-				if (questOptional.isPresent()) {
-					FollowQuest questCap = questOptional.resolve().get();
-					if (questCap.hasStructure()) {
-						LazyOptional<IFollower> followOptional = entity.getCapability(FollowMe.FOLLOW_CAPABILITY);
-						if (followOptional.isPresent()) {
-							IFollower followCap = followOptional.resolve().get();
-							LivingEntity followedEntity = followCap.getFollowedEntity();
-							if (followedEntity instanceof ServerPlayer) {
-								if (isInStructure(entity.blockPosition(), (ServerLevel)entity.level, questCap.getStructure())) {
-									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
-									if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
-										//remove follow ai
-										for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
-											if (entry.getGoal() instanceof FollowUserGoal) {
-												FollowUserGoal task = (FollowUserGoal) entry.getGoal();
-												if (task.getUser() == followedEntity) {
-													FollowHandler.removeAI(task);
-												}
-												break;
+		if (event.getEntity() instanceof Mob) {;
+		Mob entity = (Mob) event.getEntity();
+		if (entity.level instanceof ServerLevel) {
+			LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST);
+			if (questOptional.isPresent()) {
+				FollowQuest questCap = questOptional.resolve().get();
+				if (questCap.hasStructure()) {
+					LazyOptional<IFollower> followOptional = entity.getCapability(FollowMe.FOLLOW_CAPABILITY);
+					if (followOptional.isPresent()) {
+						IFollower followCap = followOptional.resolve().get();
+						LivingEntity followedEntity = followCap.getFollowedEntity();
+						if (followedEntity instanceof ServerPlayer) {
+							if (isInStructure(entity.blockPosition(), (ServerLevel)entity.level, questCap.getStructure())) {
+								QuestData quests = QuestData.get((ServerPlayer) followedEntity);
+								if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
+									//remove follow ai
+									for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
+										if (entry.getGoal() instanceof FollowUserGoal) {
+											FollowUserGoal task = (FollowUserGoal) entry.getGoal();
+											if (task.getUser() == followedEntity) {
+												FollowHandler.removeAI(task);
 											}
-										};
+											break;
+										}
+									};
 
-										//remove capabilities
-										followCap.setForcedToFollow(false);
-										questCap.setStructure(null);
-									}
-								} else if (!entity.level.getEntitiesOfClass(Guard.class, entity.getBoundingBox().inflate(5)).isEmpty()) {
-									QuestData quests = QuestData.get((ServerPlayer) followedEntity);
-									if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
-										//remove follow ai
-										for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
-											if (entry.getGoal() instanceof FollowUserGoal) {
-												FollowUserGoal task = (FollowUserGoal) entry.getGoal();
-												if (task.getUser() == followedEntity) {
-													FollowHandler.removeAI(task);
-												}
-												break;
+									//remove capabilities
+									followCap.setForcedToFollow(false);
+									questCap.setStructure(null);
+								}
+							} else if (questCap.getStructure().equals("#minecraft:village")  &! entity.level.getEntitiesOfClass(QuestGuardVillager.class, entity.getBoundingBox().inflate(10)).isEmpty()) {
+								QuestData quests = QuestData.get((ServerPlayer) followedEntity);
+								if (quests.checkComplete(FollowTask.INSTANCE, questCap.getStructure())) {
+									//remove follow ai
+									for (WrappedGoal entry : entity.goalSelector.getRunningGoals().toArray(WrappedGoal[]::new)) {
+										if (entry.getGoal() instanceof FollowUserGoal) {
+											FollowUserGoal task = (FollowUserGoal) entry.getGoal();
+											if (task.getUser() == followedEntity) {
+												FollowHandler.removeAI(task);
 											}
-										};
+											break;
+										}
+									};
 
-										//remove capabilities
-										followCap.setForcedToFollow(false);
-										questCap.setStructure(null);
-									}
+									//remove capabilities
+									followCap.setForcedToFollow(false);
+									questCap.setStructure(null);
 								}
 							}
 						}
 					}
 				}
 			}
+		}
 		}
 	}
 
