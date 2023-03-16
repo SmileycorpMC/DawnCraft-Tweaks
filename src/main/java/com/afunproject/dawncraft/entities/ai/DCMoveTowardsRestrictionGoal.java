@@ -11,7 +11,12 @@ public class DCMoveTowardsRestrictionGoal extends MoveTowardsRestrictionGoal {
 
 	@Override
 	public boolean canUse() {
-		return mob.getTarget() == null;
+		return mob.getTarget() == null && super.canUse();
+	}
+
+	@Override
+	public boolean canContinueToUse() {
+		return mob.getTarget() == null && super.canContinueToUse();
 	}
 
 }
