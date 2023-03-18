@@ -12,7 +12,6 @@ import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Disguisable;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -29,9 +28,11 @@ import net.smileycorp.atlas.api.client.RenderingUtils;
 public class DisguisedBakedModel implements IDynamicBakedModel {
 
 	private final DungeonModelContext ctx;
+	private final DisguisedBakedModelOverlay overlay;
 
 	public DisguisedBakedModel(DungeonModelContext ctx) {
 		this.ctx = ctx;
+		overlay = new DisguisedBakedModelOverlay(this);
 	}
 
 	@Override
@@ -51,17 +52,6 @@ public class DisguisedBakedModel implements IDynamicBakedModel {
 		List<BakedQuad> quads = Lists.newArrayList();
 		Minecraft mc = Minecraft.getInstance();
 		Function<ResourceLocation, TextureAtlasSprite> blockSprites = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
-		LocalPlayer player = mc.player;
-		if (player.isCreative()) {
-			for (Entry<Direction, ResourceLocation> entry : ctx.getOverlayTextures().entrySet()) {
-				try {
-					TextureAtlasSprite sprite = blockSprites.apply(entry.getValue());
-					quads.addAll(RenderingUtils.getQuadsForPlane(entry.getKey(), Color.WHITE, sprite, -10));
-				} catch (Exception e) {
-					DawnCraft.logError("Failed to load overlay quads for side "+entry.getKey(), e);
-				}
-			}
-		}
 		for (Direction dir : Direction.values()) {
 			if (ctx.getTextures().containsKey(dir)) {
 				try {
@@ -122,6 +112,70 @@ public class DisguisedBakedModel implements IDynamicBakedModel {
 	@Override
 	public ItemTransforms getTransforms() {
 		return ItemTransforms.NO_TRANSFORMS;
+	}
+
+	public DisguisedBakedModelOverlay getOverlayModel() {
+		return overlay;
+	}
+
+	public static class DisguisedBakedModelOverlay implements IDynamicBakedModel {
+
+		protected final DisguisedBakedModel base;
+
+		public DisguisedBakedModelOverlay(DisguisedBakedModel base) {
+			this.base = base;
+		}
+
+		@Override
+		public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, IModelData data) {
+			List<BakedQuad> quads = Lists.newArrayList();
+			Minecraft mc = Minecraft.getInstance();
+			Function<ResourceLocation, TextureAtlasSprite> blockSprites = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
+			for (Entry<Direction, ResourceLocation> entry : base.ctx.getOverlayTextures().entrySet()) {
+				try {
+					TextureAtlasSprite sprite = blockSprites.apply(entry.getValue());
+					quads.addAll(RenderingUtils.getQuadsForPlane(entry.getKey(), Color.WHITE, sprite, 10));
+				} catch (Exception e) {
+					DawnCraft.logError("Failed to load overlay quads for side "+entry.getKey(), e);
+				}
+			}
+			return quads;
+		}
+
+		@Override
+		public boolean useAmbientOcclusion() {
+			return base.useAmbientOcclusion();
+		}
+
+		@Override
+		public boolean isGui3d() {
+			return base.isGui3d();
+		}
+
+		@Override
+		public boolean usesBlockLight() {
+			return base.usesBlockLight();
+		}
+
+		@Override
+		public boolean isCustomRenderer() {
+			return base.isCustomRenderer();
+		}
+
+		@Override
+		public TextureAtlasSprite getParticleIcon() {
+			return base.getParticleIcon();
+		}
+
+		@Override
+		public ItemOverrides getOverrides() {
+			return base.getOverrides();
+		}
+
+		@Override
+		public ItemTransforms getTransforms() {
+			return base.getTransforms();
+		}
 	}
 
 }

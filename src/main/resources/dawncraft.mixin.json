@@ -14,7 +14,8 @@
 		"MixinKeyboardHandler",
 		"MixinMouseHandler",
 		"MixinEntityRenderer",
-		"MixinEntityRenderDispatcher"
+		"MixinEntityRenderDispatcher",
+		"MixinModelBlockRenderer"
 	],
 	"minVersion": "0.8"
 }
