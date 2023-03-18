@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.integration.simplemobs;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.invasion.InvasionEntry;
@@ -25,6 +26,7 @@ import net.mcreator.simplemobs.init.SimpleMobsModEntities;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -176,15 +178,32 @@ public class SimpleMobsEvents {
 	public void registerSubCommands(DCSubCommandsEvent event) {
 		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class))
 				.executes(ctx -> spawnInvasion(ctx))));
+		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class)).then(Commands.argument("player", EntityArgument.player()))
+				.executes(ctx -> spawnInvasion(ctx, EntityArgument.getPlayer(ctx, "player")))));
+		event.addSubCommand(Commands.literal("enableInvasions").then(Commands.argument("player", EntityArgument.player()))
+				.executes(ctx -> enableInvasions(ctx)));
 	}
 
 	public static int spawnInvasion(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
 		CommandSourceStack source = ctx.getSource();
 		if (source.getEntity() instanceof Player) {
-			InvasionEntry entry = InvasionRegistry.getInvasion(ctx.getArgument("invader", InvasionKey.class));
-			entry.spawnEntities((Player) source.getEntity());
+			return spawnInvasion(ctx, (Player) source.getEntity());
 		}
 		return 0;
 	}
+
+	public static int spawnInvasion(CommandContext<CommandSourceStack> ctx, Player player) throws CommandSyntaxException {
+		InvasionEntry entry = InvasionRegistry.getInvasion(ctx.getArgument("invader", InvasionKey.class));
+		entry.spawnEntities((Player) player);
+		return 0;
+	}
+
+	public static int enableInvasions(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+		Player player = EntityArgument.getPlayer(ctx, "player");
+		LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
+		if (optional.isPresent()) optional.resolve().get().setNextSpawn(player.tickCount + player.getRandom().nextInt(18000, 36000));
+		return 0;
+	}
+
 
 }

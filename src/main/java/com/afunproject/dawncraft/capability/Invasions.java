@@ -20,6 +20,8 @@ public interface Invasions {
 
 	public void tryToSpawnInvasion(Player player);
 
+	public void setNextSpawn(int ticks);
+
 	public CompoundTag save();
 
 	public void load(CompoundTag tag);
@@ -28,7 +30,7 @@ public interface Invasions {
 
 		private Random rand = new Random();
 		private List<InvasionEntry> invasions = Lists.newArrayList();
-		private int nextSpawn;
+		private int nextSpawn = -1;
 
 		public Implementation() {
 			invasions.addAll(InvasionRegistry.getInvasions());
@@ -37,6 +39,7 @@ public interface Invasions {
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
+			if (nextSpawn == -1) return;
 			if (!player.level.isClientSide && player.tickCount >= nextSpawn && player.tickCount > 0 &! invasions.isEmpty()) {
 				if (rand.nextInt(3)>0) {
 					InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
@@ -45,6 +48,11 @@ public interface Invasions {
 				}
 				nextSpawn = player.tickCount + rand.nextInt(72000, 96000);
 			}
+		}
+
+		@Override
+		public void setNextSpawn(int ticks) {
+			nextSpawn = ticks;
 		}
 
 		@Override
