@@ -24,14 +24,18 @@ import net.mcreator.simplemobs.entity.WoodendayEntity;
 import net.mcreator.simplemobs.entity.YesImDavidEntity;
 import net.mcreator.simplemobs.init.SimpleMobsModEntities;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -180,8 +184,8 @@ public class SimpleMobsEvents {
 				.executes(ctx -> spawnInvasion(ctx))));
 		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class)).then(Commands.argument("player", EntityArgument.player()))
 				.executes(ctx -> spawnInvasion(ctx, EntityArgument.getPlayer(ctx, "player")))));
-		event.addSubCommand(Commands.literal("enableInvasions").then(Commands.argument("player", EntityArgument.player()))
-				.executes(ctx -> enableInvasions(ctx)));
+		event.addSubCommand(Commands.literal("enableInvasions").then(Commands.argument("player", EntityArgument.player())
+				.executes(ctx -> enableInvasions(ctx))));
 	}
 
 	public static int spawnInvasion(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -201,7 +205,12 @@ public class SimpleMobsEvents {
 	public static int enableInvasions(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
 		Player player = EntityArgument.getPlayer(ctx, "player");
 		LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
-		if (optional.isPresent()) optional.resolve().get().setNextSpawn(player.tickCount + player.getRandom().nextInt(18000, 36000));
+		if (optional.isPresent()) {
+			int time = player.getRandom().nextInt(6000, 36000);
+			optional.resolve().get().setNextSpawn(player.tickCount + time);
+			player.level.playSound(null, player.position().x, player.position().y, player.position().z, SoundEvents.ENDER_DRAGON_AMBIENT, SoundSource.HOSTILE, 1f, player.level.random.nextFloat());
+			player.sendMessage(new TranslatableComponent("message.dawncraft.invasions_enabled_0").withStyle(ChatFormatting.RED), null);
+		}
 		return 0;
 	}
 
