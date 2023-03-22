@@ -1,4 +1,4 @@
-package com.afunproject.dawncraft.integration.simplemobs;
+package com.afunproject.dawncraft.integration.dcmobs;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;

@@ -19,7 +19,7 @@ public enum QuestNPC implements StringRepresentable {
 	BELL_GHOST(QuestEntities.FALLEN_ADVENTURER.get(), "{\"username\":\"NickWins\", \"quest\":\"dawncraft:ghost\"}"),
 	CULT_INFORMER(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"dg2q\", \"quest\":\"dawncraft:cult\"}"),
 	BARREL(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"JosslynMC\", \"quest\":\"dawncraft:barrel\"}"),
-	ALCHEMIST(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Jun_li\", \"quest\":\"dawncraft:alchemist\"}\"}"),
+	ALCHEMIST(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Jormungandirr\", \"quest\":\"dawncraft:alchemist\"}\"}"),
 	MASK_GHOST(QuestEntities.FALLEN_ADVENTURER.get(), "{\"username\":\"Sir_Sense\", \"quest\":\"dawncraft:mask_ghost\"}"),
 	WITCH(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"zherterry\", \"quest\":\"dawncraft:witch\", \"damageable\":1b}"),
 	KING(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Dark_King_0507\", \"quest\":\"dawncraft:king\"}"),

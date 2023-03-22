@@ -10,8 +10,9 @@ import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlay
 import com.github.justinwon777.humancompanions.entity.Knight;
 
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -35,7 +36,7 @@ public class HCEvents {
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		Level level = event.getWorld();
-		if (event.getEntity() instanceof Knight &! level.isClientSide) {
+		if (event.getEntity().getClass() == Knight.class && level instanceof ServerLevel) {
 			Knight entity = (Knight) event.getEntity();
 			LazyOptional<SpawnTracker> optional = entity.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
 			if (optional.isPresent()) {
@@ -44,14 +45,20 @@ public class HCEvents {
 					if (new Random().nextInt(100) < 5) {
 						KnightPlayer player = HCEntities.KNIGHT_PLAYER.get().create(level);
 						player.setPos(entity.position());
-						player.setPlayer("Braydon2570");
 						level.addFreshEntity(player);
-						player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(EpicFightItems.IRON_GREATSWORD.get()));
-						player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SimpleMobsModItems.DIABOLIUM_CHESTPLATE.get()));
-						player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.CHAINMAIL_LEGGINGS));
-						player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.LEATHER_BOOTS));
+						player.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(player.blockPosition()), MobSpawnType.NATURAL, null, null);
+						player.setPlayer("Braydon2570");
+						player.setSex(0);
+						for (EquipmentSlot slot : EquipmentSlot.values()) player.setItemSlot(slot, ItemStack.EMPTY);
+						player.inventory.clearContent();
+						player.inventory.setItem(0, new ItemStack(EpicFightItems.IRON_GREATSWORD.get()));
+						player.inventory.setItem(1, new ItemStack(SimpleMobsModItems.DIABOLIUM_CHESTPLATE.get()));
+						player.inventory.setItem(2, new ItemStack(Items.CHAINMAIL_LEGGINGS));
+						player.inventory.setItem(3, new ItemStack(Items.LEATHER_BOOTS));
 						player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40D);
-						entity.discard();
+						player.checkArmor();
+						player.checkSword();
+						event.setCanceled(true);
 					}
 					tracker.setSpawned();
 				}

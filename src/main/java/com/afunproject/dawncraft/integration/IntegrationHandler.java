@@ -1,12 +1,12 @@
 package com.afunproject.dawncraft.integration;
 
+import com.afunproject.dawncraft.integration.dcmobs.SimpleMobsEvents;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.epicfight.client.EpicFightClientEvents;
 import com.afunproject.dawncraft.integration.humancompanions.HCEvents;
 import com.afunproject.dawncraft.integration.humancompanions.client.HCClientEvents;
 import com.afunproject.dawncraft.integration.quests.QuestEvents;
 import com.afunproject.dawncraft.integration.quests.client.QuestClientEvents;
-import com.afunproject.dawncraft.integration.simplemobs.SimpleMobsEvents;
 
 import net.minecraftforge.fml.ModList;
 
