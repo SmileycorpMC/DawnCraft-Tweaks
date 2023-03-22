@@ -53,32 +53,34 @@ public class ClientEventListener {
 		if (mc.player.hasEffect(DawnCraftEffects.FROGFORM.get())) event.setCanceled(true);
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent
 	public void renderOverlay(RenderGameOverlayEvent.Pre event) {
 		Minecraft mc = Minecraft.getInstance();
 		//hide during quest screen
 		//if (mc.screen != null) return;
 		//render minimap
-		if (event.getType() != ElementType.ALL) return;
-		PoseStack poseStack = event.getMatrixStack();
-		poseStack.pushPose();
-		poseStack.popPose();
-		LocalPlayer player = mc.player;
-		if (mc.options.renderDebug || player.isUsingItem()) return;
-		ItemStack stack = null;
-		if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.FILLED_MAP) {
-			stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-		}
-		else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.FILLED_MAP) {
-			stack = player.getItemInHand(InteractionHand.OFF_HAND);
-		}
-		if (stack != null) {
-			boolean fullscreen = player.getUseItem().isEmpty() && mc.options.keyUse.isDown();
-			if (fullscreen) {
-				event.setCanceled(true);
-				if (!mc.options.getCameraType().isFirstPerson()) mc.options.setCameraType(CameraType.FIRST_PERSON);
+		if (event.getType() == ElementType.LAYER)  {
+			PoseStack poseStack = event.getMatrixStack();
+			poseStack.pushPose();
+			poseStack.clear();
+			poseStack.popPose();
+			LocalPlayer player = mc.player;
+			if (mc.options.renderDebug || player.isUsingItem()) return;
+			ItemStack stack = null;
+			if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.FILLED_MAP) {
+				stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 			}
-			MinimapRenderer.renderBasicMinimap(poseStack, stack, player.getUseItem().isEmpty() && mc.options.keyUse.isDown());
+			else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.FILLED_MAP) {
+				stack = player.getItemInHand(InteractionHand.OFF_HAND);
+			}
+			if (stack != null) {
+				boolean fullscreen = player.getUseItem().isEmpty() && mc.options.keyUse.isDown();
+				if (fullscreen) {
+					event.setCanceled(true);
+					if (!mc.options.getCameraType().isFirstPerson()) mc.options.setCameraType(CameraType.FIRST_PERSON);
+				}
+				MinimapRenderer.renderBasicMinimap(poseStack, stack, player.getUseItem().isEmpty() && mc.options.keyUse.isDown());
+			}
 		}
 	}
 
