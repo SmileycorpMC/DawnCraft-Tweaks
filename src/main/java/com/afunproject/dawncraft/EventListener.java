@@ -10,6 +10,7 @@ import com.afunproject.dawncraft.capability.RestrictBlock;
 import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.entities.ai.DCMoveTowardsRestrictionGoal;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
@@ -21,6 +22,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -41,6 +43,7 @@ import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -61,7 +64,7 @@ public class EventListener {
 			"entity.minecraft.ender_dragon","entity.minecraft.wither","entity.simple_mobs.ogre",
 			"entity.simple_mobs.martian","entity.simple_mobs.sentinel_knight","entity.simple_mobs.fire_giant",
 			"entity.simple_mobs.nine_tails","entity.simple_mobs.skeletonlord","entity.simple_mobs.knight_4",
-			"entity.simple_mobs.fire_dragon", "entity.simple_mobs.ice_dragon",
+			"entity.simple_mobs.fire_dragon", "entity.simple_mobs.ice_dragon", "entity.simple_mobs.notch", "entity.simple_mobs.elemental_deity",
 			"entity.bloodandmadness.father_gascoigne","entity.bloodandmadness.gascoigne_beast",
 			"entity.bloodandmadness.micolash","entity.ob_aquamirae.captain_cornelia","entity.conjurer_illager.conjurer",
 			"entity.mowziesmobs.ferrous_wroughtnaut","entity.mowziesmobs.barako","entity.mowziesmobs.frostmaw",
@@ -136,6 +139,12 @@ public class EventListener {
 		LazyOptional<SageQuestTracker> optionalOld = original.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
 		LazyOptional<SageQuestTracker> optional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
 		if (optionalOld.isPresent() && optional.isPresent()) optional.resolve().get().readNBT(optionalOld.resolve().get().writeNBT());
+		if (original.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
+			player.addEffect(new MobEffectInstance(DawnCraftEffects.FRACTURED_SOUL.get(), 3600,
+					Math.min(4, original.getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier()+1), true, true));
+		} else {
+			player.addEffect(new MobEffectInstance(DawnCraftEffects.FRACTURED_SOUL.get(), 3600, 0, true, true));
+		}
 	}
 
 	@SubscribeEvent
@@ -161,7 +170,7 @@ public class EventListener {
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void livingHurtEvent(LivingDamageEvent event) {
+	public void livingHurt(LivingDamageEvent event) {
 		LivingEntity entity = event.getEntityLiving();
 		DamageSource source = event.getSource();
 		if (!entity.level.isClientSide) {
@@ -181,6 +190,19 @@ public class EventListener {
 				else if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
 					attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, attacker.getRandom().nextFloat());
 					event.setAmount(entity.getHealth());
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void livingDeath(LivingDeathEvent event) {
+		if (event.getEntity() instanceof Player &! event.getEntity().level.isClientSide) {
+			DamageSource source = event.getSource();
+			if (source.getEntity() instanceof LivingEntity) {
+				LivingEntity boss = (LivingEntity) source.getEntity();
+				if (bosses.contains(boss.getType().getDescriptionId())) {
+					boss.heal(boss.getMaxHealth()*0.25f);
 				}
 			}
 		}

@@ -18,7 +18,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -33,6 +35,7 @@ public class DawnCraft {
 		ModList.get().getModContainerById(Constants.MODID)
 		.ifPresent(container -> Constants.VERSION = container.getModInfo().getVersion().toString());
 		LOGGER.info("DawnCraft Tweaks " + Constants.VERSION + " initialized");
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DCConfig.config);
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
 		DCNetworkHandler.initPackets();

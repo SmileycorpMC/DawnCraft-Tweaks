@@ -207,7 +207,7 @@ public class SimpleMobsEvents {
 		LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
 		if (optional.isPresent()) {
 			int time = player.getRandom().nextInt(6000, 36000);
-			optional.resolve().get().setNextSpawn(player.tickCount + time);
+			optional.resolve().get().setNextSpawn(time);
 			player.level.playSound(null, player.position().x, player.position().y, player.position().z, SoundEvents.ENDER_DRAGON_AMBIENT, SoundSource.HOSTILE, 1f, player.level.random.nextFloat());
 			player.sendMessage(new TranslatableComponent("message.dawncraft.invasions_enabled_0").withStyle(ChatFormatting.RED), null);
 		}

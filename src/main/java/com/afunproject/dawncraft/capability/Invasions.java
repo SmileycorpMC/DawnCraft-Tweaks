@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -39,14 +40,15 @@ public interface Invasions {
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
-			if (nextSpawn == -1) return;
-			if (!player.level.isClientSide && player.tickCount >= nextSpawn && player.tickCount > 0 &! invasions.isEmpty()) {
+			if (nextSpawn == -1 || player.level.isClientSide || invasions.isEmpty()) return;
+			if (player.level.dimension().location() != new ResourceLocation("overworld")) return;
+			if (nextSpawn-- < 1) {
 				if (rand.nextInt(3)>0) {
 					InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
 					invasion.spawnEntities(player);
 					invasions.remove(invasion);
 				}
-				nextSpawn = player.tickCount + rand.nextInt(72000, 96000);
+				nextSpawn = rand.nextInt(72000, 96000);
 			}
 		}
 
