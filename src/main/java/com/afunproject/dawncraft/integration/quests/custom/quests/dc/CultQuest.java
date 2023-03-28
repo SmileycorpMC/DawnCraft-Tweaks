@@ -8,6 +8,10 @@ import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,14 +45,20 @@ public class CultQuest extends ItemQuest {
 	@Override
 	protected void completeItemQuest(Player quest_completer, Mob entity, int phase, boolean accepted) {
 		if (phase == 3) {
-			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("minecraft", "dg2q"), "map.dawncraft.cultist");
+			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("custom:church"), "map.dawncraft.cultist");
+			ListTag tag = new ListTag();
+			tag.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("map.dawncraft.cultist.lore"))));
+			map.addTagElement(ItemStack.TAG_LORE, tag);
 			giveItem(quest_completer, map);
 		}
 		if (phase == end_phase) {
 			if (entity instanceof QuestEntityBase) {
 				((QuestEntityBase) entity).setDespawnable(true);
 			}
-			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("minecraft", "dg2q2"), "map.dawncraft.cultist_2");
+			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("custom:church_father"), "map.dawncraft.cultist_2");
+			ListTag tag = new ListTag();
+			tag.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("map.dawncraft.cultist_2.lore"))));
+			map.addTagElement(ItemStack.TAG_LORE, tag);
 			giveItem(quest_completer, map);
 		}
 	}

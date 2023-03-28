@@ -1,20 +1,14 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests;
 
-import java.util.Optional;
-
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.QuestCondition;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -70,20 +64,13 @@ public abstract class Quest {
 	}
 
 	protected final ItemStack createMap(ServerLevel level, BlockPos center, ResourceLocation structure, String name) {
-		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-		ResourceKey<ConfiguredStructureFeature<?, ?>> structureKey = ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, structure);
-		Optional<Holder<ConfiguredStructureFeature<?, ?>>> structureOptional = registry.m_203636_(structureKey);
-		if (structureOptional.isPresent()) {
-			Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator()
-					.m_207970_(level, HolderSet.m_205809_(structureOptional.get()), center, 1, false);
-			if (pair != null) {
-				BlockPos pos = pair.getFirst();
-				ItemStack itemstack = MapItem.create(level, pos.getX(), pos.getZ(), (byte)2, true, true);
-				MapItem.renderBiomePreviewMap((ServerLevel) level, itemstack);
-				MapItemSavedData.addTargetDecoration(itemstack, pos, "+", Type.BANNER_BLACK);
-				itemstack.setHoverName(new TranslatableComponent("cultist_map"));
-				return itemstack;
-			}
+		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.m_203882_(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, structure);
+		BlockPos blockpos = level.m_207561_(structureTag, center, 5000, false);
+		if (blockpos != null) {
+			ItemStack itemstack = MapItem.create(level, blockpos.getX(), blockpos.getZ(), (byte)1, true, true);
+			MapItem.renderBiomePreviewMap(level, itemstack);
+			MapItemSavedData.addTargetDecoration(itemstack, blockpos, "+", Type.RED_X);
+			return itemstack;
 		}
 		return MapItem.create(level, center.getX(), center.getZ(), (byte)2, true, true);
 	}
