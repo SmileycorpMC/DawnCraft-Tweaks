@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class SageQuest extends Quest {
 
-	protected final int end_phase;
+	protected final int end_phase = 3;
 
 	public SageQuest() {
 		super((player, entity, phase, isTest)->{
@@ -23,7 +23,6 @@ public class SageQuest extends Quest {
 			if (optional.isPresent()) return phase == 2 && optional.resolve().get().getCheckedCount() >= 10;
 			return false;
 		});
-		end_phase = 3;
 	}
 
 	@Override

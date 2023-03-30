@@ -97,12 +97,12 @@ public class EventListener {
 				if (player.distanceTo(boss)<=100) players++;
 			}
 			if (players > 1) {
-				double damage_multiplier = Math.max(1.3, Math.pow(1.05, players-1));
+				double damage_multiplier = Math.max(1.5, Math.pow(1.05, players-1));
 				AttributeInstance damage = boss.getAttribute(Attributes.ATTACK_DAMAGE);
 				damage.removeModifier(BOSS_MODIFIER);
 				damage.addPermanentModifier(new AttributeModifier(BOSS_MODIFIER, "dawncraft_multiplayer_scaling", damage_multiplier, Operation.MULTIPLY_TOTAL));
 
-				double health_multiplier = Math.max(2, Math.pow(1.5, players-1));
+				double health_multiplier = Math.max(2, Math.pow(1.25, players-1));
 				AttributeInstance health = boss.getAttribute(Attributes.MAX_HEALTH);
 				health.removeModifier(BOSS_MODIFIER);
 				health.addPermanentModifier(new AttributeModifier(BOSS_MODIFIER, "dawncraft_multiplayer_scaling", health_multiplier, Operation.MULTIPLY_TOTAL));

@@ -60,11 +60,14 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 		if (player.isSecondaryUseActive()) return super.mobInteract(player, hand);
 		if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode(player)) return InteractionResult.PASS;
 		if (player instanceof ServerPlayer && canSeeQuest()) {
-			if (quest != null) if (quest.isQuestComplete(player, this, entityData.get(QUEST_PHASE))) {
-				entityData.set(QUEST_PHASE, entityData.get(QUEST_PHASE)+1);
-				setQuestText(quest.getText(entityData.get(QUEST_PHASE), true));
+			if (quest != null) {
+				if (!quest.isQuestActive(this, entityData.get(QUEST_PHASE))) return InteractionResult.PASS;
+				if (quest.isQuestComplete(player, this, entityData.get(QUEST_PHASE))) {
+					entityData.set(QUEST_PHASE, entityData.get(QUEST_PHASE)+1);
+					setQuestText(quest.getText(entityData.get(QUEST_PHASE), true));
+				}
+				DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(this, quest), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 			}
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(this, quest), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		return InteractionResult.PASS;
 	}
