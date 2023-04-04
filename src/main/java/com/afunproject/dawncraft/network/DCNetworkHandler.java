@@ -21,7 +21,7 @@ public class DCNetworkHandler {
 		NETWORK_INSTANCE = NetworkRegistry.newSimpleChannel(Constants.loc("main"), ()-> "1", "1"::equals, "1"::equals);
 		NETWORK_INSTANCE.registerMessage(0, SimpleStringMessage.class, new SimpleMessageEncoder<SimpleStringMessage>(),
 				new SimpleMessageDecoder<SimpleStringMessage>(SimpleStringMessage.class), (T, K)-> processNotificationMessage(T, K.get()));
-		NETWORK_INSTANCE.registerMessage(3, SimpleIntMessage.class, new SimpleMessageEncoder<SimpleIntMessage>(),
+		NETWORK_INSTANCE.registerMessage(1, SimpleIntMessage.class, new SimpleMessageEncoder<SimpleIntMessage>(),
 				new SimpleMessageDecoder<SimpleIntMessage>(SimpleIntMessage.class), (T, K)-> processAnimalMessage(T, K.get()));
 	}
 

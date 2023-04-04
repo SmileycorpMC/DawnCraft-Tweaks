@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import com.afunproject.dawncraft.client.EntityRenderProperties;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
+import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 import com.afunproject.dawncraft.integration.quests.network.TriggerQuestCompleteMessage;
-import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.feywild.quest_giver.screen.button.QuestButton;
 import com.feywild.quest_giver.screen.button.QuestButtonSmall;
 import com.google.common.collect.Lists;
@@ -26,7 +26,7 @@ public class QuestScreen extends Screen {
 	private static final int TEXT_WIDTH = 56;
 
 	protected final Mob entity;
-	protected final QuestType questType;
+	protected final QuestResponseType questType;
 	protected List<Page> pages = Lists.newArrayList();
 	protected Random random = new Random();
 	protected final Style style;
@@ -35,7 +35,7 @@ public class QuestScreen extends Screen {
 
 	protected final Button NEXT_PAGE;
 
-	public QuestScreen(Mob entity, MutableComponent text, QuestType questType) {
+	public QuestScreen(Mob entity, MutableComponent text, QuestResponseType questType) {
 		super(entity.getName());
 		this.entity = entity;
 		this.questType = questType;
@@ -48,7 +48,7 @@ public class QuestScreen extends Screen {
 			}
 			pageIndex++;
 		});
-		if (questType == QuestType.OPTIONS) {
+		if (questType == QuestResponseType.OPTIONS) {
 			String[] pages = text.getString().split("¶");
 			if (pages.length == 0) this.pages.addAll(generatePages(this, text));
 			if (pages.length > 1) {
@@ -114,7 +114,7 @@ public class QuestScreen extends Screen {
 				}
 
 			}
-			if (screen.questType == QuestType.AUTO_CLOSE) pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
+			if (screen.questType == QuestResponseType.AUTO_CLOSE) pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 			else pages.add(new TextPage(screen, lines, screen.getAcceptButtons()));
 		} else {
 			pages.add(new TextPage(screen, Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString()), screen.NEXT_PAGE));
@@ -123,7 +123,7 @@ public class QuestScreen extends Screen {
 	}
 
 	private void completeQuest(boolean accepted) {
-		DCNetworkHandler.NETWORK_INSTANCE.sendToServer(new TriggerQuestCompleteMessage(entity, accepted));
+		QuestNetworkHandler.NETWORK_INSTANCE.sendToServer(new TriggerQuestCompleteMessage(entity, accepted));
 	}
 
 	@Override
@@ -157,11 +157,11 @@ public class QuestScreen extends Screen {
 
 	@Override
 	public boolean shouldCloseOnEsc() {
-		return questType == QuestType.OPTIONS;
+		return questType == QuestResponseType.OPTIONS;
 	}
 
 	private Button[] getAcceptButtons() {
-		if (questType == QuestType.ACCEPT_QUEST) {
+		if (questType == QuestResponseType.ACCEPT_QUEST) {
 			return new Button[] {new QuestButton(380, 190, true, entity.blockPosition(), getRandomAcceptMessage(), button1 -> {
 				completeQuest(true);
 				onClose();
@@ -173,7 +173,7 @@ public class QuestScreen extends Screen {
 			})
 			};
 		}
-		else if (questType == QuestType.ACKNOWLEDGE) {
+		else if (questType == QuestResponseType.ACKNOWLEDGE) {
 			TranslatableComponent msg1 = getRandomAcknowledgmentMessage();
 			TranslatableComponent msg2 = getRandomAcknowledgmentMessage();
 			while (msg1.equals(msg2)) msg2 = getRandomAcknowledgmentMessage();
@@ -187,7 +187,7 @@ public class QuestScreen extends Screen {
 				return;
 			})};
 		}
-		else if (questType == QuestType.DENY) {
+		else if (questType == QuestResponseType.DENY) {
 			TranslatableComponent msg1 = getRandomDenyMessage();
 			TranslatableComponent msg2 = getRandomDenyMessage();
 			while (msg1.equals(msg2)) msg2 = getRandomDenyMessage();

@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.integration.quests.custom.quests;
 import java.util.Optional;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.QuestCondition;
 import com.mojang.datafixers.util.Pair;
 
@@ -59,7 +59,7 @@ public abstract class Quest {
 
 	public abstract String getText(int phase, boolean accepted);
 
-	public abstract QuestType getQuestType(int phase);
+	public abstract QuestResponseType getQuestType(int phase);
 
 	public abstract boolean isQuestActive(Mob entity, int phase);
 
