@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 
 import net.mcreator.simplemobs.entity.JosslynMCEntity;
@@ -32,8 +32,8 @@ public class BarrelQuest extends Quest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		return QuestType.ACCEPT_QUEST;
+	public QuestResponseType getQuestType(int phase) {
+		return QuestResponseType.ACCEPT_QUEST;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.AndCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.OrCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.QuestCondition;
@@ -11,7 +11,7 @@ import com.afunproject.dawncraft.integration.quests.custom.conditions.TagConditi
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
-import com.afunproject.dawncraft.network.DCNetworkHandler;
+import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
@@ -39,7 +39,7 @@ public class MonsterSlayerQuest extends Quest {
 			QuestEntity quest_entity = QuestEntity.safeCast(entity);
 			quest_entity.setQuestPhase(-1);
 			quest_entity.setQuestText("text.dawncraft.quest.monster_slayer" + "1b");
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			QuestNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		} else if (phase % 2 == 0 && accepted) {
 			setPhase(entity, phase + 1);
 			if (phase == 2) giveItem(quest_completer, new ItemStack(Items.EMERALD, 3));
@@ -54,11 +54,11 @@ public class MonsterSlayerQuest extends Quest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		if (phase == -1) return QuestType.AUTO_CLOSE;
-		if (phase == 7) return QuestType.AUTO_CLOSE;
-		if (phase % 2 == 1) return QuestType.ACCEPT_QUEST;
-		return QuestType.DENY;
+	public QuestResponseType getQuestType(int phase) {
+		if (phase == -1) return QuestResponseType.AUTO_CLOSE;
+		if (phase == 7) return QuestResponseType.AUTO_CLOSE;
+		if (phase % 2 == 1) return QuestResponseType.ACCEPT_QUEST;
+		return QuestResponseType.DENY;
 	}
 
 	@Override

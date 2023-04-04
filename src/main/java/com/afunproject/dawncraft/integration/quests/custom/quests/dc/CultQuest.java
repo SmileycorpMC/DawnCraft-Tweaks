@@ -1,11 +1,11 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
-import com.afunproject.dawncraft.network.DCNetworkHandler;
+import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +32,7 @@ public class CultQuest extends ItemQuest {
 			QuestEntity quest_entity = QuestEntity.safeCast(entity);
 			quest_entity.setQuestPhase(-1);
 			quest_entity.setQuestText(getText() + "1b");
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			QuestNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		} else {
 			super.completeQuest(quest_completer, entity, phase, accepted);
 		}
@@ -54,8 +54,8 @@ public class CultQuest extends ItemQuest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		if (phase == -1) return QuestType.AUTO_CLOSE;
+	public QuestResponseType getQuestType(int phase) {
+		if (phase == -1) return QuestResponseType.AUTO_CLOSE;
 		return super.getQuestType(phase);
 	}
 

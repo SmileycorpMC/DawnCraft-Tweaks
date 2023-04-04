@@ -27,6 +27,7 @@ public class CapabilitiesRegister {
 	public static Capability<QuestEntity> QUEST_ENTITY = CapabilityManager.get(new CapabilityToken<QuestEntity>(){});
 	public static Capability<SpawnTracker> SPAWN_TRACKER = CapabilityManager.get(new CapabilityToken<SpawnTracker>(){});
 	public static Capability<SageQuestTracker> SAGE_QUEST_TRACKER = CapabilityManager.get(new CapabilityToken<SageQuestTracker>(){});
+	public static Capability<QuestTracker> QUEST_TRACKER = CapabilityManager.get(new CapabilityToken<QuestTracker>(){});
 
 	@SubscribeEvent
 	public void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -34,6 +35,9 @@ public class CapabilitiesRegister {
 		event.register(RestrictBlock.class);
 		event.register(Invasions.class);
 		event.register(QuestEntity.class);
+		event.register(SpawnTracker.class);
+		event.register(SageQuestTracker.class);
+		event.register(QuestTracker.class);
 	}
 
 	@SubscribeEvent
@@ -45,9 +49,6 @@ public class CapabilitiesRegister {
 		if (entity instanceof PathfinderMob) {
 			event.addCapability(Constants.loc("restrict_block"), new RestrictBlock.Provider());
 		}
-		if (entity instanceof Player) {
-			event.addCapability(Constants.loc("invasions"), new Invasions.Provider());
-		}
 		if (ArrayUtils.contains(QUEST_ENTITIES, entity.getType())) {
 			event.addCapability(Constants.loc("quest"), new QuestProvider());
 		}
@@ -56,6 +57,8 @@ public class CapabilitiesRegister {
 		}
 		if (entity instanceof Player) {
 			event.addCapability(Constants.loc("sage_quest"), new SageQuestTracker.Provider());
+			event.addCapability(Constants.loc("quests"), new QuestTracker.Provider());
+			event.addCapability(Constants.loc("invasions"), new Invasions.Provider());
 		}
 	}
 

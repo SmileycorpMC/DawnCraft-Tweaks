@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 
 import net.minecraft.world.entity.Mob;
@@ -24,8 +24,8 @@ public class IntroQuest extends Quest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		return QuestType.ACKNOWLEDGE;
+	public QuestResponseType getQuestType(int phase) {
+		return QuestResponseType.ACKNOWLEDGE;
 	}
 
 	@Override

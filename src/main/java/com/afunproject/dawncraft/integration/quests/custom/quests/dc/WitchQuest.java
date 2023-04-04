@@ -3,7 +3,7 @@ package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.AndCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.TagCondition;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
@@ -69,10 +69,10 @@ public class WitchQuest extends Quest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		if (phase == end_phase) return QuestType.AUTO_CLOSE;
-		if (phase % 2 == 1) return QuestType.ACCEPT_QUEST;
-		return QuestType.DENY;
+	public QuestResponseType getQuestType(int phase) {
+		if (phase == end_phase) return QuestResponseType.AUTO_CLOSE;
+		if (phase % 2 == 1) return QuestResponseType.ACCEPT_QUEST;
+		return QuestResponseType.DENY;
 	}
 
 	@Override

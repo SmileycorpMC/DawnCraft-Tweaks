@@ -1,20 +1,25 @@
 package com.afunproject.dawncraft.integration.quests.client;
 
+import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.QuestTracker;
 import com.afunproject.dawncraft.client.ClientEventRegister;
 import com.afunproject.dawncraft.client.entity.FallenRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntities;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
+import com.afunproject.dawncraft.integration.quests.network.QuestSyncMessage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.LazyOptional;
 
 public class QuestClientEvents {
 
@@ -33,9 +38,16 @@ public class QuestClientEvents {
 		Mob mob = message.get(mc.level);
 		QuestEntity entity = QuestEntity.safeCast(mob);
 		Quest quest = message.getQuest();
-		QuestType type = quest == null ? QuestType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
+		QuestResponseType type = quest == null ? QuestResponseType.ACKNOWLEDGE : quest.getQuestType(message.getPhase() == 0 ? entity.getQuestPhase() : message.getPhase());
 		String text = message.getMessage() == null ? entity.getQuestText() : message.getMessage();
 		mc.setScreen(new QuestScreen(mob, new TranslatableComponent(text, mc.player), type));
+	}
+
+	public static void syncQuests(QuestSyncMessage message) {
+		Minecraft mc = Minecraft.getInstance();
+		Player player = mc.player;
+		LazyOptional<QuestTracker> optional = player.getCapability(CapabilitiesRegister.QUEST_TRACKER);
+		if (optional.isPresent()) optional.resolve().get().updateQuest(message.getId(), message.getData(), player);
 	}
 
 }

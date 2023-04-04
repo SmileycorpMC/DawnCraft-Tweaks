@@ -1,12 +1,12 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
-import com.afunproject.dawncraft.integration.quests.custom.QuestType;
+import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.AndCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.ItemCondition;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
-import com.afunproject.dawncraft.network.DCNetworkHandler;
+import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
@@ -26,7 +26,7 @@ public class AlchemistQuest extends Quest {
 		if (phase !=-1 && accepted && isQuestComplete(quest_completer, entity, -2)) {
 			QuestEntity.safeCast(entity).setQuestText(getText(-1, true));
 			setPhase(entity, -1);
-			if (quest_completer instanceof ServerPlayer) DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			if (quest_completer instanceof ServerPlayer) QuestNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 
@@ -42,8 +42,8 @@ public class AlchemistQuest extends Quest {
 	}
 
 	@Override
-	public QuestType getQuestType(int phase) {
-		return (phase == -1) ? QuestType.OPTIONS : QuestType.ACCEPT_QUEST;
+	public QuestResponseType getQuestType(int phase) {
+		return (phase == -1) ? QuestResponseType.OPTIONS : QuestResponseType.ACCEPT_QUEST;
 	}
 
 	@Override

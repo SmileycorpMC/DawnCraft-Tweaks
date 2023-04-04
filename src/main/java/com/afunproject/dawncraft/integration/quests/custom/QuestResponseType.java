@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom;
 
-public enum QuestType {
+public enum QuestResponseType {
 
 	//can accept or deny quest, with different results based on choice
 	ACCEPT_QUEST,
