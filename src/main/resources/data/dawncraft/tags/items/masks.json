@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "fromtheshadows:plague_doctor_mask",
 	"simple_mobs:plaguemask_helmet",
 	"savage_and_ravage:mask_of_dishonesty",
+	"savage_and_ravage:griefer_helmet",
 	"mowziesmobs:barakoa_mask_fury",
 	"mowziesmobs:barakoa_mask_fear",
 	"mowziesmobs:barakoa_mask_rage",

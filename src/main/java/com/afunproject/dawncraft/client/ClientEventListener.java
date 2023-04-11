@@ -2,15 +2,22 @@ package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
+import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,12 +27,15 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
+
+	public static final TagKey<Item> MASK_TAG = TagKey.m_203882_(Registry.ITEM_REGISTRY, Constants.loc("masks"));
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void renderLivingEventStart(RenderLivingEvent.Pre<?, ?> event) {
@@ -104,6 +114,13 @@ public class ClientEventListener {
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) event.setCanceled(true);
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void addTooltips(ItemTooltipEvent event) {
+		ItemStack stack = event.getItemStack();
+		if (stack.m_204117_(MASK_TAG) && stack.getItem() != DungeonItems.CURSED_MASK.get())
+			event.getToolTip().add(new TranslatableComponent("tooltip.dawncraft.mask").withStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.DARK_PURPLE)));
 	}
 
 	/*@SuppressWarnings("deprecation")

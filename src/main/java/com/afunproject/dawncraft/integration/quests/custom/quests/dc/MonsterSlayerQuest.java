@@ -35,20 +35,24 @@ public class MonsterSlayerQuest extends Quest {
 		if (phase == -1) {
 			QuestEntity.safeCast(entity).setQuestPhase(2);
 		}
-		if (phase == 1 && accepted) {
+		else if (phase == 1 && accepted) {
 			QuestEntity quest_entity = QuestEntity.safeCast(entity);
 			quest_entity.setQuestPhase(-1);
 			quest_entity.setQuestText("text.dawncraft.quest.monster_slayer" + "1b");
 			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new OpenQuestMessage(entity, this), ((ServerPlayer) quest_completer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-		} else if (phase % 2 == 0 && accepted) {
-			setPhase(entity, phase + 1);
-			if (phase == 2) giveItem(quest_completer, new ItemStack(Items.EMERALD, 3));
-			else if (phase == 4) giveItem(quest_completer, new ItemStack(Items.EMERALD, 15));
-			else if (phase == 6) {
+		} else if (accepted) {
+			if (phase == 3) {
+				giveItem(quest_completer, new ItemStack(Items.EMERALD, 3));
+			}
+			else if (phase == 5) {
+				giveItem(quest_completer, new ItemStack(Items.EMERALD, 15));
+			}
+			else if (phase == 7) {
 				giveItem(quest_completer, new ItemStack(Items.EMERALD, 54));
 				giveItem(quest_completer, new ItemStack(DungeonItems.SLAYERS_BLADE.get()));
 				if (entity instanceof QuestEntityBase) ((QuestEntityBase) entity).setDespawnable(true);
 			}
+			setPhase(entity, phase + 1);
 		}
 		QuestEntity.safeCast(entity).setQuestText(getText(QuestEntity.safeCast(entity).getQuestPhase(), accepted));
 	}
