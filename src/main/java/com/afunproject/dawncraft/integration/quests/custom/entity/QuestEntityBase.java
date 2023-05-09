@@ -34,8 +34,8 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	protected static final EntityDataAccessor<String> TEXT = SynchedEntityData.defineId(QuestEntityBase.class, EntityDataSerializers.STRING);
 	protected static final EntityDataAccessor<Integer> QUEST_PHASE = SynchedEntityData.defineId(QuestEntityBase.class, EntityDataSerializers.INT);
+	protected static final EntityDataAccessor<String> QUEST = SynchedEntityData.defineId(QuestEntityBase.class, EntityDataSerializers.STRING);
 
-	protected Quest quest = null;
 	protected boolean damageable;
 	private boolean shouldDespawn;
 
@@ -53,6 +53,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 		super.defineSynchedData();
 		entityData.define(TEXT, "");
 		entityData.define(QUEST_PHASE, 1);
+		entityData.define(QUEST, "");
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 		if (player.isSecondaryUseActive()) return super.mobInteract(player, hand);
 		if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode(player)) return InteractionResult.PASS;
 		if (player instanceof ServerPlayer && canSeeQuest()) {
+			Quest quest = getCurrentQuest();
 			if (quest != null) {
 				if (!quest.isQuestActive(this, entityData.get(QUEST_PHASE))) return InteractionResult.PASS;
 				if (quest.isQuestComplete(player, this, entityData.get(QUEST_PHASE))) {
@@ -99,13 +101,13 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		boolean result = (damageable || source == DamageSource.OUT_OF_WORLD) ? super.hurt(source, amount) : false;
-		if (damageable && quest != null) quest.onHurt(this, source);
+		if (damageable && getCurrentQuest() != null) getCurrentQuest().onHurt(this, source);
 		return result;
 	}
 
 	@Override
 	public void die(DamageSource source) {
-		if (quest != null) quest.onDeath(this, source);
+		if (getCurrentQuest() != null) getCurrentQuest().onDeath(this, source);
 	}
 
 	@Override
@@ -139,7 +141,12 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	@Override
 	public Quest getCurrentQuest() {
-		return quest;
+		try {
+			return QuestsRegistry.getQuest(new ResourceLocation(entityData.get(QUEST)));
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -159,7 +166,8 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 
 	@Override
 	public void setQuest(Quest quest) {
-		this.quest = quest;
+		if (quest == null) entityData.set(QUEST, "");
+		else entityData.set(QUEST, quest.getRegistryName().toString());
 	}
 
 	@Override
@@ -171,7 +179,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 	public CompoundTag saveQuestData(CompoundTag tag) {
 		tag.putString("text", entityData.get(TEXT));
 		tag.putInt("quest_phase", entityData.get(QUEST_PHASE));
-		if (quest != null) tag.putString("quest", quest.getRegistryName().toString());
+		if (getCurrentQuest() != null) tag.putString("quest", getCurrentQuest().getRegistryName().toString());
 		return tag;
 	}
 
@@ -181,7 +189,7 @@ public abstract class QuestEntityBase extends Mob implements QuestEntity {
 		if (tag.contains("quest_phase")) entityData.set(QUEST_PHASE, tag.getInt("quest_phase"));
 		if (tag.contains("quest")) {
 			setQuest(QuestsRegistry.getQuest(new ResourceLocation(tag.getString("quest"))));
-			if (quest != null) entityData.set(TEXT, quest.getText(entityData.get(QUEST_PHASE), true));
+			if (getCurrentQuest() != null) entityData.set(TEXT, getCurrentQuest().getText(entityData.get(QUEST_PHASE), true));
 		}
 	}
 

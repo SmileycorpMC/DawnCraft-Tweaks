@@ -11,6 +11,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.TagKey;
@@ -27,6 +28,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -121,6 +123,19 @@ public class ClientEventListener {
 		ItemStack stack = event.getItemStack();
 		if (stack.m_204117_(MASK_TAG) && stack.getItem() != DungeonItems.CURSED_MASK.get())
 			event.getToolTip().add(new TranslatableComponent("tooltip.dawncraft.mask").withStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.DARK_PURPLE)));
+	}
+
+	@SubscribeEvent
+	public static void clientTick(TickEvent.ClientTickEvent event) {
+		if (event.phase == TickEvent.Phase.START) {
+			Minecraft mc = Minecraft.getInstance();
+			LocalPlayer player = mc.player;
+			if (player != null && player.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
+				if (player.tickCount % Math.floorDiv(10, player.getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1) == 0) {
+					mc.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+				}
+			}
+		}
 	}
 
 	/*@SuppressWarnings("deprecation")
