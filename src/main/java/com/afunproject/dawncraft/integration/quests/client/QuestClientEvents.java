@@ -20,6 +20,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 
+import net.mcreator.simplemobs.entity.KorokIntroEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -61,7 +62,7 @@ public class QuestClientEvents {
 	@SubscribeEvent
 	public static void onRenderNamePlate(RenderNameplateEvent event) {
 		Minecraft mc = Minecraft.getInstance();
-		if (event.getEntity() instanceof QuestEntityBase) {
+		if (event.getEntity() instanceof QuestEntityBase &!(event.getEntity() instanceof KorokIntroEntity)) {
 			QuestEntityBase entity = (QuestEntityBase) event.getEntity();
 			Quest quest = entity.getCurrentQuest();
 			if (quest != null && quest.isQuestActive(entity, entity.getQuestPhase()) &! (mc.screen instanceof QuestScreen)) {
