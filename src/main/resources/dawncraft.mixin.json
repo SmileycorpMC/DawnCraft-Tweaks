@@ -10,6 +10,7 @@
 		"MixinItemStack",
 		"MixinLivingEntity",
 		"MixinMob",
+		"MixinMoveTowardsRestrictionGoal",
 		"MixinNearestAttackableTargetGoal",
 		"MixinPlayer",
 		"MixinResourceLocation"

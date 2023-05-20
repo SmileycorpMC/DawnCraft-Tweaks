@@ -11,7 +11,6 @@ import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
-import com.afunproject.dawncraft.entities.ai.DCMoveTowardsRestrictionGoal;
 import com.afunproject.dawncraft.integration.apotheosis.ApotheosisCompat;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
@@ -31,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
@@ -116,7 +116,7 @@ public class EventListener {
 			if (optional.isPresent()) {
 				RestrictBlock cap = optional.resolve().get();
 				if (cap.canRestrict(entity)) {
-					entity.goalSelector.addGoal(5, new DCMoveTowardsRestrictionGoal(entity, 1.0D));
+					entity.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(entity, 1.0D));
 					cap.applyRestriction(entity);
 				}
 			}
