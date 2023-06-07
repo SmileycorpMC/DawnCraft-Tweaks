@@ -24,7 +24,7 @@ repositories {
     }
 }
 
-version = '1.18.2-1.2.3b'
+version = '1.18.2-1.2.3c'
 group = 'com.afunproject.dawncraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'DawnCraft-Tweaks'
 

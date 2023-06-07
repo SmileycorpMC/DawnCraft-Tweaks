@@ -35,14 +35,13 @@ public interface Invasions {
 
 		public Implementation() {
 			invasions.addAll(InvasionRegistry.getInvasions());
-			nextSpawn = rand.nextInt(72000, 96000);
 		}
 
 		@Override
 		public void tryToSpawnInvasion(Player player) {
 			if (nextSpawn == -1 || player.level.isClientSide || invasions.isEmpty()) return;
-			if (player.level.dimension().location() != new ResourceLocation("overworld")) return;
-			if (nextSpawn-- < 1) {
+			if (!player.level.dimension().location().equals(new ResourceLocation("overworld"))) return;
+			if (nextSpawn-- == 0) {
 				if (rand.nextInt(3)>0) {
 					InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
 					invasion.spawnEntities(player);

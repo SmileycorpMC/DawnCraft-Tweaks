@@ -68,7 +68,7 @@ public class InvasionEntry {
 			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
 			level.addFreshEntity(entity);
-			entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
+			entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 1000));
 			Vec3 sound = player.position().add(dir);
 			level.playSound(null, sound.x, sound.y, sound.z, SoundEvents.PORTAL_TRAVEL, SoundSource.HOSTILE, 1f, level.random.nextFloat());
 			player.displayClientMessage(new TranslatableComponent("message.dawncraft.invasion", name).setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withBold(true)), true);
