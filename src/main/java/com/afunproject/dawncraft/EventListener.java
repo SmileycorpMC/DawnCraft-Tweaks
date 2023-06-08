@@ -23,6 +23,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -31,6 +33,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
@@ -92,6 +95,7 @@ public class EventListener {
 
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
+		//scale boss hp and damage based on players nearby
 		if (bosses.contains(event.getEntity().getType().getDescriptionId()) && event.getEntity() instanceof Mob) {
 			Mob boss = (Mob) event.getEntity();
 			int players = 0;
@@ -110,6 +114,7 @@ public class EventListener {
 				health.addPermanentModifier(new AttributeModifier(BOSS_MODIFIER, "dawncraft_multiplayer_scaling", health_multiplier, Operation.MULTIPLY_TOTAL));
 			}
 		}
+		//add block restrictions
 		if (event.getEntity() instanceof PathfinderMob) {
 			PathfinderMob entity = (PathfinderMob) event.getEntity();
 			LazyOptional<RestrictBlock> optional = entity.getCapability(CapabilitiesRegister.RESTRICT_BLOCK);
@@ -119,6 +124,15 @@ public class EventListener {
 					entity.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(entity, 1.0D));
 					cap.applyRestriction(entity);
 				}
+			}
+		}
+		//add effects to natural iron golems
+		if (event.getEntity() instanceof  IronGolem) {
+			IronGolem golem = (IronGolem) event.getEntity();
+			if (!golem.isPlayerCreated()) {
+				golem.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 10000000, 0, false, false));
+				golem.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 10000000, 0, false, false));
+				golem.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10000000, 0, false, false));
 			}
 		}
 	}
@@ -181,11 +195,11 @@ public class EventListener {
 				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
 					if (attacker instanceof Player) {
 						if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode((Player) attacker)) {
-							event.setAmount(entity.getMaxHealth()*0.05f);
+							event.setAmount(entity.getMaxHealth()*0.1f);
 							return;
 						}
 					} else {
-						event.setAmount(entity.getMaxHealth()*0.05f);
+						event.setAmount(entity.getMaxHealth()*0.1f);
 						return;
 					}
 				}

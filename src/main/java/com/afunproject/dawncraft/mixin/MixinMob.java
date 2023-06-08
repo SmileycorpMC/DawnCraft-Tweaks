@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.mixin;
 
+import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,6 +45,14 @@ public abstract class MixinMob extends LivingEntity {
 				SageQuestTracker cap = optional.resolve().get();
 				if (cap.isActive()) cap.checkAnimal(player, (Animal)(LivingEntity)this);
 			}
+		}
+	}
+
+	@Inject(at=@At("HEAD"), method = "canBeLeashed(Lnet/minecraft/world/entity/player/Player;)Z", cancellable = true)
+	public void canBeLeashed(Player p_21418_, CallbackInfoReturnable<Boolean> callback) {
+		if (this.getType() == EntityType.IRON_GOLEM) {
+			callback.setReturnValue(false);
+			callback.cancel();
 		}
 	}
 
