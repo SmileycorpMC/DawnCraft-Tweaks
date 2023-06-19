@@ -3,7 +3,6 @@ package com.afunproject.dawncraft.integration.humancompanions.client;
 import com.afunproject.dawncraft.client.ClientEventRegister;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
-
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.common.MinecraftForge;
 

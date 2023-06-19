@@ -3,7 +3,6 @@ package com.afunproject.dawncraft.integration.quests;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntities;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;

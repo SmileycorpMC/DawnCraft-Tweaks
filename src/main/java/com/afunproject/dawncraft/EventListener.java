@@ -1,9 +1,5 @@
 package com.afunproject.dawncraft;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.function.Consumer;
-
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Invasions;
 import com.afunproject.dawncraft.capability.RestrictBlock;
@@ -15,7 +11,6 @@ import com.afunproject.dawncraft.integration.apotheosis.ApotheosisCompat;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +19,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -57,6 +51,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 @EventBusSubscriber(modid = Constants.MODID, bus = Bus.MOD)
 public class EventListener {
@@ -127,7 +125,7 @@ public class EventListener {
 			}
 		}
 		//add effects to natural iron golems
-		if (event.getEntity() instanceof  IronGolem) {
+		if (event.getEntity() instanceof IronGolem) {
 			IronGolem golem = (IronGolem) event.getEntity();
 			if (!golem.isPlayerCreated()) {
 				golem.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 10000000, 0, false, false));

@@ -1,9 +1,6 @@
 package com.afunproject.dawncraft.entities;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+
+import java.util.List;
 
 public class RitualItemEntity extends Entity {
 

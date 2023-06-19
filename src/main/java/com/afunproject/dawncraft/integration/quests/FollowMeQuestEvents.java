@@ -1,7 +1,5 @@
 package com.afunproject.dawncraft.integration.quests;
 
-import java.util.Optional;
-
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
@@ -11,7 +9,6 @@ import com.feywild.quest_giver.entity.QuestGuardVillager;
 import com.feywild.quest_giver.quest.player.QuestData;
 import com.feywild.quest_giver.quest.task.TaskTypes;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -32,6 +29,8 @@ import net.smileycorp.followme.common.FollowHandler;
 import net.smileycorp.followme.common.FollowMe;
 import net.smileycorp.followme.common.ai.FollowUserGoal;
 import net.smileycorp.followme.common.capability.IFollower;
+
+import java.util.Optional;
 
 public class FollowMeQuestEvents {
 

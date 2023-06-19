@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.effects;
 
 import com.afunproject.dawncraft.Constants;
-
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

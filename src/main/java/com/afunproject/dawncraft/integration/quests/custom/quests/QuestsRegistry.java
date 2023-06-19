@@ -1,23 +1,11 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests;
 
-import java.util.Map;
-
 import com.afunproject.dawncraft.Constants;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.AlchemistQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BarrelQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.BellGhostQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.CultQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.IntroQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.KingQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MaskGhostQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.MonsterSlayerQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.SageQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.SorcererQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WerewolfQuest;
-import com.afunproject.dawncraft.integration.quests.custom.quests.dc.WitchQuest;
+import com.afunproject.dawncraft.integration.quests.custom.quests.dc.*;
 import com.google.common.collect.Maps;
-
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Map;
 
 public class QuestsRegistry {
 

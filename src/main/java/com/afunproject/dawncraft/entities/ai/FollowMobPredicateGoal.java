@@ -1,10 +1,10 @@
 package com.afunproject.dawncraft.entities.ai;
 
-import java.util.List;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.FollowMobGoal;
 import net.smileycorp.atlas.api.util.Func;
+
+import java.util.List;
 
 public class FollowMobPredicateGoal extends FollowMobGoal {
 

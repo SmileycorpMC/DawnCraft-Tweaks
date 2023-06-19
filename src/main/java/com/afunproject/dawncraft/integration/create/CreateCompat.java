@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.integration.create;
 
-import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
-
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 

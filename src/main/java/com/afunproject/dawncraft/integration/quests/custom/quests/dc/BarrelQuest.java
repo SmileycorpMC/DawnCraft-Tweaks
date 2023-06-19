@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.mcreator.simplemobs.entity.JosslynMCEntity;
 import net.mcreator.simplemobs.init.SimpleMobsModEntities;
 import net.minecraft.world.entity.Entity.RemovalReason;

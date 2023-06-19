@@ -4,7 +4,6 @@ import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.integration.quests.custom.entity.Fallen;
 import com.afunproject.dawncraft.integration.quests.custom.quests.ItemTagQuest;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

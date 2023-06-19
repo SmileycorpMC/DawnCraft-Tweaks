@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.dungeon.block.entity.base;
 
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Lockable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;

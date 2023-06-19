@@ -1,14 +1,8 @@
 package com.afunproject.dawncraft.dungeon.block;
 
-import java.util.Optional;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.block.entity.RedstoneActivatorBlockEntity;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -30,6 +24,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.Random;
 
 public class RedstoneActivatorBlock extends Block implements EntityBlock {
 

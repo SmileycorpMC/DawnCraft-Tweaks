@@ -6,7 +6,6 @@ import com.afunproject.dawncraft.integration.quests.custom.conditions.AndConditi
 import com.afunproject.dawncraft.integration.quests.custom.conditions.ItemCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.OrCondition;
 import com.afunproject.dawncraft.integration.quests.custom.conditions.QuestCondition;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

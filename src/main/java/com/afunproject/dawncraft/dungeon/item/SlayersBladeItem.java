@@ -1,11 +1,6 @@
 package com.afunproject.dawncraft.dungeon.item;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.afunproject.dawncraft.CreativeTabs;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.BaseComponent;
 import net.minecraft.network.chat.Component;
@@ -18,6 +13,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.item.CustomTier;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SlayersBladeItem extends SwordItem {
 

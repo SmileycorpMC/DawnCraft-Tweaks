@@ -1,14 +1,13 @@
 package com.afunproject.dawncraft.integration.quests.client.screens;
 
-import java.util.List;
-
 import com.feywild.quest_giver.screen.button.QuestButtonSmall;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.TranslatableComponent;
+
+import java.util.List;
 
 public class OptionsPage implements Page {
 

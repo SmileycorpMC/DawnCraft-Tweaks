@@ -8,7 +8,6 @@ import com.afunproject.dawncraft.integration.quests.custom.conditions.AndConditi
 import com.afunproject.dawncraft.integration.quests.custom.conditions.TagCondition;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

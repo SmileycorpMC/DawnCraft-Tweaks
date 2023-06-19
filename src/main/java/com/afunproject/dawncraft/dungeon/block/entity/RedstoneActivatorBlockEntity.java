@@ -4,7 +4,6 @@ import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.RedstoneActivatorBlock;
 import com.afunproject.dawncraft.dungeon.block.entity.base.CamouflagedFunctionalBlockEntity;
 import com.afunproject.dawncraft.dungeon.block.entity.base.TriggerBlockEntityBase;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

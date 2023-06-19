@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.integration.quests.custom;
 
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.util.LazyOptional;

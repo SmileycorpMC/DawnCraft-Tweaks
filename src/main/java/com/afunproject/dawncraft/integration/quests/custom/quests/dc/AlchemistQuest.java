@@ -7,7 +7,6 @@ import com.afunproject.dawncraft.integration.quests.custom.conditions.ItemCondit
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +37,7 @@ public class AlchemistQuest extends Quest {
 
 	@Override
 	public String getText(int phase, boolean accepted) {
-		return phase == -1 ? "text.dawncraft.quest.alchemist.bloodthirst¦text.dawncraft.quest.alchemist.withering¦text.dawncraft.quest.alchemist.endurance" : "text.dawncraft.quest.alchemist";
+		return phase == -1 ? "text.dawncraft.quest.alchemist.bloodthirstï¿½text.dawncraft.quest.alchemist.witheringï¿½text.dawncraft.quest.alchemist.endurance" : "text.dawncraft.quest.alchemist";
 	}
 
 	@Override

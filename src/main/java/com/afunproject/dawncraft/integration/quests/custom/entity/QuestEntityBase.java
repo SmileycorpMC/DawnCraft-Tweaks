@@ -1,14 +1,11 @@
 package com.afunproject.dawncraft.integration.quests.custom.entity;
 
-import java.util.List;
-
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.custom.quests.QuestsRegistry;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,6 +26,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
+
+import java.util.List;
 
 public abstract class QuestEntityBase extends Mob implements QuestEntity {
 

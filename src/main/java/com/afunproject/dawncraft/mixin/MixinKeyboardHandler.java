@@ -1,16 +1,14 @@
 package com.afunproject.dawncraft.mixin;
 
+import com.afunproject.dawncraft.client.ClientHandler;
+import com.afunproject.dawncraft.effects.DawnCraftEffects;
+import net.minecraft.client.KeyboardHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.afunproject.dawncraft.client.ClientHandler;
-import com.afunproject.dawncraft.effects.DawnCraftEffects;
-
-import net.minecraft.client.KeyboardHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 
 @Mixin(KeyboardHandler.class)
 public class MixinKeyboardHandler {

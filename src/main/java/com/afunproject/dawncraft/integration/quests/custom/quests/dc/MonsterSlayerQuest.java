@@ -12,7 +12,6 @@ import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBas
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;

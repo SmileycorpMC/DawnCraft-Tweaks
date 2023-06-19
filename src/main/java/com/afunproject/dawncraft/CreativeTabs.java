@@ -2,13 +2,7 @@ package com.afunproject.dawncraft;
 
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
-import com.afunproject.dawncraft.dungeon.item.DungeonConfiguratorItem;
-import com.afunproject.dawncraft.dungeon.item.DungeonItems;
-import com.afunproject.dawncraft.dungeon.item.KeyItem;
-import com.afunproject.dawncraft.dungeon.item.LockItem;
-import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
-import com.afunproject.dawncraft.dungeon.item.SkeletonKeyItem;
-
+import com.afunproject.dawncraft.dungeon.item.*;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;

@@ -3,7 +3,6 @@ package com.afunproject.dawncraft.client.entity;
 import com.afunproject.dawncraft.integration.quests.custom.entity.Fallen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 

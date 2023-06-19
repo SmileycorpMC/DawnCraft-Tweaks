@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
-
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity.RemovalReason;

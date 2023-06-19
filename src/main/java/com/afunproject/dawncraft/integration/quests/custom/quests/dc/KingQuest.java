@@ -4,7 +4,6 @@ import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;

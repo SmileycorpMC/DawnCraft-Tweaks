@@ -1,22 +1,14 @@
 package com.afunproject.dawncraft.client.entity;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.entities.PlayerEntity;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -25,6 +17,9 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.smileycorp.atlas.api.client.PlayerTextureRenderer;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class PlayerEntityRenderer<T extends Mob & PlayerEntity> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
 

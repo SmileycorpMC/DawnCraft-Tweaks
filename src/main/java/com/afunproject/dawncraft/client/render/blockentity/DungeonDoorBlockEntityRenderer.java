@@ -6,7 +6,6 @@ import com.afunproject.dawncraft.dungeon.block.entity.DungeonDoorBlockEntity;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;

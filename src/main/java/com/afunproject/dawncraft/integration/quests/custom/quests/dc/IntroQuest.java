@@ -3,7 +3,6 @@ package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 

@@ -1,10 +1,7 @@
 package com.afunproject.dawncraft.dungeon.block;
 
-import javax.annotation.Nullable;
-
 import com.afunproject.dawncraft.dungeon.block.entity.ChestSpawnerBlockEntity;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +20,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+
+import javax.annotation.Nullable;
 
 public class ChestSpawnerBlock extends HorizontalDirectionalBlock implements EntityBlock {
 

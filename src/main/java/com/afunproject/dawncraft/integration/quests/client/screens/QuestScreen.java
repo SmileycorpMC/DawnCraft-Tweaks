@@ -1,8 +1,5 @@
 package com.afunproject.dawncraft.integration.quests.client.screens;
 
-import java.util.List;
-import java.util.Random;
-
 import com.afunproject.dawncraft.client.EntityRenderProperties;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.network.TriggerQuestCompleteMessage;
@@ -11,7 +8,6 @@ import com.feywild.quest_giver.screen.button.QuestButton;
 import com.feywild.quest_giver.screen.button.QuestButtonSmall;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,6 +16,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Mob;
+
+import java.util.List;
+import java.util.Random;
 
 public class QuestScreen extends Screen {
 
@@ -49,12 +48,12 @@ public class QuestScreen extends Screen {
 			pageIndex++;
 		});
 		if (questType == QuestType.OPTIONS) {
-			String[] pages = text.getString().split("¶");
+			String[] pages = text.getString().split("ï¿½");
 			if (pages.length == 0) this.pages.addAll(generatePages(this, text));
 			if (pages.length > 1) {
 				for (int i = 0; i < pages.length-2; i++) this.pages.addAll(generatePages(this, new TranslatableComponent(pages[i])));
 			}
-			String[] options = pages[pages.length-1].split("¦");
+			String[] options = pages[pages.length-1].split("ï¿½");
 			this.pages.add(new OptionsPage(this, Lists.newArrayList(options)));
 		}
 		else pages.addAll(generatePages(this, text));
@@ -70,16 +69,16 @@ public class QuestScreen extends Screen {
 			while (position < str.length()) {
 				int size = Math.min(TEXT_WIDTH, str.length()-position);
 				int newPos = position + size;
-				if (str.substring(position, newPos).contains("¶")) {
-					int i = str.substring(position, newPos).indexOf("¶");
+				if (str.substring(position, newPos).contains("ï¿½")) {
+					int i = str.substring(position, newPos).indexOf("ï¿½");
 					lines.add(str.substring(position, position + i));
 					pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 					lines = Lists.newArrayList();
 					position = position + i + 1;
 					continue;
 				}
-				if (str.substring(position, newPos).contains("¬")) {
-					int i = str.substring(position, newPos).indexOf("¬");
+				if (str.substring(position, newPos).contains("ï¿½")) {
+					int i = str.substring(position, newPos).indexOf("ï¿½");
 					lines.add(str.substring(position, position + i));
 					position = position + i + 1;
 					if (lines.size() >= 9) {

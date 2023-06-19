@@ -1,10 +1,7 @@
 package com.afunproject.dawncraft.client.entity;
 
-import java.util.Random;
-
 import com.afunproject.dawncraft.entities.RitualItemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -17,6 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Random;
 
 public class RitualItemEntityRenderer extends EntityRenderer<RitualItemEntity> {
 

@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.integration.epicfight.client;
 
 import com.afunproject.dawncraft.client.ClientHandler;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import yesman.epicfight.client.input.EpicFightKeyMappings;

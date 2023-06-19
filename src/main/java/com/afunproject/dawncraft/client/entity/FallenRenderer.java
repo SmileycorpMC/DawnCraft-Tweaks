@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.client.entity;
 
 import com.afunproject.dawncraft.client.DawnCraftRenderTypes;
 import com.afunproject.dawncraft.integration.quests.custom.entity.Fallen;
-
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 

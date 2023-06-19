@@ -7,7 +7,6 @@ import com.afunproject.dawncraft.integration.humancompanions.HCEvents;
 import com.afunproject.dawncraft.integration.humancompanions.client.HCClientEvents;
 import com.afunproject.dawncraft.integration.quests.QuestEvents;
 import com.afunproject.dawncraft.integration.quests.client.QuestClientEvents;
-
 import net.minecraftforge.fml.ModList;
 
 public class IntegrationHandler {

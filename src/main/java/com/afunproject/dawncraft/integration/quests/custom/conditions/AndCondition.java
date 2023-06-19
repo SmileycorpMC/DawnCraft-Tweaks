@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.conditions;
 
 import com.afunproject.dawncraft.DawnCraft;
-
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 

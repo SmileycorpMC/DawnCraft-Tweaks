@@ -1,11 +1,7 @@
 package com.afunproject.dawncraft.dungeon.block;
 
-import java.util.Optional;
-import java.util.Random;
-
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
 import com.afunproject.dawncraft.dungeon.block.entity.RedstoneTriggerBlockEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -18,6 +14,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+
+import java.util.Optional;
+import java.util.Random;
 
 public class RedstoneTriggerBlock extends Block implements EntityBlock {
 

@@ -1,14 +1,12 @@
 package com.afunproject.dawncraft.mixin;
 
+import com.afunproject.dawncraft.Constants;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.afunproject.dawncraft.Constants;
-
-import net.minecraft.resources.ResourceLocation;
 
 @Mixin(ResourceLocation.class)
 public abstract class MixinResourceLocation {

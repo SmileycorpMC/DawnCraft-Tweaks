@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.integration.quests.task;
 
 import com.feywild.quest_giver.quest.task.TaskType;
 import com.google.gson.JsonObject;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

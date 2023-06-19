@@ -1,9 +1,5 @@
 package com.afunproject.dawncraft.client;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.client.entity.FrogModel;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
@@ -19,7 +15,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.mojang.math.Transformation;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -42,6 +37,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ClientEventRegister {

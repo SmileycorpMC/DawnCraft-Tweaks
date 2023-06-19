@@ -1,11 +1,7 @@
 package com.afunproject.dawncraft.integration.quests.custom.entity;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import com.afunproject.dawncraft.entities.PlayerEntity;
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -15,6 +11,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class QuestPlayer extends QuestEntityBase implements PlayerEntity {
 

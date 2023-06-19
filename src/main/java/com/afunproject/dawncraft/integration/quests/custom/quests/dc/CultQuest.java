@@ -6,7 +6,6 @@ import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBas
 import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
-
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;

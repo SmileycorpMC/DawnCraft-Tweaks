@@ -1,7 +1,5 @@
 package com.afunproject.dawncraft;
 
-import org.slf4j.Logger;
-
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.client.ClientEventListener;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
@@ -12,7 +10,6 @@ import com.afunproject.dawncraft.entities.DawnCraftEntities;
 import com.afunproject.dawncraft.integration.IntegrationHandler;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.mojang.logging.LogUtils;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,6 +21,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 
 @Mod(Constants.MODID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

@@ -1,10 +1,7 @@
 package com.afunproject.dawncraft.dungeon.block;
 
-import java.util.function.Supplier;
-
-import com.afunproject.dawncraft.CreativeTabs;
 import com.afunproject.dawncraft.Constants;
-
+import com.afunproject.dawncraft.CreativeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
@@ -13,6 +10,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class DungeonBlocks {
 

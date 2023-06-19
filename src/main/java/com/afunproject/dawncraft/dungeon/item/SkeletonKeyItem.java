@@ -1,12 +1,7 @@
 package com.afunproject.dawncraft.dungeon.item;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.afunproject.dawncraft.CreativeTabs;
 import com.afunproject.dawncraft.dungeon.block.LockedBlock;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,6 +15,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SkeletonKeyItem extends Item implements AdventureItem {
 

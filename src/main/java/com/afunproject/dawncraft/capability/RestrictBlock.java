@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.capability;
 
 import com.afunproject.dawncraft.ModUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

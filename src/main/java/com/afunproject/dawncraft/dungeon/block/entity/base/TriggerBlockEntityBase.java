@@ -1,11 +1,8 @@
 package com.afunproject.dawncraft.dungeon.block.entity.base;
 
-import java.util.Set;
-
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.DungeonTrigger;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Functional;
 import com.google.common.collect.Sets;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -18,6 +15,8 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Set;
 
 public class TriggerBlockEntityBase extends BlockEntity implements DungeonTrigger {
 

@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.client.entity;
 
 import com.afunproject.dawncraft.Constants;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

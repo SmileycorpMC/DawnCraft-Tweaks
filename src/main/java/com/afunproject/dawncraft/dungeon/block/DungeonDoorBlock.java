@@ -2,7 +2,6 @@ package com.afunproject.dawncraft.dungeon.block;
 
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonDoorBlockEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;

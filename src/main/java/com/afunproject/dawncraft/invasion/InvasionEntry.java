@@ -1,9 +1,6 @@
 package com.afunproject.dawncraft.invasion;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +27,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+
+import java.util.List;
 
 public class InvasionEntry {
 

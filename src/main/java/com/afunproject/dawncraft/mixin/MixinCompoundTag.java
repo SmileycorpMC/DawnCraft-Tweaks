@@ -1,19 +1,17 @@
 package com.afunproject.dawncraft.mixin;
 
-import java.io.DataInput;
-import java.util.Map;
-
+import com.afunproject.dawncraft.Constants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.Tag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.afunproject.dawncraft.Constants;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.nbt.Tag;
+import java.io.DataInput;
+import java.util.Map;
 
 @Mixin(CompoundTag.class)
 public abstract class MixinCompoundTag implements Tag {

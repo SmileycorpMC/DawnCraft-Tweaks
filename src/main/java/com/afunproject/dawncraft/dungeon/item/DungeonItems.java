@@ -1,15 +1,14 @@
 package com.afunproject.dawncraft.dungeon.item;
 
-import java.util.Map;
-
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.google.common.collect.Maps;
-
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Map;
 
 public class DungeonItems {
 

@@ -1,10 +1,9 @@
 package com.afunproject.dawncraft.integration.quests.client.screens;
 
-import java.util.List;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.components.AbstractWidget;
+
+import java.util.List;
 
 public interface Page {
 

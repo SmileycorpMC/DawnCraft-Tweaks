@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.dungeon.block.entity.base;
 
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Disguisable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

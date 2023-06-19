@@ -1,10 +1,7 @@
 package com.afunproject.dawncraft.capability;
 
-import java.util.List;
-
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -17,6 +14,8 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
 import net.smileycorp.atlas.api.network.SimpleIntMessage;
+
+import java.util.List;
 
 public interface SageQuestTracker {
 

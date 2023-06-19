@@ -1,16 +1,15 @@
 package com.afunproject.dawncraft.integration.quests.client.screens;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.feywild.quest_giver.screen.widget.BackgroundWidget;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+
+import java.util.Collection;
+import java.util.List;
 
 public class TextPage implements Page {
 

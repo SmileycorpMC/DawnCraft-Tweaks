@@ -1,14 +1,11 @@
 package com.afunproject.dawncraft.integration.humancompanions;
 
-import java.util.Random;
-
 import com.afunproject.dawncraft.EventListener;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
 import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlayer;
 import com.github.justinwon777.humancompanions.entity.Knight;
-
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,6 +21,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import yesman.epicfight.world.item.EpicFightItems;
+
+import java.util.Random;
 
 public class HCEvents {
 

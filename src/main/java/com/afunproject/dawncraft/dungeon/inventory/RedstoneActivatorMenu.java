@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.dungeon.inventory;
 
 import com.afunproject.dawncraft.dungeon.block.entity.RedstoneActivatorBlockEntity;
-
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.dungeon.inventory;
 
 import com.afunproject.dawncraft.Constants;
-
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;

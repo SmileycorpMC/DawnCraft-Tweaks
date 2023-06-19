@@ -1,12 +1,11 @@
 package com.afunproject.dawncraft.integration.quests.client.screens;
 
-import java.util.List;
-
 import com.feywild.quest_giver.screen.button.QuestButton;
 import com.google.common.collect.Lists;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.TranslatableComponent;
+
+import java.util.List;
 
 public class DCQuestButton extends QuestButton {
 

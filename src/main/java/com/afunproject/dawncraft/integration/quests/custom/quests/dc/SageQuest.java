@@ -6,7 +6,6 @@ import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;

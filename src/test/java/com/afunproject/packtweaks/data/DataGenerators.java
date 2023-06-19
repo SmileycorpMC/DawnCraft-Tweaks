@@ -1,7 +1,6 @@
 package com.afunproject.packtweaks.data;
 
 import com.afunproject.dawncraft.Constants;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;

@@ -16,11 +16,11 @@
 		"MixinResourceLocation"
 	],
 	"client": [
-		"MixinEntityRenderer",
-		"MixinItemRenderer",
-		"MixinKeyMapping",
-		"MixinKeyboardHandler",
-		"MixinMouseHandler"
-	],
+      "MixinEntityRenderer",
+      "MixinItemRenderer",
+      "MixinKeyboardHandler",
+      "MixinKeyMapping",
+      "MixinMouseHandler"
+    ],
 	"minVersion": "0.8"
 }

@@ -1,10 +1,7 @@
 package com.afunproject.dawncraft.dungeon.block.entity;
 
-import java.util.stream.Stream;
-
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
-
 import net.minecraft.Util;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +11,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplie
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.stream.Stream;
 
 public class DungeonBlockEntities {
 

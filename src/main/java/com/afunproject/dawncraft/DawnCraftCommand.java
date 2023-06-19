@@ -1,19 +1,18 @@
 package com.afunproject.dawncraft;
 
-import java.util.List;
-import java.util.function.Function;
-
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.google.common.collect.Lists;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+import java.util.List;
+import java.util.function.Function;
 
 @EventBusSubscriber(modid=Constants.MODID)
 public class DawnCraftCommand {

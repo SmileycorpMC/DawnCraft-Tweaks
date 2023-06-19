@@ -1,12 +1,8 @@
 package com.afunproject.dawncraft.capability;
 
-import java.util.List;
-import java.util.Random;
-
 import com.afunproject.dawncraft.invasion.InvasionEntry;
 import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -16,6 +12,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.List;
+import java.util.Random;
 
 public interface Invasions {
 

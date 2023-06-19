@@ -1,7 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom;
 
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
-
 import net.minecraft.nbt.CompoundTag;
 
 public class DummyQuestEntity implements QuestEntity {

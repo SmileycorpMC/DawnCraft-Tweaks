@@ -1,16 +1,11 @@
 package com.afunproject.dawncraft.dungeon.item;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.afunproject.dawncraft.CreativeTabs;
 import com.afunproject.dawncraft.ModUtils;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.DungeonTrigger;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Functional;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.SingleUse;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -34,6 +29,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 import net.smileycorp.atlas.api.network.SimpleStringMessage;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class DungeonConfiguratorItem extends Item {
 

@@ -1,9 +1,6 @@
 package com.afunproject.dawncraft.dungeon.block;
 
-import java.util.function.Function;
-
 import com.afunproject.dawncraft.CreativeTabs;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
@@ -11,6 +8,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.smileycorp.atlas.api.block.ShapedBlock;
+
+import java.util.function.Function;
 
 public class DungeonBlock extends ShapedBlock {
 
