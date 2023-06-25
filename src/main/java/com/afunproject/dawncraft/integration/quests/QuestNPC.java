@@ -12,6 +12,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Locale;
+
 public enum QuestNPC implements StringRepresentable {
 
 	WEREWOLF(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"hjvu55\", \"quest\":\"dawncraft:werewolf\", \"damageable\":1b}"),
@@ -38,7 +40,7 @@ public enum QuestNPC implements StringRepresentable {
 
 	@Override
 	public String getSerializedName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.US);
 	}
 
 	public Entity spawnEntity(Level level, double x, double y, double z) {

@@ -32,6 +32,7 @@ import net.smileycorp.atlas.api.network.SimpleStringMessage;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Locale;
 
 public class DungeonConfiguratorItem extends Item {
 
@@ -155,7 +156,7 @@ public class DungeonConfiguratorItem extends Item {
 
 	protected void setMode(ItemStack stack, ConfiguratorMode mode) {
 		CompoundTag tag = new CompoundTag();
-		tag.putString("mode", mode.toString().toLowerCase());
+		tag.putString("mode", mode.toString().toLowerCase(Locale.US));
 		stack.setTag(tag);
 	}
 
@@ -184,17 +185,17 @@ public class DungeonConfiguratorItem extends Item {
 		ROTATE;
 
 		public String getModeMessage() {
-			return "configuratormode.dawncraft." + toString().toLowerCase();
+			return "configuratormode.dawncraft." + toString().toLowerCase(Locale.US);
 		}
 
 		public TranslatableComponent getTooltip() {
-			return new TranslatableComponent("tooltip.dawncraft.configuratormode." + toString().toLowerCase());
+			return new TranslatableComponent("tooltip.dawncraft.configuratormode." + toString().toLowerCase(Locale.US));
 		}
 
 		public static ConfiguratorMode getmode(ItemStack stack) {
 			CompoundTag tag = stack.getOrCreateTag();
 			if (tag.contains("mode")) {
-				return ConfiguratorMode.valueOf(tag.getString("mode").toUpperCase());
+				return ConfiguratorMode.valueOf(tag.getString("mode").toUpperCase(Locale.US));
 			}
 			return LINK_FUNCTIONAL;
 		}

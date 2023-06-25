@@ -3,6 +3,8 @@ package com.afunproject.dawncraft.invasion;
 import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.common.IExtensibleEnum;
 
+import java.util.Locale;
+
 public enum InvasionKey implements IExtensibleEnum, StringRepresentable{
 
 	;
@@ -26,7 +28,7 @@ public enum InvasionKey implements IExtensibleEnum, StringRepresentable{
 		for (InvasionKey key : values()) {
 			if (key.getSerializedName().equals(name)) return key;
 		}
-		return valueOf(name.toUpperCase());
+		return valueOf(name.toUpperCase(Locale.US));
 	}
 
 	@Override

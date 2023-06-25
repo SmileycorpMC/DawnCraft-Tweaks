@@ -1,5 +1,7 @@
 package com.afunproject.dawncraft.dungeon;
 
+import java.util.Locale;
+
 public enum KeyColour {
 	RED(0x7F0000),
 	GREEN(0x2B6000),
@@ -16,7 +18,7 @@ public enum KeyColour {
 	}
 
 	public String getName() {
-		return super.name().toLowerCase();
+		return super.name().toLowerCase(Locale.US);
 	}
 
 	public int getColour() {

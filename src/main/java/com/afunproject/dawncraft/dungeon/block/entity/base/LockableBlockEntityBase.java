@@ -8,6 +8,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Locale;
+
 public class LockableBlockEntityBase extends BlockEntity implements Lockable {
 
 	public LockableBlockEntityBase(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
@@ -29,13 +31,13 @@ public class LockableBlockEntityBase extends BlockEntity implements Lockable {
 	@Override
 	public void load(CompoundTag tag) {
 		super.load(tag);
-		if (tag.contains("lock_colour")) lock = KeyColour.valueOf(tag.getString("lock_colour").toUpperCase());
+		if (tag.contains("lock_colour")) lock = KeyColour.valueOf(tag.getString("lock_colour").toUpperCase(Locale.US));
 	}
 
 	@Override
 	protected void saveAdditional(CompoundTag tag) {
 		super.saveAdditional(tag);
-		if (lock != null) tag.putString("lock_colour", lock.toString().toLowerCase());
+		if (lock != null) tag.putString("lock_colour", lock.toString().toLowerCase(Locale.US));
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class LockableBlockEntityBase extends BlockEntity implements Lockable {
 	@Override
 	public CompoundTag getUpdateTag() {
 		CompoundTag tag = super.getUpdateTag();
-		if (lock!=null) tag.putString("lock_colour", lock.toString().toLowerCase());
+		if (lock!=null) tag.putString("lock_colour", lock.toString().toLowerCase(Locale.US));
 		return tag;
 	}
 
