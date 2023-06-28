@@ -1,17 +1,21 @@
 package com.afunproject.dawncraft.integration.quests;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Mob;
 
 public interface QuestData {
 
-	public ResourceLocation getQuestLocation();
+	public String getTitle();
+
+	public String getID();
 
 	public String getText();
 
 	public QuestType getQuestType();
 
 	public boolean isDCQuest();
+
+	public Mob getRenderEntity();
 
 	public CompoundTag save();
 

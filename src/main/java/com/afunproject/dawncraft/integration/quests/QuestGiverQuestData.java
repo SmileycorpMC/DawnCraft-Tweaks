@@ -5,16 +5,18 @@ import com.afunproject.dawncraft.integration.quests.custom.quests.QuestsRegistry
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
-public class DCQuestData implements QuestData {
+public class QuestGiverQuestData implements QuestData {
 
 	protected ResourceLocation quest;
 	protected int phase;
 	protected boolean accepted;
+	protected boolean is_main;
 
-	public DCQuestData() {};
+	public QuestGiverQuestData() {};
 
-	public DCQuestData(ResourceLocation loc) {
+	public QuestGiverQuestData(ResourceLocation loc) {
 		quest = loc;
+		is_main = false;
 	}
 
 	public void setQuestPhase(int phase, boolean accepted) {
@@ -33,7 +35,7 @@ public class DCQuestData implements QuestData {
 
 	@Override
 	public QuestType getQuestType() {
-		return QuestType.SPECIAL;
+		return is_main ? QuestType.MAIN_QUEST : QuestType.SIDE_QUEST;
 	}
 
 	@Override
@@ -55,6 +57,7 @@ public class DCQuestData implements QuestData {
 		if (tag.contains("quest")) quest = new ResourceLocation(tag.getString("quest"));
 		if (tag.contains("phase")) phase = tag.getInt("phase");
 		if (tag.contains("accepted")) accepted = tag.getBoolean("accepted");
+		if (tag.contains("isMain")) is_main = tag.getBoolean("isMain");
 	}
 
 	@Override

@@ -244,5 +244,7 @@
 	"text.dawncraft.decline3": "No, Sorry.",
 	"text.dawncraft.decline4": "Not right now",
 	"text.dawncraft.decline5": "I decline!",
+	
 	"text.dawncraft.quest_progress_button": "Quest progress"
+	"text.dawncraft.quest_progress_click": "See quest task"
 }

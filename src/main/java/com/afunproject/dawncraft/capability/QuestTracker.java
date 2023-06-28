@@ -1,24 +1,23 @@
 package com.afunproject.dawncraft.capability;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import com.afunproject.dawncraft.integration.quests.QuestData;
 import com.afunproject.dawncraft.integration.quests.QuestDataSerializer;
 import com.afunproject.dawncraft.integration.quests.QuestType;
 import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 import com.afunproject.dawncraft.integration.quests.network.QuestSyncMessage;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -27,13 +26,11 @@ import net.minecraftforge.network.NetworkDirection;
 
 public interface QuestTracker {
 
-	public void updateQuest(int id, QuestData data, Player player);
+	public void updateQuest(QuestData data, Player player);
 
-	public Collection<Entry<Integer, QuestData>> getQuests();
+	public Collection<QuestData> getQuests();
 
-	public Collection<Entry<Integer, QuestData>> getQuests(QuestType type);
-
-	public QuestData getQuest(Entity entity);
+	public Collection<QuestData> getQuests(QuestType type);
 
 	public void readNBT(ListTag nbt);
 
@@ -41,32 +38,27 @@ public interface QuestTracker {
 
 	public static class Implementation implements QuestTracker {
 
-		protected final Map<Integer, QuestData> quest_data = Maps.newLinkedHashMap();
+		protected final LinkedHashMap<String, QuestData> quest_data = Maps.newLinkedHashMap();
 
 		@Override
-		public void updateQuest(int id, QuestData data, Player player) {
-			quest_data.put(id, data);
-			if (player instanceof ServerPlayer) {
-				QuestNetworkHandler.NETWORK_INSTANCE.sendTo(new QuestSyncMessage(id, data), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-			}
+		public void updateQuest(QuestData data, Player player) {
+			if (quest_data.containsKey(data.getID()))
+				if (player instanceof ServerPlayer) {
+					QuestNetworkHandler.NETWORK_INSTANCE.sendTo(new QuestSyncMessage(data), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+				}
 
 		}
 
 		@Override
-		public QuestData getQuest(Entity entity) {
-			return quest_data.get(entity.getId());
+		public Collection<QuestData> getQuests() {
+			return quest_data.values();
 		}
 
 		@Override
-		public Collection<Entry<Integer, QuestData>> getQuests() {
-			return quest_data.entrySet();
-		}
-
-		@Override
-		public Collection<Entry<Integer, QuestData>> getQuests(QuestType type) {
-			Set<Entry<Integer, QuestData>> entries = Sets.newHashSet();
-			for (Entry<Integer, QuestData> entry : quest_data.entrySet()) {
-				if (entry.getValue().getQuestType() == type) entries.add(entry);
+		public Collection<QuestData> getQuests(QuestType type) {
+			ArrayList<QuestData> entries = Lists.newArrayList();
+			for (QuestData entry : quest_data.values()) {
+				if (entry.getQuestType() == type) entries.add(entry);
 			}
 			return entries;
 		}
@@ -77,7 +69,7 @@ public interface QuestTracker {
 				CompoundTag tag = (CompoundTag) nbt;
 				if (tag.contains("id")) {
 					QuestData data = QuestDataSerializer.loadQuestData(tag);
-					if (data != null) quest_data.put(tag.getInt("id"), data);
+					if (data != null) quest_data.put(data.getID(), data);
 				}
 			}
 		}
@@ -85,9 +77,8 @@ public interface QuestTracker {
 		@Override
 		public ListTag writeNBT() {
 			ListTag list = new ListTag();
-			for (Entry<Integer, QuestData> entry : quest_data.entrySet()) {
+			for (Entry<String, QuestData> entry : quest_data.entrySet()) {
 				CompoundTag tag = QuestDataSerializer.saveQuestData(entry.getValue());
-				tag.putInt("id", entry.getKey());
 				list.add(tag);
 			}
 			return list;

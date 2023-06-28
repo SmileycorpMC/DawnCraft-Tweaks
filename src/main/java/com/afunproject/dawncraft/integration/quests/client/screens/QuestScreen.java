@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.afunproject.dawncraft.client.EntityRenderProperties;
+import com.afunproject.dawncraft.integration.quests.QuestData;
 import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
 import com.afunproject.dawncraft.integration.quests.network.QuestNetworkHandler;
 import com.afunproject.dawncraft.integration.quests.network.TriggerQuestCompleteMessage;
@@ -35,12 +36,19 @@ public class QuestScreen extends Screen {
 
 	protected final Button NEXT_PAGE;
 
+	private boolean isProgressScreen = false;
+
+	public QuestScreen(QuestData data) {
+		this(data.getRenderEntity(), new TranslatableComponent(data.getText()), QuestResponseType.AUTO_CLOSE);
+		isProgressScreen = true;
+	}
+
 	public QuestScreen(Mob entity, MutableComponent text, QuestResponseType questType) {
 		super(entity.getName());
 		this.entity = entity;
 		this.questType = questType;
 		style = text.getStyle();
-		NEXT_PAGE = new QuestButtonSmall(380, 120, true, entity.blockPosition(), new TranslatableComponent("text.dawncraft.next"), button -> {
+		NEXT_PAGE = new QuestButtonSmall(380, 120, true, minecraft.player.blockPosition(), new TranslatableComponent("text.dawncraft.next"), button -> {
 			if (pageIndex == pages.size()-1) {
 				completeQuest(true);
 				onClose();
@@ -123,7 +131,7 @@ public class QuestScreen extends Screen {
 	}
 
 	private void completeQuest(boolean accepted) {
-		QuestNetworkHandler.NETWORK_INSTANCE.sendToServer(new TriggerQuestCompleteMessage(entity, accepted));
+		if (!isProgressScreen) QuestNetworkHandler.NETWORK_INSTANCE.sendToServer(new TriggerQuestCompleteMessage(entity, accepted));
 	}
 
 	@Override
@@ -157,7 +165,7 @@ public class QuestScreen extends Screen {
 
 	@Override
 	public boolean shouldCloseOnEsc() {
-		return questType == QuestResponseType.OPTIONS;
+		return questType == QuestResponseType.OPTIONS || isProgressScreen;
 	}
 
 	private Button[] getAcceptButtons() {

@@ -5,6 +5,7 @@ import com.afunproject.dawncraft.capability.QuestTracker;
 import com.afunproject.dawncraft.client.ClientEventRegister;
 import com.afunproject.dawncraft.client.entity.FallenRenderer;
 import com.afunproject.dawncraft.client.entity.PlayerEntityRenderer;
+import com.afunproject.dawncraft.integration.quests.client.screens.QuestProgressScreen;
 import com.afunproject.dawncraft.integration.quests.client.screens.QuestScreen;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestResponseType;
@@ -19,10 +20,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.client.event.ScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.ScreenEvent.MouseClickedEvent;
@@ -34,7 +34,7 @@ public class QuestClientEvents {
 
 	protected static Button button = new Button(0, 0, 90, 20, new TranslatableComponent("text.dawncraft.quest_progress_button"), (button)->{
 		Minecraft mc = Minecraft.getInstance();
-		mc.setScreen(new QuestScreen(new Creeper(EntityType.CREEPER, mc.level), new TranslatableComponent("text.dawncraft.quest.lorem_ipsum"), QuestResponseType.AUTO_CLOSE));
+		ForgeHooksClient.pushGuiLayer(mc, new QuestProgressScreen());
 	});
 
 	public static void init() {
@@ -61,7 +61,7 @@ public class QuestClientEvents {
 		Minecraft mc = Minecraft.getInstance();
 		Player player = mc.player;
 		LazyOptional<QuestTracker> optional = player.getCapability(CapabilitiesRegister.QUEST_TRACKER);
-		if (optional.isPresent()) optional.resolve().get().updateQuest(message.getId(), message.getData(), player);
+		if (optional.isPresent()) optional.resolve().get().updateQuest(message.getData(), player);
 	}
 
 	@SubscribeEvent
