@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    	"minecraft:emerald",
+    "minecraft:emerald",
 	"minecraft:emerald_block",
 	"minecraft:diamond",
 	"minecraft:diamond_block",
@@ -37,6 +37,11 @@
 	"apotheosis:uncommon_material",
 	"apotheosis:mythic_material",
 	"apotheosis:rare_material",
-	"apotheosis:epic_material"
+	"apotheosis:epic_material",
+	"#forge:meats",
+	"#forge:bread",
+	"#forge:fruits/berry",
+	"#minecraft:arrows",
+	"minecraft:netherite_scrap"
   ]
 }
