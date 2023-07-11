@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.Constants;
+import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
@@ -9,15 +10,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,8 +33,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
-
-	public static final TagKey<Item> MASK_TAG = TagKey.m_203882_(Registry.ITEM_REGISTRY, Constants.loc("masks"));
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void renderLivingEventStart(RenderLivingEvent.Pre<?, ?> event) {
@@ -120,7 +116,7 @@ public class ClientEventListener {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void addTooltips(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (stack.m_204117_(MASK_TAG) && stack.getItem() != DungeonItems.CURSED_MASK.get())
+		if (stack.m_204117_(DCItemTags.MASKS) && stack.getItem() != DungeonItems.CURSED_MASK.get())
 			event.getToolTip().add(new TranslatableComponent("tooltip.dawncraft.mask").withStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.DARK_PURPLE)));
 	}
 

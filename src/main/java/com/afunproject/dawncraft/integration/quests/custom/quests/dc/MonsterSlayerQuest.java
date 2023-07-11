@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
-import com.afunproject.dawncraft.Constants;
+import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
@@ -13,8 +13,10 @@ import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkDirection;
@@ -22,11 +24,12 @@ import net.minecraftforge.network.NetworkDirection;
 public class MonsterSlayerQuest extends Quest {
 
 	public MonsterSlayerQuest() {
-		super(new OrCondition(getCondition("lesser_monster_drop", 2), getCondition("greater_monster_drop", 4), getCondition("miniboss_monster_drop", 6)));
+		super(new OrCondition(getCondition(DCItemTags.LESSER_MONSTER_DROP, 2),
+				getCondition(DCItemTags.GREATER_MONSTER_DROP, 4), getCondition(DCItemTags.MINIBOSS_MONSTER_DROP, 6)));
 	}
 
-	private static QuestCondition getCondition(String name, int i) {
-		return new AndCondition((player, entity, phase, isTest)->phase==i, new TagCondition(Constants.loc(name), 1, false));
+	private static QuestCondition getCondition(TagKey<Item> tag, int i) {
+		return new AndCondition((player, entity, phase, isTest)->phase==i, new TagCondition(tag, 1, false));
 	}
 
 	@Override

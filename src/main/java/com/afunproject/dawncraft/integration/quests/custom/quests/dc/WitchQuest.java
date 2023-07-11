@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
-import com.afunproject.dawncraft.Constants;
+import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
@@ -24,10 +24,10 @@ public class WitchQuest extends Quest {
 	protected final int end_phase;
 
 	public WitchQuest() {
-		super(new AndCondition((player, entity, phase, isTest)->phase==2), new TagCondition(Constants.loc("bat_wing")), new TagCondition(Constants.loc("bark")),
-				new TagCondition(Constants.loc("spider_eye")), new TagCondition(Constants.loc("honeycomb")),
-				new TagCondition(Constants.loc("rabbit_foot")), new TagCondition(Constants.loc("bear_pelt")),
-				new TagCondition(Constants.loc("emerald")));
+		super(new AndCondition((player, entity, phase, isTest)->phase==2), new TagCondition(DCItemTags.BAT_WING), new TagCondition(DCItemTags.BARK),
+				new TagCondition(DCItemTags.SPIDER_EYE), new TagCondition(DCItemTags.HONEYCOMB),
+				new TagCondition(DCItemTags.RABBIT_FOOT), new TagCondition(DCItemTags.BEAR_PELT),
+				new TagCondition(DCItemTags.EMERALD));
 		end_phase = 3;
 	}
 

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "farmersdelight:tree_bark"
+    "farmersdelight:tree_bark",
+	"#immersive_weathering:bark"
   ]
 }

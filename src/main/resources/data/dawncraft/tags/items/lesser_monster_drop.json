@@ -3,6 +3,7 @@
   "values": [
     "minecraft:prismarine_shard",
 	"minecraft:blaze_rod",
-	"kobolds:kobold_block_skull"
+	"kobolds:kobold_block_skull",
+	"simple_mobs:imp_scale"
   ]
 }

@@ -2,8 +2,6 @@ package com.afunproject.dawncraft.integration.quests.custom.conditions;
 
 import com.afunproject.dawncraft.DawnCraft;
 import com.google.common.collect.Lists;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Mob;
@@ -19,16 +17,16 @@ public class TagCondition implements QuestCondition {
 	protected int count;
 	protected boolean consume;
 
-	public TagCondition(ResourceLocation loc) {
-		this(loc, 1, true);
+	public TagCondition(TagKey<Item> tag) {
+		this(tag, 1, true);
 	}
 
-	public TagCondition(ResourceLocation loc, int count) {
-		this(loc, count, true);
+	public TagCondition(TagKey<Item> tag, int count) {
+		this(tag, count, true);
 	}
 
-	public TagCondition(ResourceLocation loc, int count, boolean consume) {
-		tag = TagKey.m_203882_(Registry.ITEM_REGISTRY, loc);
+	public TagCondition(TagKey<Item> tag, int count, boolean consume) {
+		this.tag = tag;
 		this.count = count;
 		this.consume = consume;
 	}

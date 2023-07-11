@@ -1,15 +1,12 @@
 package com.afunproject.dawncraft.mixin;
 
-import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.DCConfig;
+import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
-import com.afunproject.dawncraft.integration.sophisticatedbackpacks.SophisticatedBackpacksCompat;
 import com.google.common.collect.Lists;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +14,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -42,11 +38,6 @@ public abstract class MixinPlayer extends LivingEntity {
 	@Shadow
 	private Inventory inventory;
 
-	@Shadow
-	public int totalExperience;
-
-	private TagKey<Item> valuables = TagKey.m_203882_(Registry.ITEM_REGISTRY, Constants.loc("valuables"));
-
 	protected MixinPlayer(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
 		super(p_20966_, p_20967_);
 	}
@@ -55,9 +46,7 @@ public abstract class MixinPlayer extends LivingEntity {
 	public void dropEquipment(CallbackInfo callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		destroyVanishingCursedItems();
-		for (List<ItemStack> list : inventory.compartments) {
-			handleItems(list);
-		}
+		inventory.compartments.forEach(this::handleItems);
 		callback.cancel();
 	}
 
@@ -66,7 +55,7 @@ public abstract class MixinPlayer extends LivingEntity {
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) amplifier = getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1;
 		for (int i = 0; i < items.size(); i++) {
 			ItemStack stack = items.get(i);
-			if (stack.m_204117_(valuables)) {
+			if (stack.m_204117_(DCItemTags.VALUABLES)) {
 				if (level.random.nextInt(10) < amplifier) {
 					ItemStack drop = stack.copy();
 					int count = stack.getCount();
