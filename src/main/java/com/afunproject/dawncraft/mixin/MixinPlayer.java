@@ -56,21 +56,18 @@ public abstract class MixinPlayer extends LivingEntity {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		destroyVanishingCursedItems();
 		for (List<ItemStack> list : inventory.compartments) {
-			handleItems(list, true);
+			handleItems(list);
 		}
 		callback.cancel();
 	}
 
-	public List<ItemStack> handleItems(List<ItemStack> items, boolean damageItems) {
+	public List<ItemStack> handleItems(List<ItemStack> items) {
 		int amplifier = 1;
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) amplifier = getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1;
 		for (int i = 0; i < items.size(); i++) {
 			ItemStack stack = items.get(i);
-			if (stack.isDamageableItem()) {
-				if (damageItems) stack.setDamageValue((int) Math.min(stack.getMaxDamage(), stack.getDamageValue() + (amplifier*0.02*stack.getMaxDamage())));
-			}
 			if (stack.m_204117_(valuables)) {
-				if (level.random.nextInt(10) < 3) {
+				if (level.random.nextInt(10) < amplifier) {
 					ItemStack drop = stack.copy();
 					int count = stack.getCount();
 					int loss = random.nextInt(0, stack.getCount());
@@ -86,36 +83,34 @@ public abstract class MixinPlayer extends LivingEntity {
 					if(tag.contains("Items", 9)) {
 						NonNullList<ItemStack> shulker_items = NonNullList.withSize(27, ItemStack.EMPTY);
 						ContainerHelper.loadAllItems(tag, shulker_items);
-						handleItems(shulker_items, false);
+						handleItems(shulker_items);
 						ContainerHelper.saveAllItems(tag, shulker_items);
 						BlockItem.setBlockEntityData(stack, BlockEntityType.SHULKER_BOX, tag);
 					}
 				}
 			} else {
-				if (ModList.get().isLoaded("sophisticatedbackpacks")) if (SophisticatedBackpacksCompat.isBackpack(stack.getItem())) {
-					LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-					if (optional.isPresent()) {
-						IItemHandler itemhandler = optional.resolve().get();
-						List<ItemStack> backpack_items = Lists.newArrayList();
-						for (int j = 0; j < itemhandler.getSlots(); j++) backpack_items.add(itemhandler.getStackInSlot(j));
-						handleItems(backpack_items, false);
-						for (int j = 0; j < backpack_items.size(); j++) {
-							ItemStack stack0 = itemhandler.getStackInSlot(j);
-							itemhandler.extractItem(j, stack0.getCount(), false);
-							itemhandler.insertItem(j, backpack_items.get(j), false);
-						}
-					}
-				}
 				if (ModList.get().isLoaded("create")) if (CreateCompat.isToolbox(stack.getItem())) {
 					CompoundTag tag = stack.getOrCreateTag();
 					if (tag !=null) {
 						if(tag.contains("Items", 9)) {
 							NonNullList<ItemStack> toolbox_items = NonNullList.withSize(27, ItemStack.EMPTY);
 							ContainerHelper.loadAllItems(tag, toolbox_items);
-							handleItems(toolbox_items, false);
+							handleItems(toolbox_items);
 							ContainerHelper.saveAllItems(tag, toolbox_items);
 							stack.save(tag);
 						}
+					}
+				}
+				LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+				if (optional.isPresent()) {
+					IItemHandler itemhandler = optional.resolve().get();
+					List<ItemStack> backpack_items = Lists.newArrayList();
+					for (int j = 0; j < itemhandler.getSlots(); j++) backpack_items.add(itemhandler.getStackInSlot(j));
+					handleItems(backpack_items);
+					for (int j = 0; j < backpack_items.size(); j++) {
+						ItemStack stack0 = itemhandler.getStackInSlot(j);
+						itemhandler.extractItem(j, stack0.getCount(), false);
+						itemhandler.insertItem(j, backpack_items.get(j), false);
 					}
 				}
 			}
@@ -127,9 +122,9 @@ public abstract class MixinPlayer extends LivingEntity {
 	protected void getExperienceReward(Player player, CallbackInfoReturnable<Integer> callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
-			giveExperienceLevels(-getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier()-1);
+			giveExperienceLevels(-5*(getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier()+1));
 		} else {
-			giveExperienceLevels(-1);
+			giveExperienceLevels(-5);
 		}
 	}
 
