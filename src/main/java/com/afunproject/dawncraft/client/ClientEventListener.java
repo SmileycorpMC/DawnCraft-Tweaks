@@ -2,17 +2,22 @@ package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.DCItemTags;
+import com.afunproject.dawncraft.DawnCraft;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
+import com.afunproject.dawncraft.dungeon.item.DungeonConfiguratorItem;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,12 +29,16 @@ import net.minecraftforge.client.event.InputEvent.MouseScrollEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.smileycorp.atlas.api.client.RenderingUtils;
+
+import java.awt.*;
 
 @EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
@@ -133,24 +142,21 @@ public class ClientEventListener {
 		}
 	}
 
-	/*@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	@SubscribeEvent
 	public static void renderWorld(RenderLevelStageEvent event){
-		DawnCraft.logInfo("bing");
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		ItemStack stack = player.getMainHandItem();
 		if (stack.getItem() == DungeonItems.DUNGEON_CONFIGURATOR.get()) {
-			DawnCraft.logInfo("bong");
 			BlockPos pos = DungeonConfiguratorItem.getSelectedPos(stack);
 			if (pos != null) {
 				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
-				buffer.begin(Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP);
-				RenderingUtils.renderCubeQuad(buffer, 1, 1, 1, 1, new Color(5636095),
-						mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation("white_concrete")), mc.level, 15, pos);
+				buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+				RenderingUtils.renderCubeQuad(buffer, 0, 0, 0, 1, new Color(1, 1, 1, 1));
 				buffer.end();
 			}
 		}
-	}*/
+	}
 }
 

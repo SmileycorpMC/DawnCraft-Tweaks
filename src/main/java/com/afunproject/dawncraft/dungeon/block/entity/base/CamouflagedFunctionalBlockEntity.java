@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.dungeon.block.entity.base;
 
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Disguisable;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Functional;
 import net.minecraft.core.BlockPos;
@@ -8,11 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.smileycorp.followme.common.ModDefinitions;
 
 public abstract class CamouflagedFunctionalBlockEntity extends BlockEntity implements Functional, Disguisable {
 
-	protected ResourceLocation texture = ModDefinitions.getResource("forest_brick");
+	protected ResourceLocation texture = Constants.loc("forest_brick");
 
 	public CamouflagedFunctionalBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);

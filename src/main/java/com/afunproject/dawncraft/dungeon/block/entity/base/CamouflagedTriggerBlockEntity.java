@@ -1,16 +1,16 @@
 package com.afunproject.dawncraft.dungeon.block.entity.base;
 
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.dungeon.block.entity.interfaces.Disguisable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.smileycorp.followme.common.ModDefinitions;
 
 public abstract class CamouflagedTriggerBlockEntity extends TriggerBlockEntityBase implements Disguisable {
 
-	protected ResourceLocation texture = ModDefinitions.getResource("forest_brick");
+	protected ResourceLocation texture = Constants.loc("forest_brick");
 
 	public CamouflagedTriggerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
