@@ -7,9 +7,12 @@ import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities
 import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlayer;
 import com.github.justinwon777.humancompanions.entity.Knight;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -45,7 +48,9 @@ public class HCEvents {
 						KnightPlayer player = HCEntities.KNIGHT_PLAYER.get().create(level);
 						player.setPos(entity.position());
 						level.addFreshEntity(player);
-						player.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(player.blockPosition()), MobSpawnType.NATURAL, null, null);
+						player.finalizeSpawn((ServerLevel) level,
+								new DifficultyInstance(level.getDifficulty(), level.getDayTime(), 0, level.getMoonBrightness()),
+								MobSpawnType.NATURAL, null, new CompoundTag());
 						player.setPlayer("Braydon2570");
 						player.setSex(0);
 						for (EquipmentSlot slot : EquipmentSlot.values()) player.setItemSlot(slot, ItemStack.EMPTY);
