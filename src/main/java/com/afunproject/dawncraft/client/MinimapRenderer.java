@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.MapRenderer;
 import net.minecraft.client.gui.MapRenderer.MapInstance;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
@@ -36,7 +37,7 @@ public class MinimapRenderer {
 		if (mapdata != null) {
 			renderVanillaMapBlocks(poseStack, id, mapdata, scale, offsetX, offsetY);
 			//map decoration items
-			renderMapDecorations(poseStack, mapdata, scale, offsetX, offsetY);
+			renderMapDecorations(poseStack, mapdata, offsetX, offsetY, fullscreen);
 			GlStateManager._disableBlend();
 		}
 	}
@@ -76,24 +77,32 @@ public class MinimapRenderer {
 		poseStack.popPose();
 	}
 
-	private static void renderMapDecorations(PoseStack poseStack, MapItemSavedData mapData, float scale, float offsetX, float offsetY) {
+	private static void renderMapDecorations(PoseStack poseStack, MapItemSavedData mapData, float offsetX, float offsetY, boolean fullscreen) {
+		int offsetScale = fullscreen ? 2 : 1;
 		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer player = mc.player;
 		MultiBufferSource buffers = mc.renderBuffers().bufferSource();
 		int k = 0;
 		for(MapDecoration mapdecoration : mapData.getDecorations()) {
+			MapDecoration.Type type = mapdecoration.getType();
+			boolean isPlayer = (type == MapDecoration.Type.PLAYER || type == MapDecoration.Type.PLAYER_OFF_MAP || type == MapDecoration.Type.PLAYER_OFF_LIMITS);
 			poseStack.pushPose();
+			float scale = fullscreen ? 0.75f : 0.5f;
 			poseStack.scale(scale, scale, 0.5f);
-			poseStack.translate(offsetX, offsetY, k+2);
+			poseStack.translate(offsetX * offsetScale, offsetY * offsetScale, k+2);
 			if (mapdecoration.render(k)) {
 				k++;
 				poseStack.popPose();
 				continue;
 			}
-			poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F), 0);
-			poseStack.mulPose(Vector3f.ZP.rotationDegrees((float)(mapdecoration.getRot() * 360)/16f));
+			float x = /*isPlayer ? (float) ((player.getX() - mapData.x)  / mapData.scale) :*/  mapdecoration.getX();
+			float y = /*isPlayer ? (float) ((player.getZ() - mapData.z) / mapData.scale) :*/ mapdecoration.getY();
+			poseStack.translate((x / 2.0F + 64.0F) * offsetScale, (y / 2.0F + 64.0F) * offsetScale, 0);
+			float rotation = isPlayer ? player.getYRot() + (player.getYRot() > 0 ? -8: 8) : (float)(mapdecoration.getRot()) * 360/16f;
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees(rotation));
 			poseStack.scale(8.0F, 8.0F, 3.0F);
 			poseStack.translate(-0.125D, 0.125D, 0.0D);
-			byte b0 = mapdecoration.getImage();
+			byte b0 = isPlayer ? 0 : mapdecoration.getImage();
 			float f1 = (float)(b0 % 16 + 0) / 16.0F;
 			float f2 = (float)(b0 / 16 + 0) / 16.0F;
 			float f3 = (float)(b0 % 16 + 1) / 16.0F;
@@ -111,7 +120,7 @@ public class MinimapRenderer {
 				float f6 = (float)font.width(component);
 				float f7 = Mth.clamp(25.0F / f6, 0.0F, 6.0F / 9.0F);
 				poseStack.pushPose();
-				poseStack.translate((double)(0.0F + (float)mapdecoration.getX() / 2.0F + 64.0F - f6 * f7 / 2.0F), (double)(0.0F + (float)mapdecoration.getY() / 2.0F + 64.0F + 4.0F), k+2);
+				poseStack.translate((x / 2.0F + 64.0F - f6 * f7 / 2.0F) * offsetScale, (y / 2.0F + 64.0F + 4.0F) * offsetScale, k+2);
 				poseStack.scale(f7, f7, 1.0F);
 				font.drawInBatch(component, 0.0F, 0.0F, -1, false, poseStack.last().pose(), buffers, false, Integer.MIN_VALUE, 255);
 				poseStack.popPose();
