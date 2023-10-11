@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "minecraft:rabbit_foot",
-	"apotheosis:lucky_foot",
-	"earthmobsmod:hyper_rabbit_foot"
+	"apotheosis:lucky_foot"
   ]
 }
