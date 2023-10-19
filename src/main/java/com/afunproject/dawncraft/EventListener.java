@@ -188,6 +188,7 @@ public class EventListener {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void livingHurt(LivingDamageEvent event) {
+		if (event.isCanceled()) return;
 		LivingEntity entity = event.getEntityLiving();
 		DamageSource source = event.getSource();
 		if (!entity.level.isClientSide) {

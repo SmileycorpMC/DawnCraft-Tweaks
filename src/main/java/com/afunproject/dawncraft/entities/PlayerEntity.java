@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public interface PlayerEntity {
 
-	public Optional<UUID> getPlayerUUID();
+	Optional<UUID> getPlayerUUID();
 
 }

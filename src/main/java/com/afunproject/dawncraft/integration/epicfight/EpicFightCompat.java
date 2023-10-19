@@ -19,10 +19,13 @@ public class EpicFightCompat {
 
 	@SubscribeEvent
 	public void livingHurtEvent(LivingDamageEvent event) {
+		if (event.isCanceled()) return;
 		if (!event.getEntity().level.isClientSide) {
 			DamageSource source = event.getSource();
-			if (source.getMsgId().equals("player") &! (source instanceof EpicFightDamageSource)) {
-				event.setAmount(event.getAmount()/2f);
+			float amount = 0.5f;
+			if (source.getDirectEntity() instanceof Player &! (source instanceof EpicFightDamageSource)) {
+				if (amount != 0.5f) event.setCanceled(true);
+				event.setAmount(event.getAmount() * amount);
 			}
 		}
 	}

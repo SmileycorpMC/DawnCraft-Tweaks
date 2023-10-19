@@ -5,24 +5,18 @@ import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.client.entity.FrogRenderer;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.InputEvent.MouseScrollEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.TickEvent;
@@ -58,37 +52,6 @@ public class ClientEventListener {
 	public void renderHandEventStart(RenderHandEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.player.hasEffect(DawnCraftEffects.FROGFORM.get())) event.setCanceled(true);
-	}
-
-	@SubscribeEvent
-	public void renderOverlay(RenderGameOverlayEvent.Pre event) {
-		Minecraft mc = Minecraft.getInstance();
-		//hide during quest screen
-		//if (mc.screen != null) return;
-		//render minimap
-		if (event.getType() == ElementType.LAYER)  {
-			PoseStack poseStack = event.getMatrixStack();
-			poseStack.pushPose();
-			poseStack.clear();
-			poseStack.popPose();
-			LocalPlayer player = mc.player;
-			if (mc.options.renderDebug || player.isUsingItem()) return;
-			ItemStack stack = null;
-			if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.FILLED_MAP) {
-				stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-			}
-			else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.FILLED_MAP) {
-				stack = player.getItemInHand(InteractionHand.OFF_HAND);
-			}
-			if (stack != null) {
-				boolean fullscreen = player.getUseItem().isEmpty() && mc.options.keyUse.isDown();
-				if (fullscreen) {
-					event.setCanceled(true);
-					if (!mc.options.getCameraType().isFirstPerson()) mc.options.setCameraType(CameraType.FIRST_PERSON);
-				}
-				MinimapRenderer.renderBasicMinimap(poseStack, stack, player.getUseItem().isEmpty() && mc.options.keyUse.isDown());
-			}
-		}
 	}
 
 	@SubscribeEvent
