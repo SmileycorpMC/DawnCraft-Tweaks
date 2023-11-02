@@ -12,7 +12,7 @@ public class DawnCraftEffects {
 
 	public static final RegistryObject<MobEffect> IMMOBILIZED = EFFECTS.register("immobilized", () -> new DCEffect(0xFFB8DBDB));
 
-	public static final RegistryObject<MobEffect> TREMOR = EFFECTS.register("tremor", () -> new DCEffect(0xFF2A7475));
+	public static final RegistryObject<MobEffect> TREMOR = EFFECTS.register("tremor", () -> new DCEffect(0xFFC80000));
 
 	public static final RegistryObject<MobEffect> FRACTURED_SOUL = EFFECTS.register("fractured_soul", () -> new DCEffect(0xFFE7FFFF));
 

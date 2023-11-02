@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.AABB;
 
-public class FrogformEffect extends MobEffect {
+public class FrogformEffect extends DCEffect {
 
 	private final String HEALTH_MOD_UUID = "f89b1456-dfb0-42a2-a4dd-f0c9320feae6";
 
@@ -15,7 +15,7 @@ public class FrogformEffect extends MobEffect {
 	public static final float FROG_EYE_HEIGHT = 0.35f;
 
 	protected FrogformEffect() {
-		super(MobEffectCategory.HARMFUL, 0xFF598423);
+		super( 0xFF598423);
 		addAttributeModifier(Attributes.MAX_HEALTH, HEALTH_MOD_UUID, -0.5, Operation.MULTIPLY_BASE);
 	}
 

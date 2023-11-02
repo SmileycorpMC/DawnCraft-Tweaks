@@ -59,7 +59,7 @@ public class ClientEventListener {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player.hasEffect(DawnCraftEffects.TREMOR.get())) {
-			float a = (player.getEffect(DawnCraftEffects.TREMOR.get()).getAmplifier() + 1)*0.5f;
+			float a = (player.getEffect(DawnCraftEffects.TREMOR.get()).getAmplifier() + 1) * 0.5f;
 			float t = (mc.getFrameTime() + player.tickCount)*a*0.75f;
 			event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
 			event.setYaw((float) (event.getYaw() + a * Math.cos(t)));

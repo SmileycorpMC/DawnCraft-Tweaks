@@ -6,12 +6,10 @@ import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
 import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlayer;
 import com.github.justinwon777.humancompanions.entity.Knight;
+import com.github.justinwon777.humancompanions.entity.ai.MoveBackToPatrolGoal;
+import com.github.justinwon777.humancompanions.entity.ai.PatrolGoal;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,20 +45,22 @@ public class HCEvents {
 						KnightPlayer player = HCEntities.KNIGHT_PLAYER.get().create(level);
 						player.setPos(entity.position());
 						level.addFreshEntity(player);
-						player.finalizeSpawn((ServerLevel) level,
-								new DifficultyInstance(level.getDifficulty(), level.getDayTime(), 0, level.getMoonBrightness()),
-								MobSpawnType.NATURAL, null, new CompoundTag());
+						player.setCompanionSkin(0);
+						player.setPatrolPos(player.blockPosition());
+						player.setPatrolling(true);
+						player.setPatrolRadius(15);
+						player.patrolGoal = new PatrolGoal(player, 60, player.getPatrolRadius());
+						player.moveBackGoal = new MoveBackToPatrolGoal(player, player.getPatrolRadius());
+						player.goalSelector.addGoal(3, player.moveBackGoal);
+						player.goalSelector.addGoal(3, player.patrolGoal);
+						player.setFoodRequirements();
 						player.setPlayer("Braydon2570");
 						player.setSex(0);
-						for (EquipmentSlot slot : EquipmentSlot.values()) player.setItemSlot(slot, ItemStack.EMPTY);
-						player.inventory.clearContent();
 						player.inventory.setItem(0, new ItemStack(EpicFightItems.IRON_GREATSWORD.get()));
 						player.inventory.setItem(1, new ItemStack(SimpleMobsModItems.DIABOLIUM_CHESTPLATE.get()));
 						player.inventory.setItem(2, new ItemStack(Items.CHAINMAIL_LEGGINGS));
 						player.inventory.setItem(3, new ItemStack(Items.LEATHER_BOOTS));
 						player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40D);
-						player.checkArmor();
-						player.checkSword();
 						event.setCanceled(true);
 					}
 					tracker.setSpawned();
