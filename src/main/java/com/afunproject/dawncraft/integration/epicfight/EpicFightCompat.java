@@ -23,7 +23,7 @@ public class EpicFightCompat {
 		if (!event.getEntity().level.isClientSide) {
 			if (event.getEntity() instanceof ServerPlayer) {
 				ServerPlayer entity = (ServerPlayer) event.getEntity();
-				if (!isCombatMode(entity)) return;
+				if (!isCombatMode(entity) || event.getSource().getEntity() == null) return;
 				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
 				if (cap.isPresent()) cap.orElseGet(null).sendDodge(entity);
 			}
