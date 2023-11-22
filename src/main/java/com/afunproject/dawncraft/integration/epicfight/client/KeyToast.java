@@ -37,7 +37,7 @@ public class KeyToast implements Toast {
         mc.getItemRenderer().renderAndDecorateFakeItem(new ItemStack(Items.IRON_SWORD), 5, 8);
         poseStack.pushPose();
         poseStack.scale(0.75f, 0.75f, 0.75f);
-        mc.font.draw(poseStack, new TranslatableComponent(message + ".title", new TranslatableComponent(mapping.getName())),
+        mc.font.draw(poseStack, new TranslatableComponent(message + ".title", mapping.getTranslatedKeyMessage()),
                 32.0F, 7.0F, 0x9E0CD2);
         mc.font.draw(poseStack,  new TranslatableComponent(message + ".text0"), 32.0F, 18.0F, -1);
         mc.font.draw(poseStack,  new TranslatableComponent(message + ".text1"), 32.0F, 29.0F, -1);
