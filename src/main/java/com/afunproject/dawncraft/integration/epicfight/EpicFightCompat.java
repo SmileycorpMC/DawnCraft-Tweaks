@@ -1,8 +1,11 @@
 package com.afunproject.dawncraft.integration.epicfight;
 
-import net.minecraft.world.damagesource.DamageSource;
+import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.Toasts;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -18,12 +21,20 @@ public class EpicFightCompat {
 	public void livingHurtEvent(LivingDamageEvent event) {
 		if (event.isCanceled()) return;
 		if (!event.getEntity().level.isClientSide) {
-			DamageSource source = event.getSource();
-			float amount = 0.5f;
-			if (source.getDirectEntity() instanceof Player) {
+			if (event.getEntity() instanceof ServerPlayer) {
+				ServerPlayer entity = (ServerPlayer) event.getEntity();
+				if (!isCombatMode(entity)) return;
+				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
+				if (cap.isPresent()) cap.orElseGet(null).sendDodge(entity);
+			}
+			if (event.getSource().getDirectEntity() instanceof ServerPlayer) {
+				ServerPlayer entity = (ServerPlayer) event.getSource().getDirectEntity();
+				float amount = 0.5f;
 				if (amount != 0.5f) event.setCanceled(true);
-				if (isCombatMode((Player) source.getDirectEntity())) return;
+				if (isCombatMode(entity)) return;
 				event.setAmount(event.getAmount() * amount);
+				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
+				if (cap.isPresent()) cap.orElseGet(null).sendCombat(entity);
 			}
 		}
 	}

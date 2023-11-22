@@ -7,6 +7,7 @@ import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Style;
@@ -23,6 +24,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
@@ -88,10 +90,15 @@ public class ClientEventListener {
 		if (event.phase == TickEvent.Phase.START) {
 			Minecraft mc = Minecraft.getInstance();
 			LocalPlayer player = mc.player;
-			if (player != null && player.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
+			if (player == null) return;
+			if (player.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
 				if (player.tickCount % Math.floorDiv(10, player.getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1) == 0) {
 					mc.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
 				}
+			}
+			if (ModList.get().isLoaded("reputation") && player.tickCount == 2000) {
+				mc.getToasts().addToast(new SystemToast(SystemToast.SystemToastIds.TUTORIAL_HINT,
+						new TranslatableComponent("toasts.dawncraft.stealing.title"), new TranslatableComponent("toasts.dawncraft.stealing.text")));
 			}
 		}
 	}

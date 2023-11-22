@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.client;
 
+import com.afunproject.dawncraft.integration.epicfight.client.EpicFightClientEvents;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -7,9 +8,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fml.ModList;
 
 import java.util.List;
 
@@ -47,6 +50,11 @@ public class ClientHandler {
 		Key key = isMouse ? InputConstants.Type.MOUSE.getOrCreate(keycode) : InputConstants.Type.KEYSYM.getOrCreate(keycode);
 		for (KeyMapping mapping : FROG_KEYS) if (mapping.getKey() == key) return true;
 		return false;
+	}
+
+	public static void displayToast(byte b) {
+		ToastComponent toasts = Minecraft.getInstance().getToasts();
+		if (b == 0 || b == 1 && ModList.get().isLoaded("epicfight")) EpicFightClientEvents.displayToast(toasts, b == 1);
 	}
 
 }

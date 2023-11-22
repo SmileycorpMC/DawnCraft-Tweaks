@@ -19,12 +19,13 @@ public class CapabilitiesRegister {
 
 	private static EntityType<?>[] QUEST_ENTITIES = {};
 
-	public static Capability<FollowQuest> FOLLOW_QUEST = CapabilityManager.get(new CapabilityToken<FollowQuest>(){});
-	public static Capability<RestrictBlock> RESTRICT_BLOCK = CapabilityManager.get(new CapabilityToken<RestrictBlock>(){});
-	public static Capability<Invasions> INVASIONS = CapabilityManager.get(new CapabilityToken<Invasions>(){});
-	public static Capability<QuestEntity> QUEST_ENTITY = CapabilityManager.get(new CapabilityToken<QuestEntity>(){});
-	public static Capability<SpawnTracker> SPAWN_TRACKER = CapabilityManager.get(new CapabilityToken<SpawnTracker>(){});
-	public static Capability<SageQuestTracker> SAGE_QUEST_TRACKER = CapabilityManager.get(new CapabilityToken<SageQuestTracker>(){});
+	public static Capability<FollowQuest> FOLLOW_QUEST = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<RestrictBlock> RESTRICT_BLOCK = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<Invasions> INVASIONS = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<QuestEntity> QUEST_ENTITY = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<SpawnTracker> SPAWN_TRACKER = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<SageQuestTracker> SAGE_QUEST_TRACKER = CapabilityManager.get(new CapabilityToken<>(){});
+	public static Capability<Toasts> TOASTS = CapabilityManager.get(new CapabilityToken<>(){});
 
 	@SubscribeEvent
 	public void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -32,6 +33,9 @@ public class CapabilitiesRegister {
 		event.register(RestrictBlock.class);
 		event.register(Invasions.class);
 		event.register(QuestEntity.class);
+		event.register(SpawnTracker.class);
+		event.register(SageQuestTracker.class);
+		event.register(Toasts.class);
 	}
 
 	@SubscribeEvent
@@ -45,15 +49,14 @@ public class CapabilitiesRegister {
 		}
 		if (entity instanceof Player) {
 			event.addCapability(Constants.loc("invasions"), new Invasions.Provider());
+			event.addCapability(Constants.loc("sage_quest"), new SageQuestTracker.Provider());
+			event.addCapability(Constants.loc("toasts"), new Toasts.Provider());
 		}
 		if (ArrayUtils.contains(QUEST_ENTITIES, entity.getType())) {
 			event.addCapability(Constants.loc("quest"), new QuestProvider());
 		}
 		if (entity instanceof Mob || entity instanceof Player) {
 			event.addCapability(Constants.loc("spawn_tracker"), new SpawnTracker.Provider());
-		}
-		if (entity instanceof Player) {
-			event.addCapability(Constants.loc("sage_quest"), new SageQuestTracker.Provider());
 		}
 	}
 

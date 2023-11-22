@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.integration.epicfight.client;
 
 import com.afunproject.dawncraft.client.ClientHandler;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import yesman.epicfight.client.input.EpicFightKeyMappings;
@@ -9,6 +10,7 @@ public class EpicFightClientEvents {
 
 	public static void init() {
 		registerKeybinds();
+		MinecraftForge.EVENT_BUS.register(EpicFightClientEvents.class);
 		if (ModList.get().isLoaded("paraglider")) MinecraftForge.EVENT_BUS.register(new EpicFightParagliderEvents());
 	}
 
@@ -25,4 +27,8 @@ public class EpicFightClientEvents {
 		ClientHandler.FROG_KEYS.add(EpicFightKeyMappings.WEAPON_INNATE_SKILL);
 	}
 
+	public static void displayToast(ToastComponent toasts, boolean dodge) {
+		toasts.addToast(dodge ? new KeyToast("toasts.dawncraft.dodge", EpicFightKeyMappings.DODGE) :
+				new KeyToast("toasts.dawncraft.combatmode", EpicFightKeyMappings.SWITCH_MODE));
+	}
 }
