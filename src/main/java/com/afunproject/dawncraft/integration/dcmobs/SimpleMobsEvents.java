@@ -186,7 +186,7 @@ public class SimpleMobsEvents {
 
 	public static int spawnInvasion(CommandContext<CommandSourceStack> ctx, Player player) throws CommandSyntaxException {
 		InvasionEntry entry = InvasionRegistry.getInvasion(ctx.getArgument("invader", InvasionKey.class));
-		entry.spawnEntities((Player) player);
+		entry.spawnEntities(player);
 		return 0;
 	}
 
@@ -194,7 +194,7 @@ public class SimpleMobsEvents {
 		Player player = EntityArgument.getPlayer(ctx, "player");
 		LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
 		if (optional.isPresent()) {
-			int time = player.getRandom().nextInt(6000, 36000);
+			int time = player.getRandom().nextInt(30000) + 6000;
 			optional.resolve().get().setNextSpawn(time);
 			player.level.playSound(null, player.position().x, player.position().y, player.position().z, SoundEvents.ENDER_DRAGON_AMBIENT, SoundSource.HOSTILE, 1f, player.level.random.nextFloat());
 			player.sendMessage(new TranslatableComponent("message.dawncraft.invasions_enabled_0").withStyle(ChatFormatting.RED), null);

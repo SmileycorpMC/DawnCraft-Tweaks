@@ -96,10 +96,6 @@ public class ClientEventListener {
 					mc.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
 				}
 			}
-			if (ModList.get().isLoaded("reputation") && player.tickCount == 2000) {
-				mc.getToasts().addToast(new SystemToast(SystemToast.SystemToastIds.TUTORIAL_HINT,
-						new TranslatableComponent("toasts.dawncraft.stealing.title"), new TranslatableComponent("toasts.dawncraft.stealing.text")));
-			}
 		}
 	}
 

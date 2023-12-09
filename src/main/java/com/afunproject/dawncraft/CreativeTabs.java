@@ -3,14 +3,13 @@ package com.afunproject.dawncraft;
 import com.afunproject.dawncraft.dungeon.KeyColour;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.item.*;
-import net.mcreator.simplemobs.init.SimpleMobsModItems;
+import com.afunproject.dawncraft.integration.dcmobs.SimpleMobsCompat;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.ModList;
 
 public class CreativeTabs {
 
@@ -47,11 +46,7 @@ public class CreativeTabs {
 				if(!(item instanceof KeyItem || item instanceof SkeletonKeyItem || item instanceof DungeonConfiguratorItem
 						|| item instanceof LockItem || item instanceof RebirthStaffItem)) item.fillItemCategory(this, items);
 			}
-			for (RegistryObject<Item> reg : SimpleMobsModItems.REGISTRY.getEntries()) {
-				Item item = reg.get();
-				if (!(item instanceof BlockItem) && item.getRegistryName().getNamespace().equals("simple_mobs") &!
-						item.getRegistryName().getPath().contains("spawn_egg")) items.add(new ItemStack(item));
-			}
+			if (ModList.get().isLoaded("simplemobs")) SimpleMobsCompat.addItemsToCreative(items);
 		}
 	};
 
