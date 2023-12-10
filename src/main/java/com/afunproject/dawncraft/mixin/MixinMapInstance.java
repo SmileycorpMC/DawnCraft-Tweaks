@@ -18,7 +18,8 @@ public class MixinMapInstance {
 
     @Redirect(method = "draw", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/saveddata/maps/MapDecoration;getImage()B"))
     public byte getImage(MapDecoration decoration) {
-        is_player = decoration.getType() == MapDecoration.Type.PLAYER_OFF_LIMITS || decoration.getType() == MapDecoration.Type.PLAYER_OFF_MAP;
+        is_player = decoration.getType() == MapDecoration.Type.PLAYER ||
+                decoration.getType() == MapDecoration.Type.PLAYER_OFF_LIMITS || decoration.getType() == MapDecoration.Type.PLAYER_OFF_MAP;
         return is_player ? 0 : decoration.getImage();
     }
 
