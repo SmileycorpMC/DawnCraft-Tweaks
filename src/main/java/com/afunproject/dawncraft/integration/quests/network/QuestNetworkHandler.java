@@ -8,16 +8,17 @@ import net.minecraft.world.entity.Mob;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent.Context;
+import net.smileycorp.atlas.api.network.NetworkUtils;
 import net.smileycorp.atlas.api.network.SimpleMessageDecoder;
 import net.smileycorp.atlas.api.network.SimpleMessageEncoder;
 
 public class QuestNetworkHandler {
 
 	public static void initPackets() {
-		DCNetworkHandler.NETWORK_INSTANCE.registerMessage(1, TriggerQuestCompleteMessage.class, new SimpleMessageEncoder<TriggerQuestCompleteMessage>(),
-				new SimpleMessageDecoder<TriggerQuestCompleteMessage>(TriggerQuestCompleteMessage.class), (T, K)-> processQuestCompleteMessage(T, K.get()));
-		DCNetworkHandler.NETWORK_INSTANCE.registerMessage(2, OpenQuestMessage.class, new SimpleMessageEncoder<OpenQuestMessage>(),
-				new SimpleMessageDecoder<OpenQuestMessage>(OpenQuestMessage.class), (T, K)-> processOpenQuestMessage(T, K.get()));
+		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 11, TriggerQuestCompleteMessage.class,
+				(T, K)-> processQuestCompleteMessage(T, K.get()));
+		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 12, OpenQuestMessage.class,
+				(T, K)-> processOpenQuestMessage(T, K.get()));
 	}
 
 	public static void processQuestCompleteMessage(TriggerQuestCompleteMessage message, Context ctx) {

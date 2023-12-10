@@ -8,10 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
+import java.util.Locale;
 
 public class KeyToast implements Toast {
 
@@ -37,8 +40,8 @@ public class KeyToast implements Toast {
         mc.getItemRenderer().renderAndDecorateFakeItem(new ItemStack(Items.IRON_SWORD), 5, 8);
         poseStack.pushPose();
         poseStack.scale(0.75f, 0.75f, 0.75f);
-        mc.font.draw(poseStack, new TranslatableComponent(message + ".title", mapping.getTranslatedKeyMessage()),
-                32.0F, 7.0F, 0x9E0CD2);
+        mc.font.draw(poseStack, new TranslatableComponent(message + ".title",
+                new TextComponent(mapping.getTranslatedKeyMessage().getString().toUpperCase(Locale.US))), 32.0F, 7.0F, 0x9E0CD2);
         mc.font.draw(poseStack,  new TranslatableComponent(message + ".text0"), 32.0F, 18.0F, -1);
         mc.font.draw(poseStack,  new TranslatableComponent(message + ".text1"), 32.0F, 29.0F, -1);
         poseStack.scale(1, 1, 1);
