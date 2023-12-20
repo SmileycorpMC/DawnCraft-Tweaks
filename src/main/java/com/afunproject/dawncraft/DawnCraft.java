@@ -36,11 +36,11 @@ public class DawnCraft {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DCConfig.config);
 		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
+		DCNetworkHandler.initPackets();
 	}
 
 	@SubscribeEvent
 	public static void modConstruction(FMLConstructModEvent event) {
-		DCNetworkHandler.initPackets();
 		DungeonBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonBlocks.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		DungeonItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

@@ -119,6 +119,8 @@
 	"message.dawncraft.reset_functional_block": "Reset functional block %1$s",
 	"message.dawncraft.no_mode": "WARNING: no functionality set for configuration mode %1$s",
 	
+	"message.dawncraft.waypoint": "Added waypoint to map for %1$s at %2$s",
+	
 	"configuratormode.dawncraft.link_functional": "Mode: Link Functional Blocks",
 	"configuratormode.dawncraft.unlink_functional": "Mode: Unlink Functional Blocks",
 	"configuratormode.dawncraft.reset_functional": "Mode: Reset Functional Blocks",
@@ -270,4 +272,5 @@
 	"toasts.dawncraft.stealing.title": "Don't Steal!",
 	"toasts.dawncraft.stealing.text0": "Village reputation is lowered if you",
 	"toasts.dawncraft.stealing.text1": "are caught stealing"
+	
 }

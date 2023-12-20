@@ -9,15 +9,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.smileycorp.atlas.api.network.NetworkUtils;
-import net.smileycorp.atlas.api.network.SimpleMessageDecoder;
-import net.smileycorp.atlas.api.network.SimpleMessageEncoder;
 
 public class QuestNetworkHandler {
 
 	public static void initPackets() {
-		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 11, TriggerQuestCompleteMessage.class,
+		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 3, TriggerQuestCompleteMessage.class,
 				(T, K)-> processQuestCompleteMessage(T, K.get()));
-		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 12, OpenQuestMessage.class,
+		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 4, OpenQuestMessage.class,
 				(T, K)-> processOpenQuestMessage(T, K.get()));
 	}
 

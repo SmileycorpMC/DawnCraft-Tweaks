@@ -1,19 +1,24 @@
 package com.afunproject.dawncraft.integration.journeymap.client;
 
 import com.afunproject.dawncraft.Constants;
+import com.afunproject.dawncraft.DawnCraft;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;
 import com.google.common.collect.Lists;
 import journeymap.client.api.ClientPlugin;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
-import journeymap.client.api.event.ClientEvent;
 import journeymap.client.api.display.Waypoint;
 import journeymap.client.api.display.WaypointGroup;
+import journeymap.client.api.event.ClientEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 
+import java.util.EnumSet;
 import java.util.List;
 
 @ClientPlugin
@@ -24,10 +29,16 @@ public class JourneyMapPlugin implements IClientPlugin {
     private IClientAPI api;
     private List<AddWaypointMessage> waypoints = Lists.newArrayList();
 
+    private boolean startedMapping;
+
+    public JourneyMapPlugin() {
+        instance = this;
+    }
+
     @Override
     public void initialize(IClientAPI api) {
-        instance = this;
         this.api = api;
+        api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.MAPPING_STARTED));
     }
 
     @Override
@@ -38,28 +49,34 @@ public class JourneyMapPlugin implements IClientPlugin {
     @Override
     public void onEvent(ClientEvent clientEvent) {
         if (clientEvent.type == ClientEvent.Type.MAPPING_STARTED) {
-            for (AddWaypointMessage message : waypoints) {
-                try {
-                    String name = message.getStructure();
-                    BlockPos pos = message.getPos();
-                    ResourceKey<Level> dim = Minecraft.getInstance().player.level.dimension();
-                    Waypoint waypoint = new Waypoint(Constants.MODID, name, dim, pos);
-                    waypoint.setColor(0xA20CD6);
-                    waypoint.setGroup(GROUP);
-                    api.show(waypoint);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            startedMapping = true;
+            for (AddWaypointMessage message : waypoints) addWaypoint(message, false);
             waypoints.clear();
         }
     }
 
-    public void addWaypoint(AddWaypointMessage message) {
-        waypoints.add(message);
+    public void addWaypoint(AddWaypointMessage message, boolean sendMessage) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (sendMessage) player.sendMessage(new TranslatableComponent("message.dawncraft.waypoint", message.getStructure(), message.getPos())
+                .setStyle(Style.EMPTY.withColor(0xA20CD6)), null);
+        if (startedMapping) {
+            try {
+                String name = message.getStructure();
+                BlockPos pos = message.getPos();
+                ResourceKey<Level> dim = player.level.dimension();
+                Waypoint waypoint = new Waypoint(Constants.MODID, name, dim, pos);
+                waypoint.setColor(0xA20CD6);
+                waypoint.setGroup(GROUP);
+                api.show(waypoint);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else waypoints.add(message);
     }
 
     public static JourneyMapPlugin getInstance() {
+        DawnCraft.logInfo(instance);
         return instance;
     }
 }
