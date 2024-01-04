@@ -62,16 +62,21 @@ public abstract class Quest {
 		}
 	}
 
-	protected final ItemStack createMap(ServerLevel level, BlockPos center, ResourceLocation structure, String name) {
+	protected final BlockPos findStructure(ServerLevel level, ResourceLocation structure, BlockPos center) {
+		Registry<ConfiguredStructureFeature<?, ?>> r = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
 		TagKey<ConfiguredStructureFeature<?, ?>> structureTag = TagKey.m_203882_(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, structure);
-		BlockPos blockpos = level.m_207561_(structureTag, center, 5000, false);
-		if (blockpos != null) {
-			ItemStack itemstack = MapItem.create(level, blockpos.getX(), blockpos.getZ(), (byte)1, true, true);
+		return level.getChunkSource().getGenerator()
+				.m_207970_(level, r.m_203431_(structureTag).get(), new BlockPos(center), 100, false).getFirst();
+	}
+
+	protected final ItemStack createMap(ServerLevel level, BlockPos structure) {
+		if (structure != null) {
+			ItemStack itemstack = MapItem.create(level, structure.getX(), structure.getZ(), (byte)1, true, true);
 			MapItem.renderBiomePreviewMap(level, itemstack);
-			MapItemSavedData.addTargetDecoration(itemstack, blockpos, "+", Type.RED_X);
+			MapItemSavedData.addTargetDecoration(itemstack, structure, "+", Type.RED_X);
 			return itemstack;
 		}
-		return MapItem.create(level, center.getX(), center.getZ(), (byte)2, true, true);
+		return MapItem.create(level, structure.getX(), structure.getZ(), (byte)2, true, true);
 	}
 
 }

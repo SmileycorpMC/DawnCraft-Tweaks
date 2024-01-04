@@ -101,6 +101,9 @@
 	"map.dawncraft.cultist_2": "Cultist's Map",
 	"map.dawncraft.cultist_2.lore": "Father Gascoigne's whereabouts.",
 	
+	"waypoint.dawncraft.cultist": "The Cultist's Prison",
+	"waypoint.dawncraft.cultist_2": "Father’s Church",
+	
 	"entity.dawncraft.fallen": "Fallen Adventurer",
 	
 	"message.dawncraft.invasions_enabled_0": "Several anachronisms have been detected, prepare for imminent invasion...",
@@ -119,7 +122,7 @@
 	"message.dawncraft.reset_functional_block": "Reset functional block %1$s",
 	"message.dawncraft.no_mode": "WARNING: no functionality set for configuration mode %1$s",
 	
-	"message.dawncraft.waypoint": "Added waypoint to map for %1$s at %2$s",
+	"message.dawncraft.waypoint": "Added waypoint to map for %1$s",
 	
 	"configuratormode.dawncraft.link_functional": "Mode: Link Functional Blocks",
 	"configuratormode.dawncraft.unlink_functional": "Mode: Unlink Functional Blocks",

@@ -21,7 +21,6 @@
       	"MixinItemRenderer",
       	"MixinKeyboardHandler",
       	"MixinKeyMapping",
-		"MixinMapInstance",
       	"MixinMouseHandler"
     ],
 	"minVersion": "0.8"

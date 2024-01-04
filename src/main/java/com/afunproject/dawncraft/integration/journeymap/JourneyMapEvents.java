@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.integration.journeymap;
 
+import com.afunproject.dawncraft.DawnCraft;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.journeymap.client.JourneyMapPlugin;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;
@@ -47,9 +48,8 @@ public class JourneyMapEvents {
 	}
 
 	private int addWaypoint(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+		DawnCraft.logInfo(ctx);
 		ResourceOrTagLocationArgument.Result<ConfiguredStructureFeature<?, ?>> result = ResourceOrTagLocationArgument.m_210970_(ctx, "structure");
-		Entity entity = ctx.getSource().getEntity();
-		if (entity == null) return 0;
 		ServerLevel level = ctx.getSource().getLevel();
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
 		HolderSet<ConfiguredStructureFeature<?, ?>> holderset = result.m_207418_().map(rk ->
@@ -57,11 +57,17 @@ public class JourneyMapEvents {
 				.orElseThrow(new SimpleCommandExceptionType(new TranslatableComponent("commands.locate.invalid", result.m_207276_()))::create);
 		Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator()
 				.m_207970_(level, holderset, new BlockPos(ctx.getSource().getPosition()), 100, false);
+		DawnCraft.logInfo(pair);
 		if (pair == null) throw new SimpleCommandExceptionType(new TranslatableComponent("commands.locate.failed", result.m_207276_())).create();
-		for (ServerPlayer player : EntityArgument.getPlayers(ctx, "player"))
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new AddWaypointMessage(pair.getFirst(), StringArgumentType.getString(ctx, "name")),
-					player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		for (ServerPlayer player : EntityArgument.getPlayers(ctx, "player")) {
+			addWaypoint(pair.getFirst(), StringArgumentType.getString(ctx, "name"), player);
+			DawnCraft.logInfo(player);
+		}
 		return 1;
+	}
+
+	public static void addWaypoint(BlockPos pos, String name, ServerPlayer player) {
+		DCNetworkHandler.NETWORK_INSTANCE.sendTo(new AddWaypointMessage(pos, name), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	private static void receivePacket(AddWaypointMessage message, Supplier<NetworkEvent.Context> supplier) {

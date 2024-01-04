@@ -28,8 +28,8 @@ public class MixinMapInstance {
         if (is_player) {
             LocalPlayer player = Minecraft.getInstance().player;
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(player.getYRot() + (player.getYRot() > 0 ? -8: 8)));
+            is_player = false;
         } else poseStack.mulPose(quaternion);
-        is_player = false;
     }
 
 }

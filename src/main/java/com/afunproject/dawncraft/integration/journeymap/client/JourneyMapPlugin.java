@@ -10,10 +10,12 @@ import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.display.Waypoint;
 import journeymap.client.api.display.WaypointGroup;
 import journeymap.client.api.event.ClientEvent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
@@ -57,11 +59,10 @@ public class JourneyMapPlugin implements IClientPlugin {
 
     public void addWaypoint(AddWaypointMessage message, boolean sendMessage) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (sendMessage) player.sendMessage(new TranslatableComponent("message.dawncraft.waypoint", message.getStructure(), message.getPos())
-                .setStyle(Style.EMPTY.withColor(0xA20CD6)), null);
+        if (sendMessage) player.sendMessage(new TranslatableComponent("message.dawncraft.waypoint", message.getStructure()), null);
         if (startedMapping) {
             try {
-                String name = message.getStructure();
+                String name = new TranslatableComponent(message.getStructure()).getString();
                 BlockPos pos = message.getPos();
                 ResourceKey<Level> dim = player.level.dimension();
                 Waypoint waypoint = new Waypoint(Constants.MODID, name, dim, pos);

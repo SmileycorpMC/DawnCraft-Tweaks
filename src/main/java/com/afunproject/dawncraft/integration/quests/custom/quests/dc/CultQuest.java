@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
+import com.afunproject.dawncraft.integration.journeymap.JourneyMapEvents;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
 import com.afunproject.dawncraft.integration.quests.custom.entity.QuestEntityBase;
@@ -7,6 +8,7 @@ import com.afunproject.dawncraft.integration.quests.custom.quests.ItemQuest;
 import com.afunproject.dawncraft.integration.quests.network.OpenQuestMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import net.mcreator.simplemobs.init.SimpleMobsModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
 
 public class CultQuest extends ItemQuest {
@@ -44,21 +47,27 @@ public class CultQuest extends ItemQuest {
 	@Override
 	protected void completeItemQuest(Player quest_completer, Mob entity, int phase, boolean accepted) {
 		if (phase == 3) {
-			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("custom:church"), "map.dawncraft.cultist");
+			BlockPos pos = findStructure((ServerLevel)quest_completer.level, new ResourceLocation("custom:church"),  quest_completer.blockPosition());
+			ItemStack map = createMap((ServerLevel)quest_completer.level, pos);
+			map.setHoverName(new TranslatableComponent("map.dawncraft.cultist"));
 			ListTag tag = new ListTag();
 			tag.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("map.dawncraft.cultist.lore"))));
 			map.addTagElement(ItemStack.TAG_LORE, tag);
 			giveItem(quest_completer, map);
+			if (ModList.get().isLoaded("journeymap")) JourneyMapEvents.addWaypoint(pos, "waypoint.dawncraft.cultist", (ServerPlayer) quest_completer);
 		}
 		if (phase == end_phase) {
 			if (entity instanceof QuestEntityBase) {
 				((QuestEntityBase) entity).setDespawnable(true);
 			}
-			ItemStack map = createMap((ServerLevel)quest_completer.level, quest_completer.blockPosition(), new ResourceLocation("custom:church_father"), "map.dawncraft.cultist_2");
+			BlockPos pos = findStructure((ServerLevel)quest_completer.level, new ResourceLocation("custom:church_father"),  quest_completer.blockPosition());
+			ItemStack map = createMap((ServerLevel)quest_completer.level, pos);
+			map.setHoverName(new TranslatableComponent("map.dawncraft.cultist_2"));
 			ListTag tag = new ListTag();
 			tag.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("map.dawncraft.cultist_2.lore"))));
 			map.addTagElement(ItemStack.TAG_LORE, tag);
 			giveItem(quest_completer, map);
+			if (ModList.get().isLoaded("journeymap")) JourneyMapEvents.addWaypoint(pos, "waypoint.dawncraft.cultist_2", (ServerPlayer) quest_completer);
 		}
 	}
 
