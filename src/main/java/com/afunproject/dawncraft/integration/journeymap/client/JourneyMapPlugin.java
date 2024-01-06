@@ -66,7 +66,7 @@ public class JourneyMapPlugin implements IClientPlugin {
                 BlockPos pos = message.getPos();
                 ResourceKey<Level> dim = player.level.dimension();
                 Waypoint waypoint = new Waypoint(Constants.MODID, name, dim, pos);
-                waypoint.setColor(0xA20CD6);
+                waypoint.setColor(0xFFFFFF);
                 waypoint.setGroup(GROUP);
                 api.show(waypoint);
             } catch (Exception e) {
