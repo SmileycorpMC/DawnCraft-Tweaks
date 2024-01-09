@@ -21,7 +21,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,7 +47,6 @@ public class JourneyMapEvents {
 	}
 
 	private int addWaypoint(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-		DawnCraft.logInfo(ctx);
 		ResourceOrTagLocationArgument.Result<ConfiguredStructureFeature<?, ?>> result = ResourceOrTagLocationArgument.m_210970_(ctx, "structure");
 		ServerLevel level = ctx.getSource().getLevel();
 		Registry<ConfiguredStructureFeature<?, ?>> registry = level.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
@@ -57,12 +55,9 @@ public class JourneyMapEvents {
 				.orElseThrow(new SimpleCommandExceptionType(new TranslatableComponent("commands.locate.invalid", result.m_207276_()))::create);
 		Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> pair = level.getChunkSource().getGenerator()
 				.m_207970_(level, holderset, new BlockPos(ctx.getSource().getPosition()), 100, false);
-		DawnCraft.logInfo(pair);
 		if (pair == null) throw new SimpleCommandExceptionType(new TranslatableComponent("commands.locate.failed", result.m_207276_())).create();
-		for (ServerPlayer player : EntityArgument.getPlayers(ctx, "player")) {
+		for (ServerPlayer player : EntityArgument.getPlayers(ctx, "player"))
 			addWaypoint(pair.getFirst(), StringArgumentType.getString(ctx, "name"), player);
-			DawnCraft.logInfo(player);
-		}
 		return 1;
 	}
 

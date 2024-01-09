@@ -1,23 +1,23 @@
 package com.afunproject.dawncraft.integration.journeymap.client;
 
 import com.afunproject.dawncraft.Constants;
-import com.afunproject.dawncraft.DawnCraft;
+import com.afunproject.dawncraft.integration.epicfight.client.KeyToast;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;
 import com.google.common.collect.Lists;
+import journeymap.client.JourneymapClient;
 import journeymap.client.api.ClientPlugin;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.display.Waypoint;
 import journeymap.client.api.display.WaypointGroup;
 import journeymap.client.api.event.ClientEvent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
@@ -77,7 +77,11 @@ public class JourneyMapPlugin implements IClientPlugin {
     }
 
     public static JourneyMapPlugin getInstance() {
-        DawnCraft.logInfo(instance);
         return instance;
     }
+
+    public static void displayToast(ToastComponent toasts) {
+        toasts.addToast(new KeyToast("toasts.dawncraft.map", JourneymapClient.getInstance().getKeyEvents().getHandler().kbFullscreenToggle, Items.FILLED_MAP));
+    }
+
 }

@@ -3,7 +3,9 @@ package com.afunproject.dawncraft.capability;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.afunproject.dawncraft.network.ToastMessage;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -12,48 +14,42 @@ import net.minecraftforge.network.NetworkDirection;
 
 public interface Toasts {
 
-	void sendCombat(ServerPlayer player);
-
-	void sendDodge(ServerPlayer player);
+	void sendToast(ServerPlayer player, byte value);
 
 	void readNBT(CompoundTag nbt);
+	void readNBT(ByteTag nbt);
 
-	CompoundTag writeNBT();
+	ByteTag writeNBT();
 
 	class Implementation implements Toasts {
 
-		private boolean combat, dodge;
+		private byte flags;
 
 		@Override
-		public void sendCombat(ServerPlayer player) {
-			if (combat) return;
-			combat = true;
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new ToastMessage((byte)0), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-		}
-
-		@Override
-		public void sendDodge(ServerPlayer player) {
-			if (dodge) return;
-			dodge = true;
-			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new ToastMessage((byte)1), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		public void sendToast(ServerPlayer player, byte b) {
+			if ((flags & b) == b) return;
+			flags += b;
+			DCNetworkHandler.NETWORK_INSTANCE.sendTo(new ToastMessage(b), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 
 		@Override
 		public void readNBT(CompoundTag nbt) {
-			if (nbt.contains("0")) combat = nbt.getBoolean("0");
-			if (nbt.contains("1")) dodge = nbt.getBoolean("1");
+			if (nbt.contains("0") && nbt.getBoolean("0")) flags += 1;
+			if (nbt.contains("1") && nbt.getBoolean("1")) flags += 2;
 		}
 
 		@Override
-		public CompoundTag writeNBT() {
-			CompoundTag tag = new CompoundTag();
-			if (combat) tag.putBoolean("0", true);
-			if (dodge) tag.putBoolean("1", true);
-			return tag;
+		public void readNBT(ByteTag nbt) {
+			flags = nbt.getAsByte();
+		}
+
+		@Override
+		public ByteTag writeNBT() {
+			return ByteTag.valueOf(flags);
 		}
 	}
 
-	class Provider implements ICapabilitySerializable<CompoundTag> {
+	class Provider implements ICapabilitySerializable<Tag> {
 
 		private final Toasts impl;
 
@@ -67,13 +63,14 @@ public interface Toasts {
 		}
 
 		@Override
-		public CompoundTag serializeNBT() {
+		public Tag serializeNBT() {
 			return impl.writeNBT();
 		}
 
 		@Override
-		public void deserializeNBT(CompoundTag nbt) {
-			impl.readNBT(nbt);
+		public void deserializeNBT(Tag nbt) {
+			if (nbt instanceof CompoundTag) impl.readNBT((CompoundTag) nbt);
+			if (nbt instanceof ByteTag) impl.readNBT((ByteTag) nbt);
 		}
 
 	}

@@ -2,11 +2,16 @@ package com.afunproject.dawncraft.mixin;
 
 import com.afunproject.dawncraft.DCConfig;
 import com.afunproject.dawncraft.DCItemTags;
+import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
 import com.google.common.collect.Lists;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,6 +45,16 @@ public abstract class MixinPlayer extends LivingEntity {
 
 	protected MixinPlayer(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
 		super(p_20966_, p_20967_);
+	}
+
+	@Inject(at = @At("TAIL"), method = "awardStat(Lnet/minecraft/resources/ResourceLocation;I)V")
+	public void awardStat(ResourceLocation stat, int value, CallbackInfo callback) {
+		if (stat == Stats.WALK_ONE_CM && (LivingEntity)this instanceof ServerPlayer && ModList.get().isLoaded("journeymap")) {
+			if (((ServerPlayer)(LivingEntity)this).getStats().getValue(Stats.CUSTOM.get(Stats.WALK_ONE_CM)) >= 1000) {
+				LazyOptional<Toasts> cap = getCapability(CapabilitiesRegister.TOASTS);
+				if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer)(LivingEntity)this, (byte) 8);
+			}
+		}
 	}
 
 	@Inject(at=@At("HEAD"), method = "dropEquipment()V", cancellable = true)

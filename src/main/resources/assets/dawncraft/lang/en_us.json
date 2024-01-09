@@ -272,6 +272,14 @@
 	"toasts.dawncraft.dodge.text0": "Dodging only works in combat mode",
 	"toasts.dawncraft.dodge.text1": "",
 	
+	"toasts.dawncraft.skills.title": "Skill Book Aquired",
+	"toasts.dawncraft.skills.text0": "Press \"%1$s\" to check your skills",
+	"toasts.dawncraft.skills.text1": "",
+	
+	"toasts.dawncraft.map.title": "Check Your Waypoints in the Map",
+	"toasts.dawncraft.map.text0": "Press \"%1$s\" to open the",
+	"toasts.dawncraft.map.text1": "world map",
+	
 	"toasts.dawncraft.stealing.title": "Don't Steal!",
 	"toasts.dawncraft.stealing.text0": "Village reputation is lowered if you",
 	"toasts.dawncraft.stealing.text1": "are caught stealing"

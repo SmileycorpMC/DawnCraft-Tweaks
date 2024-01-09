@@ -4,12 +4,14 @@ import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Toasts;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+import yesman.epicfight.world.item.EpicFightItems;
 
 public class EpicFightCompat {
 
@@ -25,7 +27,7 @@ public class EpicFightCompat {
 				ServerPlayer entity = (ServerPlayer) event.getEntity();
 				if (!isCombatMode(entity) || event.getSource().getEntity() == null) return;
 				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
-				if (cap.isPresent()) cap.orElseGet(null).sendDodge(entity);
+				if (cap.isPresent()) cap.orElseGet(null).sendToast(entity, (byte) 2);
 			}
 			if (event.getSource().getDirectEntity() instanceof ServerPlayer) {
 				ServerPlayer entity = (ServerPlayer) event.getSource().getDirectEntity();
@@ -34,7 +36,7 @@ public class EpicFightCompat {
 				if (isCombatMode(entity)) return;
 				event.setAmount(event.getAmount() * amount);
 				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
-				if (cap.isPresent()) cap.orElseGet(null).sendCombat(entity);
+				if (cap.isPresent()) cap.orElseGet(null).sendToast(entity, (byte) 1);
 			}
 		}
 	}
@@ -43,6 +45,10 @@ public class EpicFightCompat {
 		if (player == null) return false;
 		PlayerPatch patch = EpicFightCapabilities.getEntityPatch(player, PlayerPatch.class);
 		return patch == null ? false : patch.isBattleMode();
+	}
+
+	public static boolean isSkillBook(ItemStack stack) {
+		return stack.is(EpicFightItems.SKILLBOOK.get());
 	}
 
 }

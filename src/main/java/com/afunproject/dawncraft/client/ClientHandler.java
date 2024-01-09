@@ -1,6 +1,7 @@
 package com.afunproject.dawncraft.client;
 
 import com.afunproject.dawncraft.integration.epicfight.client.EpicFightClientEvents;
+import com.afunproject.dawncraft.integration.journeymap.client.JourneyMapPlugin;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Key;
@@ -54,7 +55,8 @@ public class ClientHandler {
 
 	public static void displayToast(byte b) {
 		ToastComponent toasts = Minecraft.getInstance().getToasts();
-		if (b == 0 || b == 1 && ModList.get().isLoaded("epicfight")) EpicFightClientEvents.displayToast(toasts, b == 1);
+		if (b > 0 && b < 3 || b == 4 && ModList.get().isLoaded("epicfight")) EpicFightClientEvents.displayToast(toasts, b);
+		if (b == 8 && ModList.get().isLoaded("journeymap")) JourneyMapPlugin.displayToast(toasts);
 	}
 
 }

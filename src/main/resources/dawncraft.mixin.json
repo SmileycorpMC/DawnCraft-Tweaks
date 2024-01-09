@@ -6,7 +6,7 @@
 	"mixins": [
 		"MixinCompoundTag",
 		"MixinEntity",
-		"MixinExplorationMapFunction",
+		"MixinInventory",
 		"MixinItem",
 		"MixinItemStack",
 		"MixinLivingEntity",
