@@ -51,4 +51,8 @@ public class KeyToast implements Toast {
         return pressed ? Visibility.HIDE : Visibility.SHOW;
     }
 
+    public void setPressed() {
+        pressed = true;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.afunproject.dawncraft.integration.journeymap;
 
-import com.afunproject.dawncraft.DawnCraft;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.journeymap.client.JourneyMapPlugin;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;

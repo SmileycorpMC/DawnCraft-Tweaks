@@ -56,7 +56,7 @@ public class ClientHandler {
 	public static void displayToast(byte b) {
 		ToastComponent toasts = Minecraft.getInstance().getToasts();
 		if (b > 0 && b < 3 || b == 4 && ModList.get().isLoaded("epicfight")) EpicFightClientEvents.displayToast(toasts, b);
-		if (b == 8 && ModList.get().isLoaded("journeymap")) JourneyMapPlugin.displayToast(toasts);
+		if (b == 8 && ModList.get().isLoaded("journeymap")) JourneyMapPlugin.getInstance().displayToast(toasts);
 	}
 
 }

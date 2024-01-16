@@ -30,6 +30,7 @@ public class JourneyMapPlugin implements IClientPlugin {
     private static JourneyMapPlugin instance;
     private IClientAPI api;
     private List<AddWaypointMessage> waypoints = Lists.newArrayList();
+    private KeyToast toast;
 
     private boolean startedMapping;
 
@@ -41,6 +42,7 @@ public class JourneyMapPlugin implements IClientPlugin {
     public void initialize(IClientAPI api) {
         this.api = api;
         api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.MAPPING_STARTED));
+        api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.DISPLAY_UPDATE));
     }
 
     @Override
@@ -55,6 +57,7 @@ public class JourneyMapPlugin implements IClientPlugin {
             for (AddWaypointMessage message : waypoints) addWaypoint(message, false);
             waypoints.clear();
         }
+        if (clientEvent.type == ClientEvent.Type.DISPLAY_UPDATE) if (toast != null) toast.setPressed();
     }
 
     public void addWaypoint(AddWaypointMessage message, boolean sendMessage) {
@@ -80,8 +83,9 @@ public class JourneyMapPlugin implements IClientPlugin {
         return instance;
     }
 
-    public static void displayToast(ToastComponent toasts) {
-        toasts.addToast(new KeyToast("toasts.dawncraft.map", JourneymapClient.getInstance().getKeyEvents().getHandler().kbFullscreenToggle, Items.FILLED_MAP));
+    public void displayToast(ToastComponent toasts) {
+        toast = new KeyToast("toasts.dawncraft.map", JourneymapClient.getInstance().getKeyEvents().getHandler().kbFullscreenToggle, Items.FILLED_MAP);
+        toasts.addToast(toast);
     }
 
 }

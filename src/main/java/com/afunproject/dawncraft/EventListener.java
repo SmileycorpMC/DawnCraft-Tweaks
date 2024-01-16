@@ -1,9 +1,6 @@
 package com.afunproject.dawncraft;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
-import com.afunproject.dawncraft.capability.Invasions;
-import com.afunproject.dawncraft.capability.RestrictBlock;
-import com.afunproject.dawncraft.capability.SageQuestTracker;
+import com.afunproject.dawncraft.capability.*;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
@@ -142,9 +139,7 @@ public class EventListener {
 	public void playerRespawn(PlayerRespawnEvent event) {
 		if (event.getPlayer() instanceof ServerPlayer) {
 			ServerPlayer player = (ServerPlayer) event.getPlayer();
-			if (!player.getAbilities().mayBuild) {
-				player.setGameMode(GameType.SURVIVAL);
-			}
+			if (!player.getAbilities().mayBuild) player.setGameMode(GameType.SURVIVAL);
 		}
 	}
 
@@ -153,9 +148,14 @@ public class EventListener {
 		Player original = event.getOriginal();
 		Player player = event.getPlayer();
 		original.reviveCaps();
-		LazyOptional<SageQuestTracker> optionalOld = original.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
-		LazyOptional<SageQuestTracker> optional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
-		if (optionalOld.isPresent() && optional.isPresent()) optional.resolve().get().readNBT(optionalOld.resolve().get().writeNBT());
+		//clone sage quest capabilities
+		LazyOptional<SageQuestTracker> soptionalOld = original.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+		LazyOptional<SageQuestTracker> soptional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+		if (soptionalOld.isPresent() && soptional.isPresent()) soptional.resolve().get().readNBT(soptionalOld.resolve().get().writeNBT());
+		//clone toast capabilities
+		LazyOptional<Toasts> toptionalOld = original.getCapability(CapabilitiesRegister.TOASTS);
+		LazyOptional<Toasts> toptional = player.getCapability(CapabilitiesRegister.TOASTS);
+		if (toptionalOld.isPresent() && toptional.isPresent()) toptional.resolve().get().readNBT(toptionalOld.resolve().get().writeNBT());
 		if (original.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
 			player.addEffect(new MobEffectInstance(DawnCraftEffects.FRACTURED_SOUL.get(), 3600,
 					Math.min(4, original.getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier()+1), true, true));
@@ -167,23 +167,16 @@ public class EventListener {
 	@SubscribeEvent
 	public void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getWorld();
-		if (!level.isClientSide) {
-			ItemStack stack = event.getItemStack();
-			BlockPos pos = event.getPos();
-			BlockState state = level.getBlockState(pos);
-			if (stack != null && state != null) {
-				if (state.is(Blocks.ENCHANTING_TABLE) && stack.is(DungeonItems.REBIRTH_STAFF.get())) {
-					if (!RebirthStaffItem.isPowered(stack)) {
-						if (ModList.get().isLoaded("supplementaries")) {
-							if (RitualChecker.isValid(level, pos)) {
-								RitualChecker.startRitual(stack, level, pos);
-								event.setCanceled(true);
-							}
-						}
-					}
-				}
-			}
-		}
+		if (level.isClientSide) return;
+		ItemStack stack = event.getItemStack();
+		BlockPos pos = event.getPos();
+		BlockState state = level.getBlockState(pos);
+		if (stack == null || state ==null) return;
+		if (!(state.is(Blocks.ENCHANTING_TABLE) && stack.is(DungeonItems.REBIRTH_STAFF.get()))) return;
+		if (RebirthStaffItem.isPowered(stack) |! ModList.get().isLoaded("supplementaries")) return;
+		if (!RitualChecker.isValid(level, pos)) return;
+		RitualChecker.startRitual(stack, level, pos);
+		event.setCanceled(true);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -191,25 +184,16 @@ public class EventListener {
 		if (event.isCanceled()) return;
 		LivingEntity entity = event.getEntityLiving();
 		DamageSource source = event.getSource();
-		if (!entity.level.isClientSide) {
-			if (source.getEntity() instanceof LivingEntity) {
-				LivingEntity attacker = (LivingEntity) source.getEntity();
-				if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
-					if (attacker instanceof Player) {
-						if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode((Player) attacker)) {
-							event.setAmount(entity.getMaxHealth()*0.1f);
-							return;
-						}
-					} else {
-						event.setAmount(entity.getMaxHealth()*0.1f);
-						return;
-					}
-				}
-				else if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth()*0.15)) {
-					attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, attacker.getRandom().nextFloat());
-					event.setAmount(entity.getHealth());
-				}
-			}
+		if (entity.level.isClientSide |! (source.getEntity() instanceof LivingEntity)) return;
+			LivingEntity attacker = (LivingEntity) source.getEntity();
+		if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.SLAYERS_BLADE.get())) {
+			if (attacker instanceof Player && ModList.get().isLoaded("epicfight"))
+				if (EpicFightCompat.isCombatMode((Player) attacker)) event.setAmount(entity.getMaxHealth() * 0.1f);
+			else event.setAmount(entity.getMaxHealth() * 0.1f);
+		}
+		else if (attacker.getItemInHand(InteractionHand.MAIN_HAND).is(DungeonItems.EXECUTIONER.get()) && entity.getHealth() < (entity.getMaxHealth() * 0.15)) {
+			attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 1f, attacker.getRandom().nextFloat());
+			event.setAmount(entity.getHealth());
 		}
 	}
 
@@ -220,7 +204,7 @@ public class EventListener {
 			if (source.getEntity() instanceof LivingEntity) {
 				LivingEntity boss = (LivingEntity) source.getEntity();
 				if (bosses.contains(boss.getType().getDescriptionId())) {
-					boss.heal(boss.getMaxHealth()*0.25f);
+					boss.heal(boss.getMaxHealth() * 0.25f);
 				}
 			}
 		}
