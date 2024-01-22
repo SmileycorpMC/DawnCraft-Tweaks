@@ -12,7 +12,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.item.CustomTier;
@@ -20,7 +22,6 @@ import yesman.epicfight.world.item.GreatswordItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public class SlayersBladeItem extends GreatswordItem {
 

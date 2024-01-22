@@ -8,12 +8,10 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.item.CustomTier;
-import yesman.epicfight.world.item.EpicFightItems;
 import yesman.epicfight.world.item.GreatswordItem;
 
 import javax.annotation.Nullable;
