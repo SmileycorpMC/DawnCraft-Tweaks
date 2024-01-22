@@ -41,8 +41,7 @@ public class JourneyMapPlugin implements IClientPlugin {
     @Override
     public void initialize(IClientAPI api) {
         this.api = api;
-        api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.MAPPING_STARTED));
-        api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.DISPLAY_UPDATE));
+        api.subscribe(Constants.MODID, EnumSet.of(ClientEvent.Type.MAPPING_STARTED, ClientEvent.Type.DISPLAY_UPDATE));
     }
 
     @Override

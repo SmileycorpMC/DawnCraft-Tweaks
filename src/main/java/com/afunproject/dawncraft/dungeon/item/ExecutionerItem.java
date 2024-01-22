@@ -13,15 +13,17 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.item.CustomTier;
+import yesman.epicfight.world.item.EpicFightItems;
+import yesman.epicfight.world.item.GreatswordItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ExecutionerItem extends SwordItem {
+public class ExecutionerItem extends GreatswordItem {
 
 	public ExecutionerItem() {
-		super(new CustomTier(1000, -3.25f, 5, 0, 0, ()->Ingredient.EMPTY), 5, -3.25f, new Properties().tab(CreativeTabs.DUNGEON_ITEMS)
-				.setNoRepair().stacksTo(1).rarity(Rarity.EPIC));
+		super(new Properties().tab(CreativeTabs.DUNGEON_ITEMS).setNoRepair().stacksTo(1).rarity(Rarity.EPIC),
+				new CustomTier(1000, -3.25f, 5, 0, 0, () -> Ingredient.EMPTY));
 	}
 
 	@Override

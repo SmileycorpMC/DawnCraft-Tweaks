@@ -12,30 +12,21 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.smileycorp.atlas.api.item.CustomTier;
+import yesman.epicfight.world.item.GreatswordItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class SlayersBladeItem extends SwordItem {
-
-	private static final UUID BASE_MOVE_SPEED_UUID = UUID.fromString("ee70a2df-5286-46eb-a852-28da3c795f1c");
-	private final ImmutableMultimap<Attribute, AttributeModifier> modifiers;
+public class SlayersBladeItem extends GreatswordItem {
 
 	public SlayersBladeItem() {
-		super(new CustomTier(1000, -3.05f, 0, 0, 0, ()->Ingredient.EMPTY), 0, -3.05f, new Properties().tab(CreativeTabs.DUNGEON_ITEMS)
-				.setNoRepair().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
-		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -4, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_MOVE_SPEED_UUID, "Weapon modifier", -2, AttributeModifier.Operation.ADDITION));
-		modifiers = builder.build();
+		super(new Properties().tab(CreativeTabs.DUNGEON_ITEMS).setNoRepair().stacksTo(1).fireResistant().rarity(Rarity.EPIC),
+				new CustomTier(1000, -3.05f, 0, 0, 0, ()->Ingredient.EMPTY));
 	}
 
 	@Override
@@ -51,8 +42,15 @@ public class SlayersBladeItem extends SwordItem {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? modifiers : super.getDefaultAttributeModifiers(slot);
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+		if (slot == EquipmentSlot.MAINHAND) {
+			ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -3.6f, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_MODIFIER, "Weapon modifier", -0.05f, AttributeModifier.Operation.ADDITION));
+			return builder.build();
+		} else {
+			return super.getAttributeModifiers(slot, stack);
+		}
 	}
 
 }
