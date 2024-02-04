@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -95,7 +96,7 @@ public abstract class MixinPlayer extends LivingEntity {
 			} else {
 				if (ModList.get().isLoaded("create")) if (CreateCompat.isToolbox(stack.getItem())) {
 					CompoundTag tag = stack.getOrCreateTag();
-					if (tag !=null) {
+					if (tag != null) {
 						if(tag.contains("Items", 9)) {
 							NonNullList<ItemStack> toolbox_items = NonNullList.withSize(27, ItemStack.EMPTY);
 							ContainerHelper.loadAllItems(tag, toolbox_items);
@@ -105,7 +106,7 @@ public abstract class MixinPlayer extends LivingEntity {
 						}
 					}
 				}
-				LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+				/*LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
 				if (optional.isPresent()) {
 					IItemHandler itemhandler = optional.resolve().get();
 					List<ItemStack> backpack_items = Lists.newArrayList();
@@ -116,7 +117,7 @@ public abstract class MixinPlayer extends LivingEntity {
 						itemhandler.extractItem(j, stack0.getCount(), false);
 						itemhandler.insertItem(j, backpack_items.get(j), false);
 					}
-				}
+				}*/
 			}
 		}
 		return items;
