@@ -109,6 +109,7 @@ public class EventListener {
 					double health_multiplier = Math.max(2, Math.pow(1.25, players - 1));
 					health.removeModifier(BOSS_MODIFIER);
 					health.addPermanentModifier(new AttributeModifier(BOSS_MODIFIER, "dawncraft_multiplayer_scaling", health_multiplier, Operation.MULTIPLY_TOTAL));
+					boss.setHealth((float) health.getValue());
 				}
 			}
 		}

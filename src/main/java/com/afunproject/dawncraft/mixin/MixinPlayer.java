@@ -6,7 +6,6 @@ import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
-import com.google.common.collect.Lists;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -25,10 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -75,7 +71,7 @@ public abstract class MixinPlayer extends LivingEntity {
 				if (level.random.nextInt(10) < amplifier) {
 					ItemStack drop = stack.copy();
 					int count = stack.getCount();
-					int loss = random.nextInt(0, stack.getCount());
+					int loss = random.nextInt(stack.getCount());
 					int newCount = count - loss;
 					if (newCount < 0) drop.setCount(stack.getCount());
 					else drop.setCount(loss);
@@ -107,8 +103,8 @@ public abstract class MixinPlayer extends LivingEntity {
 					}
 				}
 				/*LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-				if (optional.isPresent()) {
-					IItemHandler itemhandler = optional.resolve().get();
+				if (optional.isPresent() &! stack.isEmpty()) {
+					IItemHandler itemhandler = optional.orElseGet(null);
 					List<ItemStack> backpack_items = Lists.newArrayList();
 					for (int j = 0; j < itemhandler.getSlots(); j++) backpack_items.add(itemhandler.getStackInSlot(j));
 					handleItems(backpack_items);
