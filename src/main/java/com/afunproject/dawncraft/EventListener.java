@@ -6,6 +6,7 @@ import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.apotheosis.ApotheosisCompat;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
+import com.afunproject.dawncraft.integration.ironspellbooks.IronsSpellbooksCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
@@ -218,6 +219,13 @@ public class EventListener {
 			if (level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 				if (ModList.get().isLoaded("apotheosis")) ApotheosisCompat.fixNBT(event.getEntityLiving());
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void rightClick(PlayerInteractEvent.RightClickItem event) {
+		if (ModList.get().isLoaded("irons_spellbooks")) if (IronsSpellbooksCompat.isSpellBook(event.getItemStack())) {
+			event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
 		}
 	}
 
