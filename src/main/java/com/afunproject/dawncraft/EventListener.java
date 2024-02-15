@@ -225,7 +225,7 @@ public class EventListener {
 	@SubscribeEvent
 	public void rightClick(PlayerInteractEvent.RightClickItem event) {
 		if (ModList.get().isLoaded("irons_spellbooks")) if (IronsSpellbooksCompat.isSpellBook(event.getItemStack())) {
-			event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
+			event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 3));
 		}
 	}
 
