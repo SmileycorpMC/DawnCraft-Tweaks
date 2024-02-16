@@ -26,7 +26,7 @@ public interface QuestEntity {
 
 	public void loadQuestData(CompoundTag tag);
 
-	public static QuestEntity safeCast(Entity entity) {
+	static QuestEntity safeCast(Entity entity) {
 		if (entity instanceof QuestEntity) return (QuestEntity) entity;
 		LazyOptional<QuestEntity> optional = entity.getCapability(CapabilitiesRegister.QUEST_ENTITY);
 		if (optional.isPresent()) return optional.resolve().get();
