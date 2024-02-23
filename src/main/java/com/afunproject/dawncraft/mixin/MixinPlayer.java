@@ -5,7 +5,9 @@ import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
+import com.afunproject.dawncraft.integration.curios.CuriosCompat;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
+import com.afunproject.dawncraft.integration.sophisticatedbackpacks.SophisticatedBackpacksCompat;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +38,9 @@ import java.util.List;
 
 @Mixin(Player.class)
 public abstract class MixinPlayer extends LivingEntity {
-
+	
+	@Shadow public int experienceLevel;
+	
 	@Shadow
 	private Inventory inventory;
 
@@ -59,6 +63,7 @@ public abstract class MixinPlayer extends LivingEntity {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		destroyVanishingCursedItems();
 		inventory.compartments.forEach(this::handleItems);
+		if (ModList.get().isLoaded("curios")) handleItems(CuriosCompat.getEquippedCurios((Player) (LivingEntity)this));
 		callback.cancel();
 	}
 
@@ -102,6 +107,10 @@ public abstract class MixinPlayer extends LivingEntity {
 						}
 					}
 				}
+				if (ModList.get().isLoaded("sophisticatedbackpacks") && SophisticatedBackpacksCompat.isBackpack(stack.getItem())) {
+					drop(stack.copy(), true, false);
+					stack.setCount(0);
+				}
 				/*LazyOptional<IItemHandler> optional = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
 				if (optional.isPresent() &! stack.isEmpty()) {
 					IItemHandler itemhandler = optional.orElseGet(null);
@@ -122,11 +131,22 @@ public abstract class MixinPlayer extends LivingEntity {
 	@Inject(at=@At("HEAD"), method = "getExperienceReward(Lnet/minecraft/world/entity/player/Player;)I", cancellable = true)
 	protected void getExperienceReward(Player player, CallbackInfoReturnable<Integer> callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
-		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
-			giveExperienceLevels(-5*(getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier()+1));
-		} else {
-			giveExperienceLevels(-5);
+		int loss = 5;
+		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) loss *= getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1;
+		int lostXP = experienceLevel;
+		giveExperienceLevels(-loss);
+		int levelsLost = lostXP - experienceLevel;
+		if (ModList.get().isLoaded("create")) CreateCompat.getXPNuggets(getLoss(levelsLost, lostXP)).forEach(drop -> drop(drop, true, false));
+	}
+	
+	public int getLoss(int loss, int oldLevel) {
+		int totalLoss = 0;
+		for (int i = 1; i <= loss; i++) {
+			int level = oldLevel - i;
+			if (level >= 30) totalLoss += 112 + (level - 30) * 9;
+			else totalLoss += level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
 		}
+		return totalLoss;
 	}
 
 	@Shadow
