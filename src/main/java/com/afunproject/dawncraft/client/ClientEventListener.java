@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
@@ -84,14 +85,13 @@ public class ClientEventListener {
 	}
 
 	@SubscribeEvent
-	public static void clientTick(TickEvent.ClientTickEvent event) {
+	public static void clientTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START) {
-			Minecraft mc = Minecraft.getInstance();
-			LocalPlayer player = mc.player;
+			Player player = event.player;
 			if (player == null) return;
 			if (player.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
 				if (player.tickCount % Math.floorDiv(10, player.getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1) == 0) {
-					mc.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+					player.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
 				}
 			}
 		}

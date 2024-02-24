@@ -4,9 +4,10 @@ import com.afunproject.dawncraft.DCConfig;
 import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.capability.CapabilitiesRegister;
 import com.afunproject.dawncraft.capability.Toasts;
+import com.afunproject.dawncraft.dungeon.item.CrystallizedXPItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
-import com.afunproject.dawncraft.integration.curios.CuriosCompat;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
+import com.afunproject.dawncraft.integration.curios.CuriosCompat;
 import com.afunproject.dawncraft.integration.sophisticatedbackpacks.SophisticatedBackpacksCompat;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -41,6 +42,10 @@ public abstract class MixinPlayer extends LivingEntity {
 	
 	@Shadow public int experienceLevel;
 	
+	@Shadow public abstract void giveExperiencePoints(int p_36291_);
+	
+	@Shadow public int totalExperience;
+	
 	@Shadow
 	private Inventory inventory;
 
@@ -69,14 +74,14 @@ public abstract class MixinPlayer extends LivingEntity {
 
 	public List<ItemStack> handleItems(List<ItemStack> items) {
 		int amplifier = 1;
-		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) amplifier = getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1;
+		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) amplifier += getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier();
 		for (int i = 0; i < items.size(); i++) {
 			ItemStack stack = items.get(i);
 			if (stack.m_204117_(DCItemTags.VALUABLES)) {
-				if (level.random.nextInt(10) < amplifier) {
+				if (level.random.nextInt(8) < amplifier) {
 					ItemStack drop = stack.copy();
 					int count = stack.getCount();
-					int loss = random.nextInt(stack.getCount());
+					int loss = random.nextInt(stack.getCount() + 1);
 					int newCount = count - loss;
 					if (newCount < 0) drop.setCount(stack.getCount());
 					else drop.setCount(loss);
@@ -96,7 +101,7 @@ public abstract class MixinPlayer extends LivingEntity {
 				}
 			} else {
 				if (ModList.get().isLoaded("create")) if (CreateCompat.isToolbox(stack.getItem())) {
-					CompoundTag tag = stack.getOrCreateTag();
+					CompoundTag tag = stack.getTag();
 					if (tag != null) {
 						if(tag.contains("Items", 9)) {
 							NonNullList<ItemStack> toolbox_items = NonNullList.withSize(27, ItemStack.EMPTY);
@@ -107,7 +112,7 @@ public abstract class MixinPlayer extends LivingEntity {
 						}
 					}
 				}
-				if (ModList.get().isLoaded("sophisticatedbackpacks") && SophisticatedBackpacksCompat.isBackpack(stack.getItem())) {
+				if (ModList.get().isLoaded("sophisticatedbackpacks")) if (SophisticatedBackpacksCompat.isBackpack(stack.getItem())) {
 					drop(stack.copy(), true, false);
 					stack.setCount(0);
 				}
@@ -132,17 +137,15 @@ public abstract class MixinPlayer extends LivingEntity {
 	protected void getExperienceReward(Player player, CallbackInfoReturnable<Integer> callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		int loss = 5;
-		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) loss *= getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1;
-		int lostXP = experienceLevel;
-		giveExperienceLevels(-loss);
-		int levelsLost = lostXP - experienceLevel;
-		if (ModList.get().isLoaded("create")) CreateCompat.getXPNuggets(getLoss(levelsLost, lostXP)).forEach(drop -> drop(drop, true, false));
+		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) loss *= (getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1);
+		drop(CrystallizedXPItem.withValue(totalExperience - getLoss(loss)), true, false);
+		giveExperiencePoints(-totalExperience);
 	}
 	
-	public int getLoss(int loss, int oldLevel) {
+	public int getLoss(int loss) {
 		int totalLoss = 0;
 		for (int i = 1; i <= loss; i++) {
-			int level = oldLevel - i;
+			int level = experienceLevel - i;
 			if (level >= 30) totalLoss += 112 + (level - 30) * 9;
 			else totalLoss += level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
 		}
