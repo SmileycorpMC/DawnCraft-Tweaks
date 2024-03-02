@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.integration.quests.custom.quests.Quest;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +28,7 @@ public interface QuestEntity {
 
 	static QuestEntity safeCast(Entity entity) {
 		if (entity instanceof QuestEntity) return (QuestEntity) entity;
-		LazyOptional<QuestEntity> optional = entity.getCapability(CapabilitiesRegister.QUEST_ENTITY);
+		LazyOptional<QuestEntity> optional = entity.getCapability(DCCapabilities.QUEST_ENTITY);
 		if (optional.isPresent()) return optional.resolve().get();
 		return new DummyQuestEntity();
 	}

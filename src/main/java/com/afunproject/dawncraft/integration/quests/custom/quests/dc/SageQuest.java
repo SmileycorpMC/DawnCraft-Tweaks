@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.quests.custom.quests.dc;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.integration.quests.custom.QuestEntity;
 import com.afunproject.dawncraft.integration.quests.custom.QuestType;
@@ -18,7 +18,7 @@ public class SageQuest extends Quest {
 
 	public SageQuest() {
 		super((player, entity, phase, isTest)->{
-			LazyOptional<SageQuestTracker> optional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+			LazyOptional<SageQuestTracker> optional = player.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
 			if (optional.isPresent()) return phase == 2 && optional.resolve().get().getCheckedCount() >= 10;
 			return false;
 		});
@@ -30,14 +30,14 @@ public class SageQuest extends Quest {
 			if (entity instanceof QuestEntityBase) {
 				((QuestEntityBase) entity).setDespawnable(true);
 			}
-			LazyOptional<SageQuestTracker> optional = quest_completer.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+			LazyOptional<SageQuestTracker> optional = quest_completer.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
 			if (optional.isPresent()) optional.resolve().get().setActive(false);
 			this.giveItem(quest_completer, new ItemStack(SimpleMobsModItems.SHINY_KEY.get()));
 			setPhase(entity, phase + 1);
 		}
 		else if (phase == 1 && accepted) {
 			setPhase(entity, phase + 1);
-			LazyOptional<SageQuestTracker> optional = quest_completer.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+			LazyOptional<SageQuestTracker> optional = quest_completer.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
 			if (optional.isPresent()) optional.resolve().get().setActive(true);
 		}
 		if (entity instanceof QuestEntity) ((QuestEntity) entity).setQuestText(getText(((QuestEntity) entity).getQuestPhase(), accepted));

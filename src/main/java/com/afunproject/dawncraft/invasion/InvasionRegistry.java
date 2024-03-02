@@ -2,6 +2,8 @@ package com.afunproject.dawncraft.invasion;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.Locale;
@@ -10,9 +12,14 @@ import java.util.Map;
 public class InvasionRegistry {
 
 	private static final Map<InvasionKey, InvasionEntry> ENTRIES = Maps.newHashMap();
+	private static final Map<Integer, ItemStack> REWARDS = Maps.newHashMap();
 
 	public static void register(InvasionEntry entry) {
 		ENTRIES.put(InvasionKey.create(entry.name.toUpperCase(Locale.US), entry.name), entry);
+	}
+	
+	public static void addReward(int kills, ItemStack reward) {
+		REWARDS.put(kills, reward);
 	}
 
 	public static InvasionEntry getInvasion(String name) {
@@ -26,11 +33,21 @@ public class InvasionRegistry {
 	}
 
 	public static List<String> getKeys() {
-		return ENTRIES.keySet().stream().map(key->key.toString()).toList();
+		return ENTRIES.keySet().stream().map(InvasionKey::toString).toList();
 	}
 
 	public static InvasionEntry getInvasion(InvasionKey key) {
 		return ENTRIES.get(key);
 	}
-
+	
+	public static ItemStack getReward(int kills) {
+		ItemStack stack = REWARDS.get(kills);
+		return stack == null ? ItemStack.EMPTY : stack;
+	}
+	
+	public static boolean contains(Entity entity) {
+		for (InvasionEntry entry : ENTRIES.values()) if (entry.entities.contains(entity.getType())) return true;
+		return false;
+	}
+	
 }

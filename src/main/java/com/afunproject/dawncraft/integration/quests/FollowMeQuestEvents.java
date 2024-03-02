@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.integration.quests;
 
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.ModUtils;
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.FollowQuest;
 import com.afunproject.dawncraft.integration.quests.task.FollowTask;
 import com.feywild.quest_giver.entity.QuestGuardVillager;
@@ -43,7 +43,7 @@ public class FollowMeQuestEvents {
 		if (event.getEntity() instanceof Mob) {;
 		Mob entity = (Mob) event.getEntity();
 		if (entity.level instanceof ServerLevel) {
-			LazyOptional<FollowQuest> questOptional = entity.getCapability(CapabilitiesRegister.FOLLOW_QUEST);
+			LazyOptional<FollowQuest> questOptional = entity.getCapability(DCCapabilities.FOLLOW_QUEST);
 			if (questOptional.isPresent()) {
 				FollowQuest questCap = questOptional.resolve().get();
 				if (questCap.hasStructure()) {

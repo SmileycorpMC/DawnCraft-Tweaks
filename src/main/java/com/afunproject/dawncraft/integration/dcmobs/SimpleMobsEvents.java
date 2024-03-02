@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.integration.dcmobs;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
-import com.afunproject.dawncraft.capability.Invasions;
+import com.afunproject.dawncraft.capability.DCCapabilities;
+import com.afunproject.dawncraft.capability.Invasion;
 import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.invasion.InvasionEntry;
@@ -59,13 +59,16 @@ public class SimpleMobsEvents {
 		InvasionRegistry.register(new InvasionEntry("Jungharam", SimpleMobsModEntities.JUNGHARAM.get()));
 		InvasionRegistry.register(new InvasionEntry("ManuelPoky", SimpleMobsModEntities.MANUEL_POKY.get()));
 		InvasionRegistry.register(new InvasionEntry("PPX", SimpleMobsModEntities.PPX.get()));
+		InvasionRegistry.register(new InvasionEntry("Lorde_RK", SimpleMobsModEntities.LORDE_RK.get()));
+		InvasionRegistry.register(new InvasionEntry("Ibr17eem171", SimpleMobsModEntities.IBR_17EEM_171.get()));
+		InvasionRegistry.addReward(2, new ItemStack(SimpleMobsModItems.TORN_NOTE.get()));
 	}
 
 	@SubscribeEvent
 	public void playerJoinWorld(PlayerLoggedInEvent event) {
 		if (event.getPlayer() instanceof ServerPlayer) {
 			Player player = event.getPlayer();
-			LazyOptional<SpawnTracker> optional = player.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+			LazyOptional<SpawnTracker> optional = player.getCapability(DCCapabilities.SPAWN_TRACKER);
 			if (optional.isPresent()) {
 				SpawnTracker spawnTracker = optional.resolve().get();
 				if (!spawnTracker.hasSpawned()) {
@@ -83,8 +86,8 @@ public class SimpleMobsEvents {
 		Player original = event.getOriginal();
 		Player player = event.getPlayer();
 		original.reviveCaps();
-		LazyOptional<SpawnTracker> optionalOld = original.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
-		LazyOptional<SpawnTracker> optional = player.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+		LazyOptional<SpawnTracker> optionalOld = original.getCapability(DCCapabilities.SPAWN_TRACKER);
+		LazyOptional<SpawnTracker> optional = player.getCapability(DCCapabilities.SPAWN_TRACKER);
 		if (optionalOld.isPresent() && optional.isPresent()) if (optionalOld.resolve().get().hasSpawned()) optional.resolve().get().setSpawned();
 	}
 
@@ -192,7 +195,7 @@ public class SimpleMobsEvents {
 
 	public static int enableInvasions(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
 		Player player = EntityArgument.getPlayer(ctx, "player");
-		LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
+		LazyOptional<Invasion> optional = player.getCapability(DCCapabilities.INVASIONS);
 		if (optional.isPresent()) {
 			int time = player.getRandom().nextInt(30000) + 6000;
 			optional.resolve().get().setNextSpawn(time);

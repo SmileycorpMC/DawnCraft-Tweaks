@@ -97,7 +97,7 @@ public interface SageQuestTracker {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.SAGE_QUEST_TRACKER ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.SAGE_QUEST_TRACKER ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

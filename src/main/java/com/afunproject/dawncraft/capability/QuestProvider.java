@@ -19,7 +19,7 @@ public class QuestProvider implements ICapabilitySerializable<CompoundTag> {
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		return cap == CapabilitiesRegister.QUEST_ENTITY ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+		return cap == DCCapabilities.QUEST_ENTITY ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public interface FollowQuest {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.FOLLOW_QUEST ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.FOLLOW_QUEST ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

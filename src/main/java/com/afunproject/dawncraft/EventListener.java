@@ -83,8 +83,8 @@ public class EventListener {
 		Player player = event.player;
 		if (event.phase == Phase.END && player != null && !(player instanceof FakePlayer)) {
 			if (!player.level.isClientSide) {
-				LazyOptional<Invasions> optional = player.getCapability(CapabilitiesRegister.INVASIONS);
-				if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion(player);
+				LazyOptional<Invasion> optional = player.getCapability(DCCapabilities.INVASIONS);
+				if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion();
 			}
 		}
 	}
@@ -117,7 +117,7 @@ public class EventListener {
 		//add block restrictions
 		if (event.getEntity() instanceof PathfinderMob) {
 			PathfinderMob entity = (PathfinderMob) event.getEntity();
-			LazyOptional<RestrictBlock> optional = entity.getCapability(CapabilitiesRegister.RESTRICT_BLOCK);
+			LazyOptional<RestrictBlock> optional = entity.getCapability(DCCapabilities.RESTRICT_BLOCK);
 			if (optional.isPresent()) {
 				RestrictBlock cap = optional.resolve().get();
 				if (cap.canRestrict(entity)) {
@@ -151,12 +151,12 @@ public class EventListener {
 		Player player = event.getPlayer();
 		original.reviveCaps();
 		//clone sage quest capabilities
-		LazyOptional<SageQuestTracker> soptionalOld = original.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
-		LazyOptional<SageQuestTracker> soptional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+		LazyOptional<SageQuestTracker> soptionalOld = original.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
+		LazyOptional<SageQuestTracker> soptional = player.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
 		if (soptionalOld.isPresent() && soptional.isPresent()) soptional.resolve().get().readNBT(soptionalOld.resolve().get().writeNBT());
 		//clone toast capabilities
-		LazyOptional<Toasts> toptionalOld = original.getCapability(CapabilitiesRegister.TOASTS);
-		LazyOptional<Toasts> toptional = player.getCapability(CapabilitiesRegister.TOASTS);
+		LazyOptional<Toasts> toptionalOld = original.getCapability(DCCapabilities.TOASTS);
+		LazyOptional<Toasts> toptional = player.getCapability(DCCapabilities.TOASTS);
 		if (toptionalOld.isPresent() && toptional.isPresent()) toptional.resolve().get().readNBT(toptionalOld.resolve().get().writeNBT());
 		if (original.hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) {
 			player.addEffect(new MobEffectInstance(DawnCraftEffects.FRACTURED_SOUL.get(), 3600,
@@ -201,15 +201,19 @@ public class EventListener {
 
 	@SubscribeEvent
 	public void livingDeath(LivingDeathEvent event) {
-		if (event.getEntity() instanceof Player &! event.getEntity().level.isClientSide) {
+		if (event.getEntity().level.isClientSide) return;
+		if (event.getEntity() instanceof Player) {
 			DamageSource source = event.getSource();
-			if (source.getEntity() instanceof LivingEntity) {
+			if (source.getEntity() instanceof LivingEntity && bosses.contains(source.getEntity().getType().getDescriptionId())) {
 				LivingEntity boss = (LivingEntity) source.getEntity();
-				if (bosses.contains(boss.getType().getDescriptionId())) {
-					boss.heal(boss.getMaxHealth() * 0.25f);
-				}
+				boss.heal(boss.getMaxHealth() * 0.25f);
 			}
 		}
+		LazyOptional<Invader> optional = event.getEntity().getCapability(DCCapabilities.INVADER);
+		if (!optional.isPresent()) return;
+		Invasion invasion = optional.orElse(null).getInvasion();
+		if (invasion == null) return;
+		invasion.entityKilled();
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

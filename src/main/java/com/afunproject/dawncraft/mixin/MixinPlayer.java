@@ -2,7 +2,7 @@ package com.afunproject.dawncraft.mixin;
 
 import com.afunproject.dawncraft.DCConfig;
 import com.afunproject.dawncraft.DCItemTags;
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.dungeon.item.CrystallizedXPItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
@@ -57,7 +57,7 @@ public abstract class MixinPlayer extends LivingEntity {
 	public void awardStat(ResourceLocation stat, int value, CallbackInfo callback) {
 		if (stat == Stats.WALK_ONE_CM && (LivingEntity)this instanceof ServerPlayer && ModList.get().isLoaded("journeymap")) {
 			if (((ServerPlayer)(LivingEntity)this).getStats().getValue(Stats.CUSTOM.get(Stats.WALK_ONE_CM)) >= 1000) {
-				LazyOptional<Toasts> cap = getCapability(CapabilitiesRegister.TOASTS);
+				LazyOptional<Toasts> cap = getCapability(DCCapabilities.TOASTS);
 				if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer)(LivingEntity)this, (byte) 8);
 			}
 		}

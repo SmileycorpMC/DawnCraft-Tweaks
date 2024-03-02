@@ -53,7 +53,7 @@ public interface SpawnTracker {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.SPAWN_TRACKER ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.SPAWN_TRACKER ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

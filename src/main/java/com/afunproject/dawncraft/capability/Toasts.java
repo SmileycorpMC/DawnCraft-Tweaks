@@ -59,7 +59,7 @@ public interface Toasts {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.TOASTS ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.TOASTS ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

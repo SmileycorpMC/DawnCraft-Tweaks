@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.mixin;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +25,7 @@ public class MixinInventory {
     @Inject(at=@At("HEAD"), method = "add(ILnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     public void add(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
        if (player instanceof ServerPlayer && ModList.get().isLoaded("epicfight") && EpicFightCompat.isSkillBook(stack)) {
-           LazyOptional<Toasts> cap = player.getCapability(CapabilitiesRegister.TOASTS);
+           LazyOptional<Toasts> cap = player.getCapability(DCCapabilities.TOASTS);
            if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer) player, (byte) 4);
        }
     }
@@ -33,7 +33,7 @@ public class MixinInventory {
     @Inject(at=@At("HEAD"), method = "setItem", cancellable = true)
     public void setItem(int slot, ItemStack stack, CallbackInfo callback) {
         if (player instanceof ServerPlayer && ModList.get().isLoaded("epicfight") && EpicFightCompat.isSkillBook(stack)) {
-            LazyOptional<Toasts> cap = player.getCapability(CapabilitiesRegister.TOASTS);
+            LazyOptional<Toasts> cap = player.getCapability(DCCapabilities.TOASTS);
             if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer) player, (byte) 4);
         }
     }

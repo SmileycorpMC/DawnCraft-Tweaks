@@ -69,7 +69,7 @@ public interface RestrictBlock {
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-			return cap == CapabilitiesRegister.RESTRICT_BLOCK ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.RESTRICT_BLOCK ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

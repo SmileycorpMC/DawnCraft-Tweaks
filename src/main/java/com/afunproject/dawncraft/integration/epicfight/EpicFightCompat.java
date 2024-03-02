@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.integration.epicfight;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.Toasts;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,7 @@ public class EpicFightCompat {
 			if (event.getEntity() instanceof ServerPlayer) {
 				ServerPlayer entity = (ServerPlayer) event.getEntity();
 				if (!isCombatMode(entity) || event.getSource().getEntity() == null) return;
-				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
+				LazyOptional<Toasts> cap = entity.getCapability(DCCapabilities.TOASTS);
 				if (cap.isPresent()) cap.orElseGet(null).sendToast(entity, (byte) 2);
 			}
 			if (event.getSource().getDirectEntity() instanceof ServerPlayer) {
@@ -35,7 +35,7 @@ public class EpicFightCompat {
 				if (amount != 0.5f) event.setCanceled(true);
 				if (isCombatMode(entity)) return;
 				event.setAmount(event.getAmount() * amount);
-				LazyOptional<Toasts> cap = entity.getCapability(CapabilitiesRegister.TOASTS);
+				LazyOptional<Toasts> cap = entity.getCapability(DCCapabilities.TOASTS);
 				if (cap.isPresent()) cap.orElseGet(null).sendToast(entity, (byte) 1);
 			}
 		}

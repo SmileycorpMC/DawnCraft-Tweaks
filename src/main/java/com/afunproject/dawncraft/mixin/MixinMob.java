@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft.mixin;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.SageQuestTracker;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
@@ -38,7 +38,7 @@ public abstract class MixinMob extends LivingEntity {
 	public void interact(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
 		if (((LivingEntity)this) instanceof Animal) {
 			if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode(player)) return;
-			LazyOptional<SageQuestTracker> optional = player.getCapability(CapabilitiesRegister.SAGE_QUEST_TRACKER);
+			LazyOptional<SageQuestTracker> optional = player.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
 			if (optional.isPresent()) {
 				SageQuestTracker cap = optional.resolve().get();
 				if (cap.isActive()) cap.checkAnimal(player, (Animal)(LivingEntity)this);

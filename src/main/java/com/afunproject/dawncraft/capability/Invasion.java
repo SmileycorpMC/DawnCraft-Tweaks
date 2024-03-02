@@ -9,6 +9,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -16,28 +17,33 @@ import net.minecraftforge.common.util.LazyOptional;
 import java.util.List;
 import java.util.Random;
 
-public interface Invasions {
+public interface Invasion {
 
-	public void tryToSpawnInvasion(Player player);
+	void tryToSpawnInvasion();
 
-	public void setNextSpawn(int ticks);
+	void setNextSpawn(int ticks);
+	
+	void entityKilled();
 
-	public CompoundTag save();
+	CompoundTag save();
 
-	public void load(CompoundTag tag);
+	void load(CompoundTag tag);
 
-	public static class Implementation implements Invasions {
-
+	class Implementation implements Invasion {
+		
+		private final Player player;
 		private Random rand = new Random();
 		private List<InvasionEntry> invasions = Lists.newArrayList();
+		private int kills = 0;
 		private int nextSpawn = -1;
-
-		public Implementation() {
+		
+		public Implementation(Player player) {
+			this.player = player;
 			invasions.addAll(InvasionRegistry.getInvasions());
 		}
 
 		@Override
-		public void tryToSpawnInvasion(Player player) {
+		public void tryToSpawnInvasion() {
 			if (nextSpawn == -1 || player.level.isClientSide || invasions.isEmpty()) return;
 			if (!player.level.dimension().location().equals(new ResourceLocation("overworld"))) return;
 			if (nextSpawn-- == 0) {
@@ -48,6 +54,12 @@ public interface Invasions {
 				}
 				nextSpawn = rand.nextInt(72000, 96000);
 			}
+		}
+		
+		@Override
+		public void entityKilled() {
+			ItemStack stack = InvasionRegistry.getReward(kills++);
+			if (!stack.isEmpty()) player.addItem(stack);
 		}
 
 		@Override
@@ -62,6 +74,7 @@ public interface Invasions {
 			for (InvasionEntry invasion : invasions) list.add(invasion.save());
 			tag.put("invasions", list);
 			tag.putInt("nextSpawn", nextSpawn);
+			tag.putInt("kills", kills);
 			return tag;
 		}
 
@@ -72,17 +85,22 @@ public interface Invasions {
 				invasions.add(new InvasionEntry((CompoundTag)invasion));
 			} catch (Exception e) {}
 			if (tag.contains("nextSpawn")) nextSpawn = tag.getInt("nextSpawn");
+			if (tag.contains("kills")) kills = tag.getInt("kills");
 		}
 
 	}
 
-	public static class Provider implements ICapabilitySerializable<CompoundTag> {
+	class Provider implements ICapabilitySerializable<CompoundTag> {
 
-		protected Invasions impl = new Implementation();
+		protected final Invasion impl;
+		
+		public Provider(Player player) {
+			 impl = new Implementation(player);
+		}
 
 		@Override
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction facing) {
-			return cap == CapabilitiesRegister.INVASIONS ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
+			return cap == DCCapabilities.INVASIONS ? LazyOptional.of(() -> impl).cast() : LazyOptional.empty();
 		}
 
 		@Override

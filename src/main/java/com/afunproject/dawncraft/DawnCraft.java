@@ -1,6 +1,6 @@
 package com.afunproject.dawncraft;
 
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.client.ClientEventListener;
 import com.afunproject.dawncraft.dungeon.block.DungeonBlocks;
 import com.afunproject.dawncraft.dungeon.block.entity.DungeonBlockEntities;
@@ -34,7 +34,7 @@ public class DawnCraft {
 		.ifPresent(container -> Constants.VERSION = container.getModInfo().getVersion().toString());
 		LOGGER.info("DawnCraft Tweaks " + Constants.VERSION + " initialized");
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DCConfig.config);
-		MinecraftForge.EVENT_BUS.register(new CapabilitiesRegister());
+		MinecraftForge.EVENT_BUS.register(new DCCapabilities());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
 		DCNetworkHandler.initPackets();
 	}

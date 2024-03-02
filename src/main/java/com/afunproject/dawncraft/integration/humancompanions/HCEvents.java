@@ -1,7 +1,7 @@
 package com.afunproject.dawncraft.integration.humancompanions;
 
 import com.afunproject.dawncraft.EventListener;
-import com.afunproject.dawncraft.capability.CapabilitiesRegister;
+import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.SpawnTracker;
 import com.afunproject.dawncraft.integration.humancompanions.entities.HCEntities;
 import com.afunproject.dawncraft.integration.humancompanions.entities.KnightPlayer;
@@ -37,7 +37,7 @@ public class HCEvents {
 		Level level = event.getWorld();
 		if (event.getEntity().getClass() == Knight.class && level instanceof ServerLevel) {
 			Knight entity = (Knight) event.getEntity();
-			LazyOptional<SpawnTracker> optional = entity.getCapability(CapabilitiesRegister.SPAWN_TRACKER);
+			LazyOptional<SpawnTracker> optional = entity.getCapability(DCCapabilities.SPAWN_TRACKER);
 			if (optional.isPresent()) {
 				SpawnTracker tracker = optional.resolve().get();
 				if (!tracker.hasSpawned()) {
