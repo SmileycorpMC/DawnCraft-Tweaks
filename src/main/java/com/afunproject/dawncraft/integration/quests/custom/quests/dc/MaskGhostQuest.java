@@ -17,7 +17,7 @@ public class MaskGhostQuest extends ItemTagQuest {
 	@Override
 	protected void completeItemQuest(Player quest_completer, Mob entity, int phase, boolean accepted) {
 		if (entity instanceof Fallen && phase == end_phase) {
-			((Fallen)entity).startFading(new ItemStack(DungeonItems.CURSED_MASK.get()));
+			((Fallen)entity).startFading(new ItemStack(DungeonItems.MASK_OF_ATHORA.get()));
 		}
 	}
 

@@ -73,7 +73,7 @@ public class EventListener {
 			"entity.meetyourfight.swampjaw","entity.meetyourfight.dame_fortuna","entity.meetyourfight.bellringer",
 			"entity.alexsmobs.warped_mosco","entity.alexsmobs.void_worm","entity.cataclysm.ender_golem",
 			"entity.cataclysm.netherite_monstrosity","entity.ba_bt.land_golem","entity.ba_bt.ocean_golem",
-			"entity.ba_bt.core_golem","entity.a_bt.nether_golem","entity.ba_bt.end_golem","entity.ba_bt.sky_golem",
+			"entity.ba_bt.core_golem","entity.ba_bt.nether_golem","entity.ba_bt.end_golem","entity.ba_bt.sky_golem",
 			"entity.goblinsanddungeons.goblin_king","entity.illageandspillage.magispeller",
 			"entity.illageandspillage.illashooter","entity.illageandspillage.twittollager","entity.illageandspillage.spiritcaller"
 			);

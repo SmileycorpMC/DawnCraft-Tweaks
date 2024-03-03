@@ -14,9 +14,9 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CursedMaskItem extends MaskItem {
+public class MaskOfAthoraItem extends MaskItem {
 
-	public CursedMaskItem() {
+	public MaskOfAthoraItem() {
 		super(new Properties().tab(CreativeTabs.DUNGEON_ITEMS).stacksTo(1).rarity(Rarity.EPIC));
 	}
 

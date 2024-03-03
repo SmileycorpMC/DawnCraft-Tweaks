@@ -80,7 +80,7 @@ public class ClientEventListener {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void addTooltips(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (stack.m_204117_(DCItemTags.MASKS) && stack.getItem() != DungeonItems.CURSED_MASK.get())
+		if (stack.m_204117_(DCItemTags.MASKS) && stack.getItem() != DungeonItems.MASK_OF_ATHORA.get())
 			event.getToolTip().add(new TranslatableComponent("tooltip.dawncraft.mask").withStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.DARK_PURPLE)));
 	}
 

@@ -19,7 +19,7 @@ public class DungeonItems {
 
 	public static final RegistryObject<Item> DUNGEON_CONFIGURATOR = ITEMS.register("dungeon_configurator", DungeonConfiguratorItem :: new);
 	public static final RegistryObject<Item> SKELETON_KEY = ITEMS.register("skeleton_key", SkeletonKeyItem :: new);
-	public static final RegistryObject<Item> CURSED_MASK = ITEMS.register("cursed_mask", CursedMaskItem :: new);
+	public static final RegistryObject<Item> MASK_OF_ATHORA = ITEMS.register("cursed_mask", MaskOfAthoraItem:: new);
 	public static final RegistryObject<Item> REBIRTH_STAFF = ITEMS.register("rebirth_staff", RebirthStaffItem :: new);
 	public static final RegistryObject<Item> SLAYERS_BLADE = ITEMS.register("slayers_blade", SlayersBladeItem :: new);
 	public static final RegistryObject<Item> EXECUTIONER = ITEMS.register("executioner", ExecutionerItem :: new);
