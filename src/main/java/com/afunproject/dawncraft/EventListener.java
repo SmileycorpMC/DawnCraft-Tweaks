@@ -4,6 +4,7 @@ import com.afunproject.dawncraft.capability.*;
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
+import com.afunproject.dawncraft.entities.ai.GoToRestrictionGoal;
 import com.afunproject.dawncraft.integration.apotheosis.ApotheosisCompat;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.ironspellbooks.IronsSpellbooksCompat;
@@ -118,12 +119,12 @@ public class EventListener {
 			}
 		}
 		//add block restrictions
-		if (event.getEntity() instanceof PathfinderMob) {
-			PathfinderMob entity = (PathfinderMob) event.getEntity();
+		if (event.getEntity() instanceof Mob) {
+			Mob entity = (Mob) event.getEntity();
 			LazyOptional<RestrictBlock> optional = entity.getCapability(DCCapabilities.RESTRICT_BLOCK);
 			if (optional.isPresent()) {
 				RestrictBlock cap = optional.resolve().get();
-				if (cap.canRestrict(entity)) cap.applyRestriction(entity);
+				entity.goalSelector.addGoal(1, new GoToRestrictionGoal(entity, cap));
 			}
 		}
 		//add effects to natural iron golems
