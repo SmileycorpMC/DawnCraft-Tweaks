@@ -20,6 +20,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,7 +62,8 @@ public class JourneyMapEvents {
 	}
 
 	public static void addWaypoint(BlockPos pos, String name, ServerPlayer player) {
-		DCNetworkHandler.NETWORK_INSTANCE.sendTo(new AddWaypointMessage(pos, name), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		DCNetworkHandler.NETWORK_INSTANCE.sendTo(new AddWaypointMessage(player.getLevel().getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos), name),
+				player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	private static void receivePacket(AddWaypointMessage message, Supplier<NetworkEvent.Context> supplier) {

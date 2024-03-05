@@ -5,21 +5,23 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 public interface RestrictBlock {
 
-	public boolean canRestrict(Mob entity);
+	boolean canRestrict(Mob entity);
 
-	public void applyRestriction(Mob entity);
+	void applyRestriction(PathfinderMob entity);
 
-	public void readNBT(CompoundTag nbt);
+	void readNBT(CompoundTag nbt);
 
-	public CompoundTag writeNBT(CompoundTag nbt);
+	CompoundTag writeNBT(CompoundTag nbt);
 
-	public static class Implementation implements RestrictBlock {
+	class Implementation implements RestrictBlock {
 
 		protected boolean shouldRestrict;
 		protected int timesSpawned = 0;
@@ -32,12 +34,10 @@ public interface RestrictBlock {
 		}
 
 		@Override
-		public void applyRestriction(Mob entity) {
-			if (timesSpawned < 2) {
-				if (center == null) center = entity.blockPosition();
-				entity.restrictTo(center, range);
-				timesSpawned = 2;
-			}
+		public void applyRestriction(PathfinderMob entity) {
+			if (center == null) center = entity.blockPosition();
+			entity.restrictTo(center, range);
+			entity.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(entity, 1.0D));
 		}
 
 		@Override
@@ -59,7 +59,7 @@ public interface RestrictBlock {
 
 	}
 
-	public static class Provider implements ICapabilitySerializable<CompoundTag> {
+	class Provider implements ICapabilitySerializable<CompoundTag> {
 
 		private final RestrictBlock impl;
 

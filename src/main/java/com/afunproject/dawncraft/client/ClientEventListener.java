@@ -26,9 +26,11 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import java.math.BigInteger;
+
 @EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
 public class ClientEventListener {
-
+	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void renderLivingEventStart(RenderLivingEvent.Pre<?, ?> event) {
 		LivingEntity entity = event.getEntity();

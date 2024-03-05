@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -24,7 +25,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -60,39 +60,42 @@ public class EventListener {
 	private static final UUID BOSS_MODIFIER = UUID.fromString("dd686c7a-e2c7-479c-96d5-3e193b35c7b8");
 
 	public static final List<Consumer<EntityAttributeCreationEvent>> ATTRIBUTE_SUPPLIERS = Lists.newArrayList();
-
+	
 	List<String> bosses = Lists.newArrayList(
-			"entity.minecraft.ender_dragon","entity.minecraft.wither","entity.simple_mobs.ogre",
-			"entity.simple_mobs.martian","entity.simple_mobs.sentinel_knight","entity.simple_mobs.fire_giant",
-			"entity.simple_mobs.nine_tails","entity.simple_mobs.skeletonlord","entity.simple_mobs.knight_4",
-			"entity.simple_mobs.fire_dragon", "entity.simple_mobs.ice_dragon", "entity.simple_mobs.notch", "entity.simple_mobs.elemental_deity",
-			"entity.bloodandmadness.father_gascoigne","entity.bloodandmadness.gascoigne_beast",
-			"entity.bloodandmadness.micolash","entity.ob_aquamirae.captain_cornelia","entity.conjurer_illager.conjurer",
-			"entity.mowziesmobs.ferrous_wroughtnaut","entity.mowziesmobs.barako","entity.mowziesmobs.frostmaw",
-			"entity.mowziesmobs.naga","entity.meetyourfight.projectile_line","entity.meetyourfight.swamp_mine",
-			"entity.meetyourfight.swampjaw","entity.meetyourfight.dame_fortuna","entity.meetyourfight.bellringer",
-			"entity.alexsmobs.warped_mosco","entity.alexsmobs.void_worm","entity.cataclysm.ender_golem",
-			"entity.cataclysm.netherite_monstrosity","entity.ba_bt.land_golem","entity.ba_bt.ocean_golem",
-			"entity.ba_bt.core_golem","entity.ba_bt.nether_golem","entity.ba_bt.end_golem","entity.ba_bt.sky_golem",
-			"entity.goblinsanddungeons.goblin_king","entity.illageandspillage.magispeller",
-			"entity.illageandspillage.illashooter","entity.illageandspillage.twittollager","entity.illageandspillage.spiritcaller"
-			);
+			"minecraft:ender_dragon","minecraft:wither","simple_mobs:ogre",
+					"simple_mobs:martian","simple_mobs:sentinel_knight","simple_mobs:fire_giant",
+					"simple_mobs:nine_tails","simple_mobs:skeletonlord","simple_mobs:knight_4",
+					"simple_mobs:fire_dragon", "simple_mobs:ice_dragon", "simple_mobs:notch", "simple_mobs:elemental_deity",
+					"bloodandmadness:father_gascoigne","bloodandmadness:gascoigne_beast",
+					"bloodandmadness:micolash","ob_aquamirae:captain_cornelia","conjurer_illager:conjurer",
+					"mowziesmobs:ferrous_wroughtnaut","mowziesmobs:barako","mowziesmobs:frostmaw",
+					"mowziesmobs:naga","meetyourfight:projectile_line","meetyourfight:swamp_mine",
+					"meetyourfight:swampjaw","meetyourfight:dame_fortuna","meetyourfight:bellringer",
+					"alexsmobs:warped_mosco","alexsmobs:void_worm","cataclysm:ender_golem",
+					"cataclysm:netherite_monstrosity","ba_bt:land_golem","ba_bt:ocean_golem",
+					"ba_bt:core_golem","ba_bt:nether_golem","ba_bt:end_golem","ba_bt:sky_golem",
+					"goblinsanddungeons:goblin_king","illageandspillage:magispeller",
+					"illageandspillage:illashooter","illageandspillage:twittollager","illageandspillage:spiritcaller"
+	);
+	
+	private boolean isBoss(Entity entity) {
+		return entity instanceof Mob && bosses.contains(entity.getType().getRegistryName());
+	}
 
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent event) {
 		Player player = event.player;
 		if (event.phase == Phase.END && player != null && !(player instanceof FakePlayer)) {
-			if (!player.level.isClientSide) {
-				LazyOptional<Invasion> optional = player.getCapability(DCCapabilities.INVASIONS);
-				if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion();
-			}
+			if (player.level.isClientSide) return;
+			LazyOptional<Invasion> optional = player.getCapability(DCCapabilities.INVASIONS);
+			if (optional.isPresent()) optional.resolve().get().tryToSpawnInvasion();
 		}
 	}
 
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		//scale boss hp and damage based on players nearby
-		if (bosses.contains(event.getEntity().getType().getDescriptionId()) && (event.getEntity() instanceof Mob)) {
+		if (isBoss(event.getEntity())) {
 			Mob boss = (Mob) event.getEntity();
 			int players = 0;
 			for (Player player : boss.level.players()) {
@@ -120,10 +123,7 @@ public class EventListener {
 			LazyOptional<RestrictBlock> optional = entity.getCapability(DCCapabilities.RESTRICT_BLOCK);
 			if (optional.isPresent()) {
 				RestrictBlock cap = optional.resolve().get();
-				if (cap.canRestrict(entity)) {
-					entity.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(entity, 1.0D));
-					cap.applyRestriction(entity);
-				}
+				if (cap.canRestrict(entity)) cap.applyRestriction(entity);
 			}
 		}
 		//add effects to natural iron golems
@@ -204,7 +204,7 @@ public class EventListener {
 		if (event.getEntity().level.isClientSide) return;
 		if (event.getEntity() instanceof Player) {
 			DamageSource source = event.getSource();
-			if (source.getEntity() instanceof LivingEntity && bosses.contains(source.getEntity().getType().getDescriptionId())) {
+			if (isBoss(source.getEntity())) {
 				LivingEntity boss = (LivingEntity) source.getEntity();
 				boss.heal(boss.getMaxHealth() * 0.25f);
 			}

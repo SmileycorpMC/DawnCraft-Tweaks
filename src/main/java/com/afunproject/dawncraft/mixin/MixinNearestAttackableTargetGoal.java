@@ -2,6 +2,7 @@ package com.afunproject.dawncraft.mixin;
 
 import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -25,8 +26,12 @@ public abstract class MixinNearestAttackableTargetGoal extends TargetGoal {
 	protected TargetingConditions targetConditions;
 	
 	@Inject(at=@At("TAIL"), method = "<init>(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V", cancellable = true)
-	public void init(Mob p_26053_, Class p_26054_, int p_26055_, boolean p_26056_, boolean p_26057_, Predicate p_26058_, CallbackInfo ci) {
-		targetConditions.selector(e -> p_26058_.test(e) && e.getItemBySlot(EquipmentSlot.HEAD).getItem() != DungeonItems.MASK_OF_ATHORA.get());
+	public void init(Mob p_26053_, Class clazz, int p_26055_, boolean p_26056_, boolean p_26057_, Predicate targetSelector, CallbackInfo callback) {
+		targetConditions.selector(targetSelector == null ? MixinNearestAttackableTargetGoal::hasMask : e -> targetSelector.test(e) && hasMask(e));
+	}
+	
+	private static boolean hasMask(LivingEntity entity) {
+		return entity.getItemBySlot(EquipmentSlot.HEAD).is(DungeonItems.MASK_OF_ATHORA.get());
 	}
 
 }
