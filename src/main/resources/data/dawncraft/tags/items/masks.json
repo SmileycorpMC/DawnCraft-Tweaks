@@ -4,14 +4,17 @@
 	"simple_mobs:plaguemask_helmet",
 	"savage_and_ravage:mask_of_dishonesty",
 	"savage_and_ravage:griefer_helmet",
-	"mowziesmobs:barakoa_mask_fury",
-	"mowziesmobs:barakoa_mask_fear",
-	"mowziesmobs:barakoa_mask_rage",
-	"mowziesmobs:barakoa_mask_bliss",
-	"mowziesmobs:barakoa_mask_misery",
-	"mowziesmobs:barakoa_mask_faith",
-	"mowziesmobs:barako_mask",
+	"mowziesmobs:umvuthana_mask_fury",
+	"mowziesmobs:umvuthana_mask_fear",
+	"mowziesmobs:umvuthana_mask_rage",
+	"mowziesmobs:umvuthana_mask_bliss",
+	"mowziesmobs:umvuthana_mask_misery",
+	"mowziesmobs:umvuthana_mask_faith",
+	"mowziesmobs:sol_visage",
 	"ob_core:obsidian_helmet",
-	"dawncraft:cursed_mask"
+	"dawncraft:cursed_mask",
+	"irons_spellbooks:plagued_helmet",
+	"irons_spellbooks:shadowwalker_helmet",
+	"wom:netherite_mask"
   ]
 }

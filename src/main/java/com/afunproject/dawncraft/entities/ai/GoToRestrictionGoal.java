@@ -3,13 +3,9 @@ package com.afunproject.dawncraft.entities.ai;
 import com.afunproject.dawncraft.capability.RestrictBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
-import net.smileycorp.atlas.api.util.DirectionUtils;
 
 import java.util.EnumSet;
 

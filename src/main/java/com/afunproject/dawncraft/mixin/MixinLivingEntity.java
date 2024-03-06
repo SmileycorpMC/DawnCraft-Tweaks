@@ -24,7 +24,6 @@ public abstract class MixinLivingEntity extends Entity {
 		if (hasEffect(DawnCraftEffects.FROGFORM.get())) {
 			callback.setReturnValue(0.77f * getBlockJumpFactor());
 			callback.cancel();
-			return;
 		}
 	}
 
@@ -33,7 +32,6 @@ public abstract class MixinLivingEntity extends Entity {
 		if (hasEffect(DawnCraftEffects.FROGFORM.get())) {
 			callback.setReturnValue(callback.getReturnValue() - 5);
 			callback.cancel();
-			return;
 		}
 	}
 

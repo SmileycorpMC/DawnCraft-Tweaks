@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+	"#bosses",
+	"minecraft:elder_guardian",
+	"minecraft:guardian",
+	"minecraft:piglin_brute",
+	"minecraft:vex"
+  ]
+}

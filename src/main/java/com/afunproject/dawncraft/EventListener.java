@@ -6,6 +6,7 @@ import com.afunproject.dawncraft.dungeon.item.RebirthStaffItem;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.entities.ai.GoToRestrictionGoal;
 import com.afunproject.dawncraft.integration.apotheosis.ApotheosisCompat;
+import com.afunproject.dawncraft.integration.champions.ChampionsIntegration;
 import com.afunproject.dawncraft.integration.epicfight.EpicFightCompat;
 import com.afunproject.dawncraft.integration.ironspellbooks.IronsSpellbooksCompat;
 import com.afunproject.dawncraft.integration.suplementaries.RitualChecker;
@@ -19,9 +20,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -42,6 +43,7 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -61,27 +63,6 @@ public class EventListener {
 	private static final UUID BOSS_MODIFIER = UUID.fromString("dd686c7a-e2c7-479c-96d5-3e193b35c7b8");
 
 	public static final List<Consumer<EntityAttributeCreationEvent>> ATTRIBUTE_SUPPLIERS = Lists.newArrayList();
-	
-	List<String> bosses = Lists.newArrayList(
-			"minecraft:ender_dragon","minecraft:wither","simple_mobs:ogre",
-					"simple_mobs:martian","simple_mobs:sentinel_knight","simple_mobs:fire_giant",
-					"simple_mobs:nine_tails","simple_mobs:skeletonlord","simple_mobs:knight_4",
-					"simple_mobs:fire_dragon", "simple_mobs:ice_dragon", "simple_mobs:notch", "simple_mobs:elemental_deity",
-					"bloodandmadness:father_gascoigne","bloodandmadness:gascoigne_beast",
-					"bloodandmadness:micolash","ob_aquamirae:captain_cornelia","conjurer_illager:conjurer",
-					"mowziesmobs:ferrous_wroughtnaut","mowziesmobs:barako","mowziesmobs:frostmaw",
-					"mowziesmobs:naga","meetyourfight:projectile_line","meetyourfight:swamp_mine",
-					"meetyourfight:swampjaw","meetyourfight:dame_fortuna","meetyourfight:bellringer",
-					"alexsmobs:warped_mosco","alexsmobs:void_worm","cataclysm:ender_golem",
-					"cataclysm:netherite_monstrosity","ba_bt:land_golem","ba_bt:ocean_golem",
-					"ba_bt:core_golem","ba_bt:nether_golem","ba_bt:end_golem","ba_bt:sky_golem",
-					"goblinsanddungeons:goblin_king","illageandspillage:magispeller",
-					"illageandspillage:illashooter","illageandspillage:twittollager","illageandspillage:spiritcaller"
-	);
-	
-	private boolean isBoss(Entity entity) {
-		return entity instanceof Mob && bosses.contains(entity.getType().getRegistryName());
-	}
 
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent event) {
@@ -96,7 +77,7 @@ public class EventListener {
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		//scale boss hp and damage based on players nearby
-		if (isBoss(event.getEntity())) {
+		if (event.getEntity().getType().m_204039_(DCEntityTags.BOSSES)) {
 			Mob boss = (Mob) event.getEntity();
 			int players = 0;
 			for (Player player : boss.level.players()) {
@@ -205,9 +186,11 @@ public class EventListener {
 		if (event.getEntity().level.isClientSide) return;
 		if (event.getEntity() instanceof Player) {
 			DamageSource source = event.getSource();
-			if (isBoss(source.getEntity())) {
-				LivingEntity boss = (LivingEntity) source.getEntity();
-				boss.heal(boss.getMaxHealth() * 0.25f);
+			if (source.getEntity() != null) {
+				if (source.getEntity().getType().m_204039_(DCEntityTags.BOSSES)) {
+					LivingEntity boss = (LivingEntity) source.getEntity();
+					boss.heal(boss.getMaxHealth() * 0.25f);
+				}
 			}
 		}
 		LazyOptional<Invader> optional = event.getEntity().getCapability(DCCapabilities.INVADER);
@@ -232,6 +215,15 @@ public class EventListener {
 		if (ModList.get().isLoaded("irons_spellbooks")) if (IronsSpellbooksCompat.isSpellBook(event.getItemStack())) {
 			event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 3));
 		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void playerTick(LivingEvent.LivingVisibilityEvent event) {
+		Entity entity = event.getLookingEntity();
+		if (!event.getEntityLiving().getItemBySlot(EquipmentSlot.HEAD).is(DungeonItems.MASK_OF_ATHORA.get())) return;
+		if (entity.getType().m_204039_(DCEntityTags.BYPASSES_MASK_OF_ATHORA)) return;
+		if (ModList.get().isLoaded("champions")) if (ChampionsIntegration.isChampion(entity)) return;
+		event.modifyVisibility(0);
 	}
 
 	//major jank because forge and eclipse both suck
