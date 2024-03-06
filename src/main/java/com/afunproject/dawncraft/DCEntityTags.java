@@ -3,7 +3,6 @@ package com.afunproject.dawncraft;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 
 public class DCEntityTags {
 
