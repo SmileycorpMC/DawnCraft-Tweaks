@@ -12,8 +12,8 @@ public class DungeonDoorBlockEntity extends LockableBlockEntityBase {
 		this(DungeonBlockEntities.DUNGEON_DOOR.get(), p_155229_, p_155230_);
 	}
 
-	public DungeonDoorBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-		super(p_155228_, p_155229_, p_155230_);
+	public DungeonDoorBlockEntity(BlockEntityType<?> type, BlockPos p_155229_, BlockState p_155230_) {
+		super(type, p_155229_, p_155230_);
 	}
 
 	public void open() {

@@ -5,10 +5,10 @@ import net.minecraft.world.level.Level;
 
 public interface DungeonTrigger extends RotatableBlockEntity {
 
-	public void triggerLinkedBlocks();
+	void triggerLinkedBlocks();
 
-	public void removeLinkedBlock(BlockPos pos);
+	void removeLinkedBlock(BlockPos pos);
 
-	public void addLinkedBlock(Level level, BlockPos pos);
+	void addLinkedBlock(Level level, BlockPos pos);
 
 }

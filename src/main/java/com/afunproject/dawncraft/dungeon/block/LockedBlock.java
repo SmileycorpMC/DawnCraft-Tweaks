@@ -7,8 +7,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 
 public interface LockedBlock {
 
-	public KeyColour getColour(Level level, BlockPos pos, BlockStateBase state);
+	KeyColour getColour(Level level, BlockPos pos, BlockStateBase state);
 
-	public boolean open(Level level, BlockPos pos, BlockStateBase state, boolean isKey);
+	boolean open(Level level, BlockPos pos, BlockStateBase state, boolean isKey);
 
 }

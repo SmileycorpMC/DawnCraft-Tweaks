@@ -23,8 +23,8 @@ public class TriggerBlockEntityBase extends BlockEntity implements DungeonTrigge
 	protected final Set<Vec3i> linked_blocks = Sets.newHashSet();
 	protected Direction direction = Direction.NORTH;
 
-	public TriggerBlockEntityBase(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-		super(p_155228_, p_155229_, p_155230_);
+	public TriggerBlockEntityBase(BlockEntityType<? extends TriggerBlockEntityBase> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 	}
 
 	@Override

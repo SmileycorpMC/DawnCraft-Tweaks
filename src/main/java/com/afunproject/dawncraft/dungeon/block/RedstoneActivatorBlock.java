@@ -88,10 +88,10 @@ public class RedstoneActivatorBlock extends Block implements EntityBlock {
 			RedstoneActivatorBlockEntity entity = optional.get();
 			if (entity.getSignalLength() < 1) {
 				entity.setSignalLength(1);
-				player.sendMessage(new TranslatableComponent("message.afptweaks.singlepulse"), null);
+				player.sendMessage(new TranslatableComponent("message.dawncraft.singlepulse"), null);
 			} else {
 				entity.setSignalLength(0);
-				player.sendMessage(new TranslatableComponent("message.afptweaks.toggle"), null);
+				player.sendMessage(new TranslatableComponent("message.dawncraft.toggle"), null);
 			}
 		}
 		return InteractionResult.SUCCESS;
