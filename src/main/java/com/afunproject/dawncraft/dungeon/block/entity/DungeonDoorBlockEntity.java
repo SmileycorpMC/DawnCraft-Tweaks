@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DungeonDoorBlockEntity extends LockableBlockEntityBase {
 
-	public DungeonDoorBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-		this(DungeonBlockEntities.DUNGEON_DOOR.get(), p_155229_, p_155230_);
+	public DungeonDoorBlockEntity(BlockPos pos, BlockState state) {
+		this(DungeonBlockEntities.DUNGEON_DOOR.get(), pos, state);
 	}
 
-	public DungeonDoorBlockEntity(BlockEntityType<?> type, BlockPos p_155229_, BlockState p_155230_) {
-		super(type, p_155229_, p_155230_);
+	public DungeonDoorBlockEntity(BlockEntityType<? extends DungeonDoorBlockEntity> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 	}
 
 	public void open() {

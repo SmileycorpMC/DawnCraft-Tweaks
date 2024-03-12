@@ -31,7 +31,7 @@ public class DungeonBlockEntities {
 	@SafeVarargs
 	private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String name, BlockEntitySupplier<T> supplier, RegistryObject<Block>... blocks) {
 		return BLOCK_ENTITIES.register(name, () ->
-		BlockEntityType.Builder.of(supplier, (Block[]) Stream.of(blocks).map(RegistryObject::get).toArray())
+		BlockEntityType.Builder.of(supplier, Stream.of(blocks).map(RegistryObject::get).collect(Collectors.toList()).toArray(new Block[]{}))
 		.build(Util.fetchChoiceType(References.BLOCK_ENTITY, Constants.locStr(name))));
 	}
 

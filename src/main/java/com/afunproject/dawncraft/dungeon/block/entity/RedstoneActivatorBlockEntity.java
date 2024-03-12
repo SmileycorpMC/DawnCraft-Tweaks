@@ -19,7 +19,7 @@ public class RedstoneActivatorBlockEntity extends CamouflagedFunctionalBlockEnti
 		this(DungeonBlockEntities.REDSTONE_ACTIVATOR.get(), pos, state);
 	}
 
-	public RedstoneActivatorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public RedstoneActivatorBlockEntity(BlockEntityType<? extends RedstoneActivatorBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 

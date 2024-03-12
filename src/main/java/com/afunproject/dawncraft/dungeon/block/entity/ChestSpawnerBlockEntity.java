@@ -38,7 +38,7 @@ public class ChestSpawnerBlockEntity extends CamouflagedFunctionalBlockEntity im
 		this(DungeonBlockEntities.CHEST_SPAWNER.get(), pos, state);
 	}
 
-	public ChestSpawnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public ChestSpawnerBlockEntity(BlockEntityType<? extends ChestSpawnerBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 

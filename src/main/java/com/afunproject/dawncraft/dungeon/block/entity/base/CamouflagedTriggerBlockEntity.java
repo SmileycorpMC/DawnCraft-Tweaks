@@ -12,7 +12,7 @@ public abstract class CamouflagedTriggerBlockEntity extends TriggerBlockEntityBa
 
 	protected ResourceLocation texture = Constants.loc("forest_brick");
 
-	public CamouflagedTriggerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public CamouflagedTriggerBlockEntity(BlockEntityType<? extends CamouflagedTriggerBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 

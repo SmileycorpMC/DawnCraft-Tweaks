@@ -14,7 +14,7 @@ public abstract class CamouflagedFunctionalBlockEntity extends BlockEntity imple
 
 	protected ResourceLocation texture = Constants.loc("forest_brick");
 
-	public CamouflagedFunctionalBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public CamouflagedFunctionalBlockEntity(BlockEntityType<? extends CamouflagedFunctionalBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 

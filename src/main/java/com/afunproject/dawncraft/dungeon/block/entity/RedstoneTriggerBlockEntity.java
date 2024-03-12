@@ -11,7 +11,7 @@ public class RedstoneTriggerBlockEntity extends CamouflagedTriggerBlockEntity {
 		this(DungeonBlockEntities.REDSTONE_TRIGGER.get(), pos, state);
 	}
 
-	public RedstoneTriggerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public RedstoneTriggerBlockEntity(BlockEntityType<? extends RedstoneTriggerBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
