@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InvasionRegistry {
 
@@ -33,7 +34,7 @@ public class InvasionRegistry {
 	}
 
 	public static List<String> getKeys() {
-		return ENTRIES.keySet().stream().map(InvasionKey::toString).toList();
+		return ENTRIES.keySet().stream().map(InvasionKey::toString).collect(Collectors.toList());
 	}
 
 	public static InvasionEntry getInvasion(InvasionKey key) {

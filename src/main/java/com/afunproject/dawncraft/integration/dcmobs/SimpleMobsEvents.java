@@ -173,8 +173,8 @@ public class SimpleMobsEvents {
 	public void registerSubCommands(DCSubCommandsEvent event) {
 		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class))
 				.executes(ctx -> spawnInvasion(ctx))));
-		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class)).then(Commands.argument("player", EntityArgument.player()))
-				.executes(ctx -> spawnInvasion(ctx, EntityArgument.getPlayer(ctx, "player")))));
+		event.addSubCommand(Commands.literal("spawnInvader").then(Commands.argument("invader", EnumArgument.enumArgument(InvasionKey.class)).then(Commands.argument("player", EntityArgument.player())
+				.executes(ctx -> spawnInvasion(ctx, EntityArgument.getPlayer(ctx, "player"))))));
 		event.addSubCommand(Commands.literal("enableInvasions").then(Commands.argument("player", EntityArgument.player())
 				.executes(ctx -> enableInvasions(ctx))));
 	}
