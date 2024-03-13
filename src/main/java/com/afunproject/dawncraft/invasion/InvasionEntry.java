@@ -1,5 +1,7 @@
 package com.afunproject.dawncraft.invasion;
 
+import com.afunproject.dawncraft.capability.DCCapabilities;
+import com.afunproject.dawncraft.capability.Invader;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 
@@ -66,6 +69,8 @@ public class InvasionEntry {
 			entity.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(entity, Player.class, true));
 			entity.goalSelector.addGoal(6, new InvasionHuntPlayerGoal(entity, player));
 			entity.setPersistenceRequired();
+			LazyOptional<Invader> cap = entity.getCapability(DCCapabilities.INVADER);
+			if (cap.isPresent()) cap.orElseGet(null).setInvasion(player);
 			level.addFreshEntity(entity);
 			entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 1000));
 			Vec3 sound = player.position().add(dir);

@@ -47,19 +47,21 @@ public interface Invasion {
 			if (nextSpawn == -1 || player.level.isClientSide || invasions.isEmpty()) return;
 			if (!player.level.dimension().location().equals(new ResourceLocation("overworld"))) return;
 			if (nextSpawn-- == 0) {
-				if (rand.nextInt(3)>0) {
+				if (rand.nextInt(3) > 0) {
 					InvasionEntry invasion = invasions.get(rand.nextInt(invasions.size()));
 					invasion.spawnEntities(player);
 					invasions.remove(invasion);
 				}
-				nextSpawn = rand.nextInt(72000, 96000);
+				nextSpawn = 72000  + rand.nextInt(24000);
 			}
 		}
 		
 		@Override
+		
 		public void entityKilled() {
-			ItemStack stack = InvasionRegistry.getReward(kills++);
-			if (!stack.isEmpty()) player.addItem(stack);
+			kills++;
+			ItemStack stack = InvasionRegistry.getReward(kills);
+			if (!stack.isEmpty()) if (!player.addItem(stack)) player.drop(stack, false);
 		}
 
 		@Override

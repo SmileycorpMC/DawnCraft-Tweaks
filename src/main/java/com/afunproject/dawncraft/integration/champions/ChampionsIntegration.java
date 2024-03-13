@@ -4,7 +4,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.util.LazyOptional;
 import top.theillusivec4.champions.api.IChampion;
 import top.theillusivec4.champions.common.capability.ChampionCapability;
-import top.theillusivec4.champions.common.rank.Rank;
 
 public class ChampionsIntegration {
     public static boolean isChampion(Entity entity) {
