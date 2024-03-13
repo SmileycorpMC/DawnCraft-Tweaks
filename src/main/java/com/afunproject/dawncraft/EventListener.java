@@ -183,8 +183,9 @@ public class EventListener {
 
 	@SubscribeEvent
 	public void livingDeath(LivingDeathEvent event) {
-		if (event.getEntity().level.isClientSide) return;
-		if (event.getEntity() instanceof Player) {
+		LivingEntity entity = event.getEntityLiving();
+		if (entity.level.isClientSide) return;
+		if (entity instanceof Player) {
 			DamageSource source = event.getSource();
 			if (source.getEntity() != null) {
 				if (source.getEntity().getType().m_204039_(DCEntityTags.BOSSES)) {
@@ -193,11 +194,11 @@ public class EventListener {
 				}
 			}
 		}
-		LazyOptional<Invader> optional = event.getEntity().getCapability(DCCapabilities.INVADER);
+		LazyOptional<Invader> optional = entity.getCapability(DCCapabilities.INVADER);
 		if (!optional.isPresent()) return;
 		Invasion invasion = optional.orElse(null).getInvasion();
 		if (invasion == null) return;
-		invasion.entityKilled();
+		invasion.entityKilled(entity);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

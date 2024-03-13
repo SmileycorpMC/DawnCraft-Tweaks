@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.capability;
 
+import com.afunproject.dawncraft.dungeon.item.CrystallizedXPItem;
 import com.afunproject.dawncraft.invasion.InvasionEntry;
 import com.afunproject.dawncraft.invasion.InvasionRegistry;
 import com.google.common.collect.Lists;
@@ -8,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -23,7 +25,7 @@ public interface Invasion {
 
 	void setNextSpawn(int ticks);
 	
-	void entityKilled();
+	void entityKilled(LivingEntity entity);
 
 	CompoundTag save();
 
@@ -57,11 +59,11 @@ public interface Invasion {
 		}
 		
 		@Override
-		
-		public void entityKilled() {
+		public void entityKilled(LivingEntity entity) {
 			kills++;
 			ItemStack stack = InvasionRegistry.getReward(kills);
-			if (!stack.isEmpty()) if (!player.addItem(stack)) player.drop(stack, false);
+			if (!stack.isEmpty()) entity.spawnAtLocation(stack);
+			entity.spawnAtLocation(CrystallizedXPItem.withValue(kills * 300));
 		}
 
 		@Override

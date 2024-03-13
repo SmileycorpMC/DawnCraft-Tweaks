@@ -1,6 +1,5 @@
 package com.afunproject.dawncraft.invasion;
 
-import com.afunproject.dawncraft.dungeon.item.CrystallizedXPItem;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.world.entity.Entity;
@@ -44,7 +43,7 @@ public class InvasionRegistry {
 	
 	public static ItemStack getReward(int kills) {
 		ItemStack stack = REWARDS.get(kills);
-		return stack == null ? CrystallizedXPItem.withValue(kills * 28) : stack;
+		return stack == null ? ItemStack.EMPTY : stack;
 	}
 	
 	public static boolean contains(Entity entity) {
