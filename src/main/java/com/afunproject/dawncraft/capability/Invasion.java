@@ -54,7 +54,7 @@ public interface Invasion {
 					invasion.spawnEntities(player);
 					invasions.remove(invasion);
 				}
-				nextSpawn = 72000  + rand.nextInt(24000);
+				nextSpawn = 72000 + rand.nextInt(24000);
 			}
 		}
 		

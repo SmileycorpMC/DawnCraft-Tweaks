@@ -3,6 +3,8 @@ package com.afunproject.dawncraft.integration.journeymap.client;
 import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.integration.epicfight.client.KeyToast;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;
+import com.afunproject.dawncraft.integration.journeymap.network.RemoveWaypointMessage;
+import com.afunproject.dawncraft.integration.journeymap.network.WaypointMessage;
 import com.google.common.collect.Lists;
 import journeymap.client.JourneymapClient;
 import journeymap.client.api.ClientPlugin;
@@ -29,7 +31,7 @@ public class JourneyMapPlugin implements IClientPlugin {
     private static final WaypointGroup GROUP = new WaypointGroup(Constants.MODID, "structures");
     private static JourneyMapPlugin instance;
     private IClientAPI api;
-    private List<AddWaypointMessage> waypoints = Lists.newArrayList();
+    private List<WaypointMessage> scheduled = Lists.newArrayList();
     private KeyToast toast;
 
     private boolean startedMapping;
@@ -53,8 +55,11 @@ public class JourneyMapPlugin implements IClientPlugin {
     public void onEvent(ClientEvent clientEvent) {
         if (clientEvent.type == ClientEvent.Type.MAPPING_STARTED) {
             startedMapping = true;
-            for (AddWaypointMessage message : waypoints) addWaypoint(message, false);
-            waypoints.clear();
+            for (WaypointMessage message : scheduled) {
+                if (message instanceof AddWaypointMessage) addWaypoint((AddWaypointMessage) message, false);
+                if (message instanceof RemoveWaypointMessage) removeWaypoint(message);
+            }
+            scheduled.clear();
         }
         if (clientEvent.type == ClientEvent.Type.DISPLAY_UPDATE) if (toast != null) toast.setPressed();
     }
@@ -64,10 +69,9 @@ public class JourneyMapPlugin implements IClientPlugin {
         if (sendMessage) player.sendMessage(new TranslatableComponent("message.dawncraft.waypoint", message.getStructure()), null);
         if (startedMapping) {
             try {
-                String name = new TranslatableComponent(message.getStructure()).getString();
                 BlockPos pos = message.getPos();
                 ResourceKey<Level> dim = player.level.dimension();
-                Waypoint waypoint = new Waypoint(Constants.MODID, name, dim, pos);
+                Waypoint waypoint = new Waypoint(Constants.MODID, message.getStructure(), dim, pos);
                 waypoint.setColor(0xFFFFFF);
                 waypoint.setGroup(GROUP);
                 api.show(waypoint);
@@ -75,7 +79,12 @@ public class JourneyMapPlugin implements IClientPlugin {
                 throw new RuntimeException(e);
             }
         }
-        else waypoints.add(message);
+        else scheduled.add(message);
+    }
+    
+    public void removeWaypoint(WaypointMessage message) {
+        if (startedMapping) api.remove(api.getWaypoint(Constants.MODID, message.getStructure()));
+        else scheduled.add(message);
     }
 
     public static JourneyMapPlugin getInstance() {

@@ -3,6 +3,7 @@ package com.afunproject.dawncraft.integration.journeymap;
 import com.afunproject.dawncraft.event.DCSubCommandsEvent;
 import com.afunproject.dawncraft.integration.journeymap.client.JourneyMapPlugin;
 import com.afunproject.dawncraft.integration.journeymap.network.AddWaypointMessage;
+import com.afunproject.dawncraft.integration.journeymap.network.RemoveWaypointMessage;
 import com.afunproject.dawncraft.network.DCNetworkHandler;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -37,13 +38,18 @@ public class JourneyMapEvents {
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(new JourneyMapEvents());
 		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 5, AddWaypointMessage.class, JourneyMapEvents::receivePacket);
+		NetworkUtils.registerMessage(DCNetworkHandler.NETWORK_INSTANCE, 6, RemoveWaypointMessage.class, JourneyMapEvents::receivePacket);
 	}
 
 	@SubscribeEvent
 	public void registerSubCommands(DCSubCommandsEvent event) {
 		event.addSubCommand(Commands.literal("addWaypoint").requires(stack -> stack.hasPermission(2))
-				.then(Commands.argument("player", EntityArgument.players()).then(Commands.argument("structure", ResourceOrTagLocationArgument.m_210968_(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY))
+				.then(Commands.argument("player", EntityArgument.players())
+						.then(Commands.argument("structure", ResourceOrTagLocationArgument.m_210968_(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY))
 						.then(Commands.argument("name", StringArgumentType.string()).executes(this::addWaypoint)))));
+		event.addSubCommand(Commands.literal("removeWaypoint").requires(stack -> stack.hasPermission(2))
+				.then(Commands.argument("player", EntityArgument.players()).then(Commands.argument("name", StringArgumentType.string())
+						.executes(this::removeWaypoint))));
 	}
 
 	private int addWaypoint(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -65,10 +71,26 @@ public class JourneyMapEvents {
 		DCNetworkHandler.NETWORK_INSTANCE.sendTo(new AddWaypointMessage(player.getLevel().getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos), name),
 				player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
+	
+	private int removeWaypoint(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+		for (ServerPlayer player : EntityArgument.getPlayers(ctx, "player"))
+			removeWaypoint(StringArgumentType.getString(ctx, "name"), player);
+		return 1;
+	}
+	
+	public static void removeWaypoint(String name, ServerPlayer player) {
+		DCNetworkHandler.NETWORK_INSTANCE.sendTo(new RemoveWaypointMessage(name),
+				player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+	}
 
 	private static void receivePacket(AddWaypointMessage message, Supplier<NetworkEvent.Context> supplier) {
 		supplier.get().enqueueWork(() -> DistExecutor.safeRunWhenOn(Dist.CLIENT, () ->
 				() -> JourneyMapPlugin.getInstance().addWaypoint(message, true)));
+	}
+	
+	private static void receivePacket(RemoveWaypointMessage message, Supplier<NetworkEvent.Context> supplier) {
+		supplier.get().enqueueWork(() -> DistExecutor.safeRunWhenOn(Dist.CLIENT, () ->
+				() -> JourneyMapPlugin.getInstance().removeWaypoint(message)));
 	}
 
 }
