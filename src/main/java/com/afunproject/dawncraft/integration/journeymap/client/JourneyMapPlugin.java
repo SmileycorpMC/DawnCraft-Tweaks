@@ -71,7 +71,7 @@ public class JourneyMapPlugin implements IClientPlugin {
             try {
                 BlockPos pos = message.getPos();
                 ResourceKey<Level> dim = player.level.dimension();
-                Waypoint waypoint = new Waypoint(Constants.MODID, message.getStructure(), dim, pos);
+                Waypoint waypoint = new Waypoint(Constants.MODID, "dc-" + message.getStructure(), message.getStructure(), dim, pos);
                 waypoint.setColor(0xFFFFFF);
                 waypoint.setGroup(GROUP);
                 api.show(waypoint);
@@ -83,7 +83,10 @@ public class JourneyMapPlugin implements IClientPlugin {
     }
     
     public void removeWaypoint(WaypointMessage message) {
-        if (startedMapping) api.remove(api.getWaypoint(Constants.MODID, message.getStructure()));
+        if (startedMapping) {
+            Waypoint waypoint = api.getWaypoint(Constants.MODID, "dc-" + message.getStructure());
+            if (waypoint != null) api.remove(waypoint);
+        }
         else scheduled.add(message);
     }
 
