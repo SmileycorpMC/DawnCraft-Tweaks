@@ -17,11 +17,13 @@ public class AddWaypointMessage extends WaypointMessage {
 
 	@Override
 	public void write(FriendlyByteBuf buf) {
+		super.write(buf);
 		if (pos != null) buf.writeBlockPos(pos);
 	}
 
 	@Override
 	public void read(FriendlyByteBuf buf) {
+		super.read(buf);
 		pos = buf.readBlockPos();
 	}
 
