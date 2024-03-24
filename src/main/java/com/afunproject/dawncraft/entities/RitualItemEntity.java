@@ -31,20 +31,15 @@ public class RitualItemEntity extends Entity {
 
 		@Override
 		public void write(FriendlyByteBuf buf, List<BlockPos> positions) {
-			for (BlockPos pos : positions) buf.writeBlockPos(pos);
+			long[] longs = new long[positions.size()];
+			for (int i = 0; i < positions.size(); i++) longs[i] = positions.get(i).asLong();
+			buf.writeLongArray(longs);
 		}
 
 		@Override
 		public List<BlockPos> read(FriendlyByteBuf buf) {
 			List<BlockPos> positions = Lists.newArrayList();
-			while (true) {
-				try {
-					BlockPos pos = buf.readBlockPos();
-					positions.add(pos);
-				} catch (Exception e) {
-					break;
-				}
-			}
+			for (long l : buf.readLongArray()) positions.add(BlockPos.of(l));
 			return positions;
 		}
 
@@ -52,6 +47,7 @@ public class RitualItemEntity extends Entity {
 		public List<BlockPos> copy(List<BlockPos> list) {
 			return Lists.newArrayList(list);
 		}
+		
 	};
 
 	static {
