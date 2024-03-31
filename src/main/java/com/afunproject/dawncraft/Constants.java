@@ -1,12 +1,19 @@
 package com.afunproject.dawncraft;
 
+import net.minecraft.data.worldgen.PillagerOutpostPools;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.PillagerOutpostFeature;
 
 public class Constants {
 
 	public static final String LEGACY_MODID = "afptweaks";
 	public static final String MODID = "dawncraft";
 	public static String VERSION = "N/A";
+	public static final float DAMAGE_MULT = 0.5f;
+	
+	static {
+		if (DAMAGE_MULT == Math.floor(DAMAGE_MULT)) throw new RuntimeException("Modifed JAR");
+	}
 
 	public static ResourceLocation loc(String path) {
 		return new ResourceLocation(MODID, path);

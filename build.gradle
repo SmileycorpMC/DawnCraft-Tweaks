@@ -24,7 +24,7 @@ repositories {
     }
 }
 
-version = '1.18.2-1.2.13a'
+version = '1.18.2-1.2.14'
 group = 'com.afunproject.dawncraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'DawnCraft-Tweaks'
 
@@ -95,7 +95,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.18'
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	//implementation fg.deobf('curse.maven:atlaslib-463826:4567244')
 	//implementation fg.deobf('curse.maven:epicfight-405076:4778609')

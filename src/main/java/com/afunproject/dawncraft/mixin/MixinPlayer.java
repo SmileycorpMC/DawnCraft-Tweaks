@@ -40,6 +40,7 @@ import java.util.List;
 @Mixin(Player.class)
 public abstract class MixinPlayer extends LivingEntity {
 	
+	@Shadow public float experienceProgress;
 	@Shadow public int experienceLevel;
 	
 	@Shadow public abstract void giveExperiencePoints(int p_36291_);
@@ -139,7 +140,9 @@ public abstract class MixinPlayer extends LivingEntity {
 		int loss = 5;
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) loss *= (getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1);
 		drop(CrystallizedXPItem.withValue(totalExperience - getLoss(loss)), true, false);
-		giveExperiencePoints(-totalExperience);
+		experienceLevel = 0;
+		totalExperience = 0;
+		experienceProgress = 0;
 	}
 	
 	public int getLoss(int loss) {

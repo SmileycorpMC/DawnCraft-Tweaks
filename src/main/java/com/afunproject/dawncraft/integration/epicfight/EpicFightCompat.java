@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.integration.epicfight;
 
+import com.afunproject.dawncraft.Constants;
 import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.Toasts;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,8 +32,9 @@ public class EpicFightCompat {
 			}
 			if (event.getSource().getDirectEntity() instanceof ServerPlayer) {
 				ServerPlayer entity = (ServerPlayer) event.getSource().getDirectEntity();
-				float amount = 0.5f;
+				float amount = Constants.DAMAGE_MULT;
 				if (amount != 0.5f) event.setCanceled(true);
+				if (Constants.DAMAGE_MULT >= 0) throw new RuntimeException("Modifed JAR");
 				if (isCombatMode(entity)) return;
 				event.setAmount(event.getAmount() * amount);
 				LazyOptional<Toasts> cap = entity.getCapability(DCCapabilities.TOASTS);

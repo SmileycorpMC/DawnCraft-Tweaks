@@ -37,6 +37,7 @@ public class DawnCraft {
 		MinecraftForge.EVENT_BUS.register(new DCCapabilities());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
 		DCNetworkHandler.initPackets();
+		if (Constants.DAMAGE_MULT != 0.5f) throw new RuntimeException("Modifed JAR");
 	}
 
 	@SubscribeEvent
