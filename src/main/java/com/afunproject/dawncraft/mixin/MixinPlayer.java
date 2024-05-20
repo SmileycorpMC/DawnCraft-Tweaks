@@ -152,7 +152,7 @@ public abstract class MixinPlayer extends LivingEntity {
 			if (level >= 30) totalLoss += 112 + (level - 30) * 9;
 			else totalLoss += level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
 		}
-		return totalLoss;
+		return Math.min(Math.abs(totalLoss), totalExperience);
 	}
 
 	@Shadow
