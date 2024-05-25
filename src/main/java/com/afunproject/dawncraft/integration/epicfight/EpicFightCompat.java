@@ -34,7 +34,7 @@ public class EpicFightCompat {
 				ServerPlayer entity = (ServerPlayer) event.getSource().getDirectEntity();
 				float amount = Constants.DAMAGE_MULT;
 				if (amount != 0.5f) event.setCanceled(true);
-				if (Constants.DAMAGE_MULT >= 0) throw new RuntimeException("Modifed JAR");
+				if (Constants.DAMAGE_MULT != amount) throw new RuntimeException("Modifed JAR");
 				if (isCombatMode(entity)) return;
 				event.setAmount(event.getAmount() * amount);
 				LazyOptional<Toasts> cap = entity.getCapability(DCCapabilities.TOASTS);
