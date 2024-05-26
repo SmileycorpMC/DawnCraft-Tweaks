@@ -164,7 +164,8 @@
 	"tooltip.dawncraft.executioner_0": "the mighty blade of a legendary king",
 	"tooltip.dawncraft.executioner_1": "Instantly kills mobs with less than 15% health",
 	
-	"tooltip.dawncraft.crystallized_xp": "Contains %1$s experience",
+	"tooltip.dawncraft.crystallized_xp_0": "Contains %1$s experience",
+	"tooltip.dawncraft.crystallized_xp_1": "Disappears if not used before dying",
 	
 	"tile.dawncraft.chest_spawner": "Chest Spawner",
 	

@@ -5,6 +5,7 @@ import com.afunproject.dawncraft.DCItemTags;
 import com.afunproject.dawncraft.capability.DCCapabilities;
 import com.afunproject.dawncraft.capability.Toasts;
 import com.afunproject.dawncraft.dungeon.item.CrystallizedXPItem;
+import com.afunproject.dawncraft.dungeon.item.DungeonItems;
 import com.afunproject.dawncraft.effects.DawnCraftEffects;
 import com.afunproject.dawncraft.integration.create.CreateCompat;
 import com.afunproject.dawncraft.integration.curios.CuriosCompat;
@@ -78,6 +79,7 @@ public abstract class MixinPlayer extends LivingEntity {
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) amplifier += getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier();
 		for (int i = 0; i < items.size(); i++) {
 			ItemStack stack = items.get(i);
+			if (stack.getItem() == DungeonItems.CRYSTALLIZED_XP.get()) stack.setCount(0);
 			if (stack.m_204117_(DCItemTags.VALUABLES)) {
 				if (level.random.nextInt(8) < amplifier) {
 					ItemStack drop = stack.copy();

@@ -41,7 +41,8 @@ public class CrystallizedXPItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag flag) {
         int value = getValue(stack);
         if (value <= 0) return;
-        lines.add(new TranslatableComponent("tooltip.dawncraft.crystallized_xp", value).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAED52))));
+        lines.add(new TranslatableComponent("tooltip.dawncraft.crystallized_xp_0", value).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAED52))));
+        lines.add(new TranslatableComponent("tooltip.dawncraft.crystallized_xp_1"));
     }
     
     @Override

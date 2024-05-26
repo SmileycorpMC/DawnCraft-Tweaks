@@ -1,8 +1,6 @@
 package com.afunproject.dawncraft;
 
-import net.minecraft.data.worldgen.PillagerOutpostPools;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.PillagerOutpostFeature;
 
 public class Constants {
 
