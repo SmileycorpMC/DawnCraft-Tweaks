@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-	"#bosses",
+	"#dawncraft:bosses",
 	"minecraft:elder_guardian",
 	"minecraft:guardian",
 	"minecraft:piglin_brute",
