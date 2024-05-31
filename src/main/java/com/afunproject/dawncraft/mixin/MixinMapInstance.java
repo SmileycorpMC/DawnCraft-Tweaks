@@ -17,14 +17,14 @@ public class MixinMapInstance {
     private boolean is_player;
 
     @Redirect(method = "draw", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/saveddata/maps/MapDecoration;getImage()B"))
-    public byte getImage(MapDecoration decoration) {
+    public byte dctweaks$getImage(MapDecoration decoration) {
         is_player = decoration.getType() == MapDecoration.Type.PLAYER ||
                 decoration.getType() == MapDecoration.Type.PLAYER_OFF_LIMITS || decoration.getType() == MapDecoration.Type.PLAYER_OFF_MAP;
         return is_player ? 0 : decoration.getImage();
     }
 
     @Redirect(method = "draw", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lcom/mojang/math/Quaternion;)V"))
-    public void mulPose(PoseStack poseStack, Quaternion quaternion) {
+    public void dctweaks$mulPose(PoseStack poseStack, Quaternion quaternion) {
         if (is_player) {
             LocalPlayer player = Minecraft.getInstance().player;
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(player.getYRot() + (player.getYRot() > 0 ? -8: 8)));

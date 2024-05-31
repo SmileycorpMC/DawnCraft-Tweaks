@@ -23,7 +23,7 @@ public class MixinInventory {
     @Shadow @Final public Player player;
 
     @Inject(at=@At("HEAD"), method = "add(ILnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
-    public void add(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
+    public void dctweaks$add(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
        if (player instanceof ServerPlayer && ModList.get().isLoaded("epicfight") && EpicFightCompat.isSkillBook(stack)) {
            LazyOptional<Toasts> cap = player.getCapability(DCCapabilities.TOASTS);
            if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer) player, (byte) 4);
@@ -31,7 +31,7 @@ public class MixinInventory {
     }
 
     @Inject(at=@At("HEAD"), method = "setItem", cancellable = true)
-    public void setItem(int slot, ItemStack stack, CallbackInfo callback) {
+    public void dctweaks$setItem(int slot, ItemStack stack, CallbackInfo callback) {
         if (player instanceof ServerPlayer && ModList.get().isLoaded("epicfight") && EpicFightCompat.isSkillBook(stack)) {
             LazyOptional<Toasts> cap = player.getCapability(DCCapabilities.TOASTS);
             if (cap.isPresent()) cap.orElseGet(null).sendToast((ServerPlayer) player, (byte) 4);

@@ -14,22 +14,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinKeyboardHandler {
 
 	@Inject(at=@At("HEAD"), method = "keyPress(JIIII)V", cancellable = true)
-	public void keyPress(long screen, int key, int scanCode, int action, int modifier, CallbackInfo callback) {
+	public void dctweaks$keyPress(long screen, int key, int scanCode, int action, int modifier, CallbackInfo callback) {
 		Minecraft mc = Minecraft.getInstance();
-		if (mc.screen == null) {
-			LocalPlayer player = mc.player;
-			if (player != null) {
-				if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-					callback.cancel();
-					return;
-				}
-				if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
-					if (ClientHandler.isUnusableByFrog(key, false)) {
-						callback.cancel();
-						return;
-					}
-				}
+		if (mc.screen != null) return;
+		LocalPlayer player = mc.player;
+		if (player != null) {
+			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
+				callback.cancel();
+				return;
 			}
+			if (player.hasEffect(DawnCraftEffects.FROGFORM.get()) && ClientHandler.isUnusableByFrog(key, false)) callback.cancel();
 		}
 	}
 

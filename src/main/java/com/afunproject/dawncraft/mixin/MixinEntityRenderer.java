@@ -13,15 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
 
-	@Shadow
-	protected EntityRenderDispatcher entityRenderDispatcher;
-
 	@Inject(at=@At("HEAD"), method = "shouldShowName(Lnet/minecraft/world/entity/Entity;)Z", cancellable = true)
-	protected void shouldShowName(Entity entity, CallbackInfoReturnable<Boolean> callback) {
-		if (!EntityRenderProperties.shouldRenderNameplate()) {
-			callback.setReturnValue(false);
-			callback.cancel();
-		}
+	protected void dctweaks$shouldShowName(Entity entity, CallbackInfoReturnable<Boolean> callback) {
+		if (!EntityRenderProperties.shouldRenderNameplate()) callback.setReturnValue(false);
 	}
 
 }

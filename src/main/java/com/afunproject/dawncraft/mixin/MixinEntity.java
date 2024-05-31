@@ -19,36 +19,21 @@ public class MixinEntity {
 	private Vec3 position;
 
 	@Inject(at=@At("HEAD"), method = "getEyeY()D", cancellable = true)
-	public void getEyeY(CallbackInfoReturnable<Double> callback) {
-		if ((Object)this instanceof LivingEntity) {
-			if (((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get())) {
-				callback.setReturnValue(position.y + FrogformEffect.FROG_EYE_HEIGHT);
-				callback.cancel();
-				return;
-			}
-		}
+	public void dctweaks$getEyeY(CallbackInfoReturnable<Double> callback) {
+		if ((Object)this instanceof LivingEntity && ((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get()))
+			callback.setReturnValue(position.y + FrogformEffect.FROG_EYE_HEIGHT);
 	}
 
 	@Inject(at=@At("HEAD"), method = "getEyeHeight()F", cancellable = true)
-	public void getEyeHeight(CallbackInfoReturnable<Float> callback) {
-		if ((Object)this instanceof LivingEntity) {
-			if (((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get())) {
-				callback.setReturnValue(FrogformEffect.FROG_EYE_HEIGHT);
-				callback.cancel();
-				return;
-			}
-		}
+	public void dctweaks$getEyeHeight(CallbackInfoReturnable<Float> callback) {
+		if ((Object)this instanceof LivingEntity && ((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get()))
+			callback.setReturnValue(FrogformEffect.FROG_EYE_HEIGHT);
 	}
 
 	@Inject(at=@At("HEAD"), method = "getBoundingBox()Lnet/minecraft/world/phys/AABB;", cancellable = true)
-	public void getBoundingBox(CallbackInfoReturnable<AABB> callback) {
-		if ((Object)this instanceof LivingEntity) {
-			if (((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get())) {
-				callback.setReturnValue(FrogformEffect.FROG_AABB.move(position));
-				callback.cancel();
-				return;
-			}
-		}
+	public void dctweaks$getBoundingBox(CallbackInfoReturnable<AABB> callback) {
+		if ((Object)this instanceof LivingEntity && (((LivingEntity)(Object)this).hasEffect(DawnCraftEffects.FROGFORM.get())))
+			callback.setReturnValue(FrogformEffect.FROG_AABB.move(position));
 	}
 
 }

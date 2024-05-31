@@ -18,13 +18,12 @@ public class MixinKeyMapping {
 	boolean isDown;
 
 	@Inject(at=@At("HEAD"), method = "isDown()Z", cancellable = true)
-	public void isDown(CallbackInfoReturnable<Boolean> callback) {
+	public void dctweaks$isDown(CallbackInfoReturnable<Boolean> callback) {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				callback.setReturnValue(false);
-				callback.cancel();
 				if (isDown) isDown = false;
 				return;
 			}
@@ -32,58 +31,46 @@ public class MixinKeyMapping {
 				KeyMapping mapping = (KeyMapping)(Object)this;
 				if (ClientHandler.FROG_KEYS.contains(mapping)) {
 					callback.setReturnValue(false);
-					callback.cancel();
 					if (isDown) isDown = false;
-					return;
 				}
 			}
 		}
 	}
 
 	@Inject(at=@At("HEAD"), method = "consumeClick()Z", cancellable = true)
-	public void consumeClick(CallbackInfoReturnable<Boolean> callback) {
+	public void dctweaks$consumeClick(CallbackInfoReturnable<Boolean> callback) {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				callback.setReturnValue(false);
-				callback.cancel();
 				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.FROG_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				if (ClientHandler.FROG_KEYS.contains(mapping)) callback.setReturnValue(false);
 			}
 		}
 	}
 
 	@Inject(at=@At("HEAD"), method = "matches(II)Z", cancellable = true)
-	public void matches(int key, int scancode, CallbackInfoReturnable<Boolean> callback) {
+	public void dctweaks$matches(int key, int scancode, CallbackInfoReturnable<Boolean> callback) {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
 			if (player.hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
 				callback.setReturnValue(false);
-				callback.cancel();
 				return;
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.FROG_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				if (ClientHandler.FROG_KEYS.contains(mapping)) callback.setReturnValue(false);
 			}
 		}
 	}
 
 	@Inject(at=@At("HEAD"), method = "matchesMouse(I)Z", cancellable = true)
-	public void matchesMouse(int button, CallbackInfoReturnable<Boolean> callback) {
+	public void dctweaks$matchesMouse(int button, CallbackInfoReturnable<Boolean> callback) {
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		if (player != null) {
@@ -94,11 +81,7 @@ public class MixinKeyMapping {
 			}
 			if (player.hasEffect(DawnCraftEffects.FROGFORM.get())) {
 				KeyMapping mapping = (KeyMapping)(Object)this;
-				if (ClientHandler.FROG_KEYS.contains(mapping)) {
-					callback.setReturnValue(false);
-					callback.cancel();
-					return;
-				}
+				if (ClientHandler.FROG_KEYS.contains(mapping)) callback.setReturnValue(false);
 			}
 		}
 	}

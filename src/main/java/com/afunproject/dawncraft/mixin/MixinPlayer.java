@@ -56,7 +56,7 @@ public abstract class MixinPlayer extends LivingEntity {
 	}
 
 	@Inject(at = @At("TAIL"), method = "awardStat(Lnet/minecraft/resources/ResourceLocation;I)V")
-	public void awardStat(ResourceLocation stat, int value, CallbackInfo callback) {
+	public void dctweaks$awardStat(ResourceLocation stat, int value, CallbackInfo callback) {
 		if (stat == Stats.WALK_ONE_CM && (LivingEntity)this instanceof ServerPlayer && ModList.get().isLoaded("journeymap")) {
 			if (((ServerPlayer)(LivingEntity)this).getStats().getValue(Stats.CUSTOM.get(Stats.WALK_ONE_CM)) >= 1000) {
 				LazyOptional<Toasts> cap = getCapability(DCCapabilities.TOASTS);
@@ -66,7 +66,7 @@ public abstract class MixinPlayer extends LivingEntity {
 	}
 
 	@Inject(at=@At("HEAD"), method = "dropEquipment()V", cancellable = true)
-	public void dropEquipment(CallbackInfo callback) {
+	public void dctweaks$dropEquipment(CallbackInfo callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		destroyVanishingCursedItems();
 		inventory.compartments.forEach(this::handleItems);
@@ -137,7 +137,7 @@ public abstract class MixinPlayer extends LivingEntity {
 	}
 
 	@Inject(at=@At("HEAD"), method = "getExperienceReward(Lnet/minecraft/world/entity/player/Player;)I", cancellable = true)
-	protected void getExperienceReward(Player player, CallbackInfoReturnable<Integer> callback) {
+	protected void dctweaks$getExperienceReward(Player player, CallbackInfoReturnable<Integer> callback) {
 		if (!DCConfig.harderKeepInventory.get() |! level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
 		int loss = 5;
 		if (hasEffect(DawnCraftEffects.FRACTURED_SOUL.get())) loss *= (getEffect(DawnCraftEffects.FRACTURED_SOUL.get()).getAmplifier() + 1);

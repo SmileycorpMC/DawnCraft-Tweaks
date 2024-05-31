@@ -20,19 +20,13 @@ public abstract class MixinLivingEntity extends Entity {
 	}
 
 	@Inject(at=@At("HEAD"), method = "getJumpPower()F", cancellable = true)
-	protected void getJumpPower(CallbackInfoReturnable<Float> callback) {
-		if (hasEffect(DawnCraftEffects.FROGFORM.get())) {
-			callback.setReturnValue(0.77f * getBlockJumpFactor());
-			callback.cancel();
-		}
+	protected void dctweaks$getJumpPower(CallbackInfoReturnable<Float> callback) {
+		if (hasEffect(DawnCraftEffects.FROGFORM.get())) callback.setReturnValue(0.77f * getBlockJumpFactor());
 	}
 
 	@Inject(at=@At("TAIL"), method = "calculateFallDamage(FF)I", cancellable = true)
-	protected void calculateFallDamage(CallbackInfoReturnable<Integer> callback) {
-		if (hasEffect(DawnCraftEffects.FROGFORM.get())) {
-			callback.setReturnValue(callback.getReturnValue() - 5);
-			callback.cancel();
-		}
+	protected void dctweaks$calculateFallDamage(CallbackInfoReturnable<Integer> callback) {
+		if (hasEffect(DawnCraftEffects.FROGFORM.get())) callback.setReturnValue(callback.getReturnValue() - 5);
 	}
 
 	@Shadow

@@ -27,15 +27,12 @@ public abstract class MixinMob extends LivingEntity {
 	}
 
 	@Inject(at=@At("HEAD"), method = "isNoAi()Z", cancellable = true)
-	public void isNoAi(CallbackInfoReturnable<Boolean> callback) {
-		if (hasEffect(DawnCraftEffects.IMMOBILIZED.get())) {
-			callback.setReturnValue(true);
-			callback.cancel();
-		}
+	public void dctweaks$isNoAi(CallbackInfoReturnable<Boolean> callback) {
+		if (hasEffect(DawnCraftEffects.IMMOBILIZED.get())) callback.setReturnValue(true);
 	}
 
 	@Inject(at=@At("HEAD"), method = "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;", cancellable = true)
-	public void interact(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
+	public void dctweaks$interact(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
 		if (((LivingEntity)this) instanceof Animal) {
 			if (ModList.get().isLoaded("epicfight")) if (EpicFightCompat.isCombatMode(player)) return;
 			LazyOptional<SageQuestTracker> optional = player.getCapability(DCCapabilities.SAGE_QUEST_TRACKER);
@@ -47,11 +44,8 @@ public abstract class MixinMob extends LivingEntity {
 	}
 
 	@Inject(at=@At("HEAD"), method = "canBeLeashed(Lnet/minecraft/world/entity/player/Player;)Z", cancellable = true)
-	public void canBeLeashed(Player p_21418_, CallbackInfoReturnable<Boolean> callback) {
-		if (this.getType() == EntityType.IRON_GOLEM) {
-			callback.setReturnValue(false);
-			callback.cancel();
-		}
+	public void dctweaks$canBeLeashed(Player p_21418_, CallbackInfoReturnable<Boolean> callback) {
+		if (this.getType() == EntityType.IRON_GOLEM) callback.setReturnValue(false);
 	}
 
 }

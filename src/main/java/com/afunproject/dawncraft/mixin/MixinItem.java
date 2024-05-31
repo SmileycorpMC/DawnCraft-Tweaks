@@ -18,18 +18,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinItem {
 
 	@Inject(at=@At("HEAD"), method = "canFitInsideContainerItems()Z", cancellable = true)
-	public void canFitInsideContainerItems(CallbackInfoReturnable<Boolean> callback) {
-		if (ModList.get().isLoaded("sophisticatedbackpacks")) if (SophisticatedBackpacksCompat.isBackpack((Item)(Object)this)) {
+	public void dctweaks$anFitInsideContainerItems(CallbackInfoReturnable<Boolean> callback) {
+		if (ModList.get().isLoaded("sophisticatedbackpacks")) if (SophisticatedBackpacksCompat.isBackpack((Item)(Object)this))
 			callback.setReturnValue(false);
-			callback.cancel();
-		}
 	}
 	
 	@Inject(at = @At("HEAD"), method = "finishUsingItem")
-	public void finishUsingItem(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> callback) {
-		if (ModList.get().isLoaded("irons_spellbooks")) if (IronsSpellbooksCompat.isSpellBook(stack)) {
+	public void dctweaks$finishUsingItem(ItemStack stack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> callback) {
+		if (ModList.get().isLoaded("irons_spellbooks")) if (IronsSpellbooksCompat.isSpellBook(stack))
 			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
-		}
 	}
 	
 }

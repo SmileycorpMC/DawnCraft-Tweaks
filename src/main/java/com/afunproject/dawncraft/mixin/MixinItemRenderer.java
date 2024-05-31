@@ -24,21 +24,19 @@ public abstract class MixinItemRenderer {
 
 	@SuppressWarnings("deprecation")
 	@Inject(at=@At("HEAD"), method = "render(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemTransforms$TransformType;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;)V", cancellable = true)
-	public void render(ItemStack stack, TransformType transforms, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel base, CallbackInfo callback) {
-		if (stack != null) {
-			if (stack.getItem() instanceof MaskItem && transforms == TransformType.GUI) {
-				Minecraft mc = Minecraft.getInstance();
-				ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
-				BakedModel model = mc.getModelManager().getModel(new ResourceLocation(loc.toString()+"_gui"));
-				p_115147_.pushPose();
-				p_115147_.translate(-0.5D, -0.5D, -0.5D);
-				RenderType rendertype = ItemBlockRenderTypes.getRenderType(stack, true);
-				VertexConsumer vertexconsumer;
-				vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, stack.hasFoil());
-				renderModelLists(model, stack, p_115149_, p_115150_, p_115147_, vertexconsumer);
-				p_115147_.popPose();
-				callback.cancel();
-			}
+	public void dctweaks$render(ItemStack stack, TransformType transforms, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel base, CallbackInfo callback) {
+		if (stack != null && stack.getItem() instanceof MaskItem && transforms == TransformType.GUI) {
+			Minecraft mc = Minecraft.getInstance();
+			ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
+			BakedModel model = mc.getModelManager().getModel(new ResourceLocation(loc.toString()+"_gui"));
+			p_115147_.pushPose();
+			p_115147_.translate(-0.5D, -0.5D, -0.5D);
+			RenderType rendertype = ItemBlockRenderTypes.getRenderType(stack, true);
+			VertexConsumer vertexconsumer;
+			vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, stack.hasFoil());
+			renderModelLists(model, stack, p_115149_, p_115150_, p_115147_, vertexconsumer);
+			p_115147_.popPose();
+			callback.cancel();
 		}
 	}
 

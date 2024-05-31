@@ -27,7 +27,7 @@ public abstract class MixinStructureTemplate {
 	private Vec3i size = null;
 
 	@Inject(at=@At("TAIL"), method = "placeInWorld(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;Ljava/util/Random;I)Z", cancellable = true)
-	public void placeInWorld(ServerLevelAccessor level, BlockPos start, BlockPos end, StructurePlaceSettings settings, Random rand, int p_74542_, CallbackInfoReturnable<Boolean> callback) {
+	public void dctweaks$placeInWorld(ServerLevelAccessor level, BlockPos start, BlockPos end, StructurePlaceSettings settings, Random rand, int p_74542_, CallbackInfoReturnable<Boolean> callback) {
 		if (callback.getReturnValue() && blockCache != null && size.getX() >= 1 && size.getY() >= 1 && size.getZ() >= 1) {
 			for(StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : blockCache) {
 				BlockPos blockpos = structuretemplate$structureblockinfo.pos;
@@ -42,7 +42,7 @@ public abstract class MixinStructureTemplate {
 	}
 
 	@ModifyVariable(method = "placeInWorld", at = @At(value = "STORE", ordinal = 4))
-	private List<StructureBlockInfo> placeInWorld(List<StructureBlockInfo> blockInfo) {
+	private List<StructureBlockInfo> dctweaks$placeInWorld(List<StructureBlockInfo> blockInfo) {
 		blockCache = blockInfo;
 		return blockInfo;
 	}
