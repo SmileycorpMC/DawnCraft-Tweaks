@@ -26,9 +26,3 @@ mandatory = true
 versionRange = "[1.1.5,)"
 ordering = "NONE"
 side = "BOTH"
-
-[[mods]]
-modId = "afptweaks"
-version = "${file.jarVersion}"
-displayName = "AFPTweaks ProxyLoader"
-description = ''''''
