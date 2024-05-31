@@ -4,15 +4,13 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "dawncraft.refmap.json",
 	"mixins": [
-		"MixinCompoundTag",
 		"MixinEntity",
 		"MixinInventory",
 		"MixinItem",
 		"MixinItemStack",
 		"MixinLivingEntity",
 		"MixinMob",
-		"MixinPlayer",
-		"MixinResourceLocation"
+		"MixinPlayer"
 	],
 	"client": [
       	"MixinEntityRenderer",
