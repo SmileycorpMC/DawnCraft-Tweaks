@@ -77,7 +77,7 @@ public class EventListener {
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		//scale boss hp and damage based on players nearby
-		if (event.getEntity().getType().m_204039_(DCEntityTags.BOSSES)) {
+		if (event.getEntity().getType().m_204039_(DCEntityTags.BOSSES) && event.getEntity() instanceof Mob) {
 			Mob boss = (Mob) event.getEntity();
 			int players = 0;
 			for (Player player : boss.level.players()) {
