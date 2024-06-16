@@ -48,12 +48,12 @@ public class QuestScreen extends Screen {
 			pageIndex++;
 		});
 		if (questType == QuestType.OPTIONS) {
-			String[] pages = text.getString().split("�");
+			String[] pages = text.getString().split("¶");
 			if (pages.length == 0) this.pages.addAll(generatePages(this, text));
 			if (pages.length > 1) {
 				for (int i = 0; i < pages.length-2; i++) this.pages.addAll(generatePages(this, new TranslatableComponent(pages[i])));
 			}
-			String[] options = pages[pages.length-1].split("�");
+			String[] options = pages[pages.length-1].split("¦");
 			this.pages.add(new OptionsPage(this, Lists.newArrayList(options)));
 		}
 		else pages.addAll(generatePages(this, text));
@@ -65,20 +65,20 @@ public class QuestScreen extends Screen {
 			String str = text.getString();
 			int position = 0;
 			List<String> lines = Lists.newArrayList();
-			if (str.length() == 0) lines.add(new TranslatableComponent("text.afptweaks.quest.no_text").getString());
+			if (str.length() == 0) lines.add(new TranslatableComponent("text.dawncraft.quest.no_text").getString());
 			while (position < str.length()) {
 				int size = Math.min(TEXT_WIDTH, str.length()-position);
 				int newPos = position + size;
-				if (str.substring(position, newPos).contains("�")) {
-					int i = str.substring(position, newPos).indexOf("�");
+				if (str.substring(position, newPos).contains("¶")) {
+					int i = str.substring(position, newPos).indexOf("¶");
 					lines.add(str.substring(position, position + i));
 					pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 					lines = Lists.newArrayList();
 					position = position + i + 1;
 					continue;
 				}
-				if (str.substring(position, newPos).contains("�")) {
-					int i = str.substring(position, newPos).indexOf("�");
+				if (str.substring(position, newPos).contains("¬")) {
+					int i = str.substring(position, newPos).indexOf("¬");
 					lines.add(str.substring(position, position + i));
 					position = position + i + 1;
 					if (lines.size() >= 9) {
@@ -116,7 +116,7 @@ public class QuestScreen extends Screen {
 			if (screen.questType == QuestType.AUTO_CLOSE) pages.add(new TextPage(screen, lines, screen.NEXT_PAGE));
 			else pages.add(new TextPage(screen, lines, screen.getAcceptButtons()));
 		} else {
-			pages.add(new TextPage(screen, Lists.newArrayList(new TranslatableComponent("text.afptweaks.quest.no_text", "null").getString()), screen.NEXT_PAGE));
+			pages.add(new TextPage(screen, Lists.newArrayList(new TranslatableComponent("text.dawncraft.quest.no_text", "null").getString()), screen.NEXT_PAGE));
 		}
 		return pages;
 	}

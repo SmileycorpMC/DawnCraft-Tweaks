@@ -25,7 +25,7 @@ public enum QuestNPC implements StringRepresentable {
 	WITCH(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"zherterry\", \"quest\":\"dawncraft:witch\", \"damageable\":1b}"),
 	KING(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Dark_King_0507\", \"quest\":\"dawncraft:king\"}"),
 	MONSTER_SLAYER(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"ReaperDoge\", \"quest\":\"dawncraft:monster_slayer\"}\"}"),
-	SAGE(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Shinykey\", \"quest\":\"dawncraft:sage\"}\"}"),
+	SAGE(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"1Venty1\", \"quest\":\"dawncraft:sage\"}\"}"),
 	SORCERER(QuestEntities.QUEST_PLAYER.get(), "{\"username\":\"Arche_Princess\", \"quest\":\"dawncraft:sorcerer\"}\"}");
 
 	private final EntityType<?> type;

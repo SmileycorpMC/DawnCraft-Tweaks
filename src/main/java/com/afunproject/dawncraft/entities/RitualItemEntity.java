@@ -1,5 +1,6 @@
 package com.afunproject.dawncraft.entities;
 
+import com.afunproject.dawncraft.DawnCraft;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -27,35 +29,8 @@ import java.util.List;
 
 public class RitualItemEntity extends Entity {
 
-	public static final EntityDataSerializer<List<BlockPos>> POS_LIST_SERIALIZER = new EntityDataSerializer<List<BlockPos>>() {
-
-		@Override
-		public void write(FriendlyByteBuf buf, List<BlockPos> positions) {
-			long[] longs = new long[positions.size()];
-			for (int i = 0; i < positions.size(); i++) longs[i] = positions.get(i).asLong();
-			buf.writeLongArray(longs);
-		}
-
-		@Override
-		public List<BlockPos> read(FriendlyByteBuf buf) {
-			List<BlockPos> positions = Lists.newArrayList();
-			for (long l : buf.readLongArray()) positions.add(BlockPos.of(l));
-			return positions;
-		}
-
-		@Override
-		public List<BlockPos> copy(List<BlockPos> list) {
-			return Lists.newArrayList(list);
-		}
-		
-	};
-
-	static {
-		EntityDataSerializers.registerSerializer(POS_LIST_SERIALIZER);
-	}
-
 	public static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(RitualItemEntity.class, EntityDataSerializers.ITEM_STACK);
-	public static final EntityDataAccessor<List<BlockPos>> PEDESTALS = SynchedEntityData.defineId(RitualItemEntity.class, POS_LIST_SERIALIZER);
+	private List<BlockPos> pedestals = Lists.newArrayList();
 
 	protected ItemStack result = ItemStack.EMPTY;
 
@@ -68,7 +43,6 @@ public class RitualItemEntity extends Entity {
 		setPos(pos.getX()+0.5f, pos.getY()+1.5f, pos.getZ()+0.5f);
 		entityData.set(ITEM, stack);
 		this.result = result;
-		entityData.set(PEDESTALS, pedestals);
 		noPhysics = true;
 	}
 
@@ -94,41 +68,38 @@ public class RitualItemEntity extends Entity {
 	}
 
 	public List<BlockPos> getPedestals() {
-		return entityData.get(PEDESTALS);
+		return pedestals;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (!level.isClientSide) {
-			this.moveTo(position().x, position().y+0.009, position().z);
-			if (random.nextInt(30) == 0)
-				playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, 0.5f, random.nextFloat());
-			if (tickCount == 400) {
-				ItemEntity drop = new ItemEntity(level, position().x, position().y, position().z, result);
-				this.kill();
-				level.addFreshEntity(drop);
-				playSound(SoundEvents.END_PORTAL_SPAWN, 0.75f, 0.75f);
-				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-				bolt.setPos(position().add(0, -3, 0));
-				bolt.setVisualOnly(true);
-				level.addFreshEntity(bolt);
-			}
-		} else if (tickCount <= 330) {
-			for (BlockPos pos : entityData.get(PEDESTALS)) {
-				Vec3 start = new Vec3(pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5);
-				Vec3 dir = DirectionUtils.getDirectionVec(start, position().add(0, 1, 0));
-				Vec3 dir1 = DirectionUtils.getDirectionVecXZ(position(), start);
-				level.addParticle(ParticleTypes.REVERSE_PORTAL, start.x, start.y, start.z, dir.x*0.15, dir.y*0.15, dir.z*0.15);
-				level.addParticle(ParticleTypes.REVERSE_PORTAL, position().x, start.y-0.5f, position().z, dir1.x*0.1, dir1.y*0.1, dir1.z*0.1);
-			}
+		if (!(level instanceof ServerLevel)) return;
+		moveTo(position().x, position().y+0.009, position().z);
+		if (random.nextInt(30) == 0) playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, 0.5f, random.nextFloat());
+		if (tickCount == 400) {
+			ItemEntity drop = new ItemEntity(level, position().x, position().y, position().z, result);
+			this.kill();
+			level.addFreshEntity(drop);
+			playSound(SoundEvents.END_PORTAL_SPAWN, 0.75f, 0.75f);
+			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+			bolt.setPos(position().add(0, -3, 0));
+			bolt.setVisualOnly(true);
+			level.addFreshEntity(bolt);
+		}
+		if (tickCount >= 330) return;
+		for (BlockPos pos : pedestals) {
+			Vec3 start = new Vec3(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+			Vec3 dir = DirectionUtils.getDirectionVec(start, position().add(0, 1, 0));
+			Vec3 dir1 = DirectionUtils.getDirectionVecXZ(position(), start);
+			((ServerLevel)level).sendParticles(ParticleTypes.REVERSE_PORTAL, start.x, start.y, start.z, 1, dir.x*0.15, dir.y*0.15, dir.z*0.15, 0);
+			((ServerLevel)level).sendParticles(ParticleTypes.REVERSE_PORTAL, position().x, start.y-0.5f, position().z, 1, dir1.x*0.1, dir1.y*0.1, dir1.z*0.1, 0);
 		}
 	}
 
 	@Override
 	protected void defineSynchedData() {
 		entityData.define(ITEM, ItemStack.EMPTY);
-		entityData.define(PEDESTALS, Lists.newArrayList());
 	}
 
 	@Override
@@ -136,12 +107,10 @@ public class RitualItemEntity extends Entity {
 		if (tag.contains("item")) entityData.set(ITEM, ItemStack.of(tag.getCompound("item")));
 		if (tag.contains("result")) result = ItemStack.of(tag.getCompound("result"));
 		if (tag.contains("pedestals")) {
-			List<BlockPos> pedestals = Lists.newArrayList();
 			for (Tag pedestal : tag.getList("pedestals", 10)) {
 				CompoundTag pos = (CompoundTag) pedestal;
 				pedestals.add(new BlockPos (pos.getInt("x"), pos.getInt("y"), pos.getInt("z")));
 			}
-			entityData.set(PEDESTALS, pedestals);
 		}
 	}
 
@@ -150,7 +119,7 @@ public class RitualItemEntity extends Entity {
 		CompoundTag stack = entityData.get(ITEM).save(new CompoundTag());
 		CompoundTag result = this.result.save(new CompoundTag());
 		ListTag pedestals = new ListTag();
-		for (BlockPos pos : entityData.get(PEDESTALS)) {
+		for (BlockPos pos : this.pedestals) {
 			CompoundTag posTag = new CompoundTag();
 			posTag.putInt("x", pos.getX());
 			posTag.putInt("y", pos.getY());
