@@ -15,7 +15,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.18.2-1.2.15e'
+version = '1.18.2-1.2.15f'
 group = 'com.afunproject.dawncraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'DawnCraft-Tweaks'
 
@@ -76,6 +76,20 @@ minecraft {
 
 mixin {
     add sourceSets.main, "dawncraft.refmap.json"
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test) {
+        systemProperty 'file.encoding', 'UTF-8'
+    }
+
+    tasks.withType(JavaExec) {
+        systemProperty 'file.encoding', 'UTF-8'
+    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

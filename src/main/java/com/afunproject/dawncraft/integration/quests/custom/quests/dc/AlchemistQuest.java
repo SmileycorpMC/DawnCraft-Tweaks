@@ -37,7 +37,7 @@ public class AlchemistQuest extends Quest {
 
 	@Override
 	public String getText(int phase, boolean accepted) {
-		return phase == -1 ? "text.dawncraft.quest.alchemist.bloodthirst�text.dawncraft.quest.alchemist.withering�text.dawncraft.quest.alchemist.endurance" : "text.dawncraft.quest.alchemist";
+		return phase == -1 ? "text.dawncraft.quest.alchemist.bloodthirst¦text.dawncraft.quest.alchemist.withering¦text.dawncraft.quest.alchemist.endurance" : "text.dawncraft.quest.alchemist";
 	}
 
 	@Override
